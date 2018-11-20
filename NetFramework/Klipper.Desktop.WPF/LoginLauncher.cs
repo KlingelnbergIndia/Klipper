@@ -57,9 +57,14 @@ namespace Klipper.Desktop.WPF
             //Do something to send an email to user resetting the password.
         }
 
-        public static bool Login(string username, string password)
+        public bool Login(string username, string password)
         {
             var hash = ToSha256(password);
+            return LoginWithHashedPassword(username, hash);
+        }
+
+        public bool LoginWithHashedPassword(string username, string hash)
+        {
             var user = new User()
             {
                 UserName = username,
@@ -74,9 +79,16 @@ namespace Klipper.Desktop.WPF
             if (response.IsSuccessStatusCode)
             {
                 Auth.SessionToken = ExtractToken(response);
+                StoreToVault(username, hash);
                 return true;
             }
             return false;
+        }
+
+        //This will be a separate module (a C++ library) which will manage the security vault
+        private void StoreToVault(string username, string hash)
+        {
+            //Stores current username or password to vault
         }
 
         internal class TokenResponse

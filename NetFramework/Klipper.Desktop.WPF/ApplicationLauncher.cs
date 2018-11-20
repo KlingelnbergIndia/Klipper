@@ -10,12 +10,25 @@ using Sparkle.DataStructures;
 using Sparkle.Controls.Navigators;
 using System.Windows.Controls;
 using Klipper.Desktop.WPF.Controls;
+using Klipper.Desktop.WPF.Controls.Main;
 
 namespace Klipper.Desktop.WPF
 {
     public class ApplicationLauncher
     {
         private MultiColorTextPanel _textPanel;
+        private Dictionary<string, UserControl>  _mainMenuControls 
+            = new Dictionary<string, UserControl>()
+            {
+                { "Home", new HomeControl() },
+                { "Work Time", new WorkTimeControl() },
+                { "Salary", new SalaryControl() },
+                { "Documents", new DocumentsControl() },
+                { "Admin", new AdminControl() },
+                { "Management", new ManagementControl() },
+                { "Settings", new SettingsControl() },
+                { "Help", new HelpControl() },
+            };
 
         public void Launch()
         {
@@ -38,6 +51,8 @@ namespace Klipper.Desktop.WPF
             LoadTopPanel(w);
             LoadBottomPanel(w);
             LoadSideToolbar(w);
+
+            AppearanceManager.CurrentSkin = SkinType.OrangeOnBlack;
 
             w.WindowState = System.Windows.WindowState.Normal;
             w.Topmost = false;
@@ -114,28 +129,14 @@ namespace Klipper.Desktop.WPF
             return btn;
         }
 
-        private void LoadMenuItems(HamburgerNavigator n)
+        private void LoadMenuItems(HamburgerNavigator navigator)
         {
-            var strs = new Dictionary<string, UserControl>() {
-                { "Home", new HomeControl() },
-                { "Attendance", new AttendanceControl() },
-                { "Leaves", new LeavesControl() },
-                { "Documents", new DocumentsControl() },
-                { "Admin", new AdminControl() },
-                { "Settings", new SettingsControl() },
-                { "Help", new HelpControl() },
-            };
-
-            foreach (var k in strs.Keys)
+            foreach (var k in _mainMenuControls.Keys)
             {
-                var control = strs[k];
-                var item = new SelectableItem(k, control, "./Images/Generic/" + k + "_white.png")
-                {
-                    IconHeight = 35,
-                    IconWidth = 35,
-                    ItemHeight = 50
-                };
-                n.Menu.AddMenuItem(item);
+                var control = _mainMenuControls[k];
+                var imageStr = k.Replace(" ", "");
+                var item = new SelectableItem(k, control, "./Images/MainMenu/" + imageStr + "_white.png") { IconHeight = 35, IconWidth = 35, ItemHeight = 50 };
+                navigator.Menu.AddMenuItem(item);
             }
         }
 

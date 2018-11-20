@@ -1,9 +1,7 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Models.Core.Employment;
 
 namespace KlipperAuthorization.Requirements.Attendance
 {

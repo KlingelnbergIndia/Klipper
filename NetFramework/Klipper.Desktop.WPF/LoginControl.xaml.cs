@@ -45,7 +45,7 @@ namespace Klipper.Desktop.WPF
             var username = UsernameTextbox.Text;
             var password = PasswordTextbox.Text;
 
-            var success = LoginLauncher.Login(username, password);
+            var success = new LoginLauncher().Login(username, password);
             if(success)
             {
                 new ApplicationLauncher().Launch();
