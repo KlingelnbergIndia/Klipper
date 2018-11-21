@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Threading;
+using Klipper.Desktop.Service.Login;
 using Microsoft.Shell;
 using System;
 using System.Collections.Generic;
@@ -55,10 +56,10 @@ namespace Klipper.Desktop.WPF
             }
             else
             {
-                var success = new LoginLauncher().LoginWithHashedPassword(loginData.Item1, loginData.Item2);
+                var success = LoginManager.Instance.LoginWithHashedPassword(loginData.Item1, loginData.Item2);
                 if (success)
                 {
-                    new ApplicationLauncher().Launch();
+                    ApplicationLauncher.Instance.Launch();
                 }
             }
         }

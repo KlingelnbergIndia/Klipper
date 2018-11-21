@@ -9,14 +9,46 @@ using Sparkle.Controls.Buttons;
 using Sparkle.DataStructures;
 using Sparkle.Controls.Navigators;
 using System.Windows.Controls;
-using Klipper.Desktop.WPF.Controls;
-using Klipper.Desktop.WPF.Controls.Main;
+using Klipper.Desktop.WPF.Views.Main;
+using Klipper.Desktop.WPF.Connectors;
+using Klipper.Desktop.Service.EmployeeProfile;
+using Models.Core.Employment;
 
 namespace Klipper.Desktop.WPF
 {
     public class ApplicationLauncher
     {
-        private MultiColorTextPanel _textPanel;
+        #region Instance
+
+        static ApplicationLauncher _instance = null;
+
+        public static ApplicationLauncher Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new ApplicationLauncher();
+                }
+                return _instance;
+            }
+        }
+
+        public static void DeleteInstance()
+        {
+            _instance = null;
+        }
+
+        private ApplicationLauncher()
+        {
+        }
+
+        #endregion
+
+        #region Fields
+
+        private MultiColorTextPanel _statusBottomTextPanel;
+
         private Dictionary<string, UserControl>  _mainMenuControls 
             = new Dictionary<string, UserControl>()
             {
@@ -29,6 +61,13 @@ namespace Klipper.Desktop.WPF
                 { "Settings", new SettingsControl() },
                 { "Help", new HelpControl() },
             };
+
+        private MultiColorTextPanel _topRightTextPanel;
+        private StockApplicationWindow _appWindow;
+
+        #endregion
+
+        #region Public methods
 
         public void Launch()
         {
@@ -57,8 +96,35 @@ namespace Klipper.Desktop.WPF
             w.WindowState = System.Windows.WindowState.Normal;
             w.Topmost = false;
 
+            //Register and unregister events on MainConnector
+            w.Closed += (s, e) =>
+            {
+                UnregisterMainConnectorEvents();
+            };
+            RegisterMainConnectorEvents();
+
+            _appWindow = w;
+
             w.Show();
         }
+
+        #endregion
+
+        #region Other Private Methods
+
+        private void RegisterMainConnectorEvents()
+        {
+            MainConnector.Instance.LoginSuccessful += OnSuccessfulLogin;
+        }
+
+        private void UnregisterMainConnectorEvents()
+        {
+            MainConnector.Instance.LoginSuccessful -= OnSuccessfulLogin;
+        }
+
+        #endregion
+
+        #region Loading methods
 
         private void LoadSideToolbar(StockApplicationWindow w)
         {
@@ -76,7 +142,7 @@ namespace Klipper.Desktop.WPF
         private void LoadBottomPanel(StockApplicationWindow w)
         {
             var b = w.BottomPanel;
-            _textPanel = new MultiColorTextPanel()
+            _statusBottomTextPanel = new MultiColorTextPanel()
             {
                 IsSelectable = true,
                 HorizontalAlignment = HorizontalAlignment.Left,
@@ -85,11 +151,12 @@ namespace Klipper.Desktop.WPF
                 VerticalContentAlignment = VerticalAlignment.Center,
                 SelectedBackground = AppearanceManager.GetCurrentSkinResource("BackgroundBase_05") as Brush,
             };
-            b.Content = _textPanel;
-            _textPanel.IsSelectable = true;
-            _textPanel.Clicked += (s, e) => { MessageBox.Show("Override action when clicked on text-panel, such as showing session log."); };
-            _textPanel.SetText("One can add application status here.", new SolidColorBrush(Colors.YellowGreen));
-            _textPanel.AddText(" Click to execute the registered action.", new SolidColorBrush(Colors.Orange));
+            b.Content = _statusBottomTextPanel;
+            _statusBottomTextPanel.IsSelectable = true;
+            _statusBottomTextPanel.Clicked += (s, e) => { MessageBox.Show("Override action when clicked on text-panel, such as showing session log."); };
+            _statusBottomTextPanel.SetText("One can add application status here.", new SolidColorBrush(Colors.YellowGreen));
+            _statusBottomTextPanel.AddText(" Click to execute the registered action.", new SolidColorBrush(Colors.Orange));
+
         }
 
         private void LoadTopPanel(StockApplicationWindow w)
@@ -161,16 +228,31 @@ namespace Klipper.Desktop.WPF
             };
         }
 
+        #endregion
+
+        #region Event handlers
+
+        private void OnSuccessfulLogin(object sender, string userName)
+        {
+            Employee e = EmployeeProfileService.Instance.GetEmployeeByUserName(userName);
+            if (e != null)
+            {
+                _topRightTextPanel.SetText(e.FirstName + " " + e.LastName, new SolidColorBrush(Colors.Azure));
+            }
+        }
+
         private void OnMenuSelectionChanged(object sender, SelectableItemSelectionChangedEventArgs e)
         {
-            if (_textPanel == null)
+            if (_statusBottomTextPanel == null)
             {
                 return;
             }
             var currItem = e.Current;
             var title = currItem.Header;
-            _textPanel.SetText("Current Session: ", new SolidColorBrush(Colors.YellowGreen));
-            _textPanel.AddText(title, new SolidColorBrush(Colors.Orange));
+            _statusBottomTextPanel.SetText("Current Session: ", new SolidColorBrush(Colors.YellowGreen));
+            _statusBottomTextPanel.AddText(title, new SolidColorBrush(Colors.Orange));
         }
+
+        #endregion
     }
 }

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Klipper.Desktop.WPF.Controls.Main
+namespace Klipper.Desktop.WPF.Views.Main
 {
     /// <summary>
-    /// Interaction logic for SalaryControl.xaml
+    /// Interaction logic for HomeControl.xaml
     /// </summary>
-    public partial class SalaryControl : UserControl
+    public partial class HomeControl : UserControl
     {
-        public SalaryControl()
+        public HomeControl()
         {
             InitializeComponent();
         }

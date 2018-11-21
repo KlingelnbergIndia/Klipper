@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Klipper.Desktop.WPF.Controls.Main
+namespace Klipper.Desktop.WPF.Views.Main
 {
     /// <summary>
-    /// Interaction logic for SettingsControl.xaml
+    /// Interaction logic for WorkTimeControl.xaml
     /// </summary>
-    public partial class SettingsControl : UserControl
+    public partial class WorkTimeControl : UserControl
     {
-        public SettingsControl()
+        public WorkTimeControl()
         {
             InitializeComponent();
         }

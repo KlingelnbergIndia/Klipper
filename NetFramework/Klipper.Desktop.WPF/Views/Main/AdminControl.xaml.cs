@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Klipper.Desktop.WPF.Controls.Main
+namespace Klipper.Desktop.WPF.Views.Main
 {
     /// <summary>
     /// Interaction logic for AdminControl.xaml

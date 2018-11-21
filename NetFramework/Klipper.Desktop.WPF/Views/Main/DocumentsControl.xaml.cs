@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Klipper.Desktop.WPF.Controls.Main
+namespace Klipper.Desktop.WPF.Views.Main
 {
     /// <summary>
     /// Interaction logic for ReportsControl.xaml

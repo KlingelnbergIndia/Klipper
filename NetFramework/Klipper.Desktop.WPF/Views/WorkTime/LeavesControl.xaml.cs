@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Klipper.Desktop.WPF.Controls.WorkTime
+namespace Klipper.Desktop.WPF.Views.WorkTime
 {
     /// <summary>
     /// Interaction logic for LeavesControl.xaml

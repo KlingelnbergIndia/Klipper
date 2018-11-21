@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Klipper.Desktop.WPF.Controls.Main
+namespace Klipper.Desktop.WPF.Views.Main
 {
     /// <summary>
-    /// Interaction logic for ManagementControl.xaml
+    /// Interaction logic for SettingsControl.xaml
     /// </summary>
-    public partial class ManagementControl : UserControl
+    public partial class SettingsControl : UserControl
     {
-        public ManagementControl()
+        public SettingsControl()
         {
             InitializeComponent();
         }

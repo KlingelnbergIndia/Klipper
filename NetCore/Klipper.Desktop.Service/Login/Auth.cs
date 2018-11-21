@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Klipper.Desktop.WPF
+namespace Klipper.Desktop.Service.Login
 {
-    internal static class Auth
+    public static class Auth
     {
         static public string SessionToken { get; set; } = string.Empty;
     }
