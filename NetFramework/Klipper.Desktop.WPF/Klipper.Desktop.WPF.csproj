@@ -62,6 +62,10 @@
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>Dependencies\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="MongoDB.Bson, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\MongoDB.Bson.2.7.0\lib\netstandard1.5\MongoDB.Bson.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.12.0.1-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -103,44 +107,45 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Connectors\MainConnector.cs" />
     <Compile Include="SingleInstance.cs" />
-    <Page Include="Controls\Main\AdminControl.xaml">
+    <Page Include="Views\Main\AdminControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\WorkTime\AttendanceControl.xaml">
+    <Page Include="Views\WorkTime\AttendanceControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Main\HelpControl.xaml">
+    <Page Include="Views\Main\HelpControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Main\HomeControl.xaml">
+    <Page Include="Views\Main\HomeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\WorkTime\LeavesControl.xaml">
+    <Page Include="Views\WorkTime\LeavesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Main\DocumentsControl.xaml">
+    <Page Include="Views\Main\DocumentsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Main\ManagementControl.xaml">
+    <Page Include="Views\Main\ManagementControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Main\SalaryControl.xaml">
+    <Page Include="Views\Main\SalaryControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Main\SettingsControl.xaml">
+    <Page Include="Views\Main\SettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Main\WorkTimeControl.xaml">
+    <Page Include="Views\Main\WorkTimeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -153,35 +158,34 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ApplicationLauncher.cs" />
-    <Compile Include="Auth.cs" />
-    <Compile Include="Controls\Main\AdminControl.xaml.cs">
+    <Compile Include="Views\Main\AdminControl.xaml.cs">
       <DependentUpon>AdminControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WorkTime\AttendanceControl.xaml.cs">
+    <Compile Include="Views\WorkTime\AttendanceControl.xaml.cs">
       <DependentUpon>AttendanceControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Main\HelpControl.xaml.cs">
+    <Compile Include="Views\Main\HelpControl.xaml.cs">
       <DependentUpon>HelpControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Main\HomeControl.xaml.cs">
+    <Compile Include="Views\Main\HomeControl.xaml.cs">
       <DependentUpon>HomeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WorkTime\LeavesControl.xaml.cs">
+    <Compile Include="Views\WorkTime\LeavesControl.xaml.cs">
       <DependentUpon>LeavesControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Main\DocumentsControl.xaml.cs">
+    <Compile Include="Views\Main\DocumentsControl.xaml.cs">
       <DependentUpon>DocumentsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Main\ManagementControl.xaml.cs">
+    <Compile Include="Views\Main\ManagementControl.xaml.cs">
       <DependentUpon>ManagementControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Main\SalaryControl.xaml.cs">
+    <Compile Include="Views\Main\SalaryControl.xaml.cs">
       <DependentUpon>SalaryControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Main\SettingsControl.xaml.cs">
+    <Compile Include="Views\Main\SettingsControl.xaml.cs">
       <DependentUpon>SettingsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Main\WorkTimeControl.xaml.cs">
+    <Compile Include="Views\Main\WorkTimeControl.xaml.cs">
       <DependentUpon>WorkTimeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoginControl.xaml.cs">
@@ -573,9 +577,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Models.Framework\Models.Framework.csproj">
-      <Project>{E06E7D98-0D23-4E9B-82D4-0489641AE7C5}</Project>
-      <Name>Models.Framework</Name>
+    <ProjectReference Include="..\..\NetCore\Klipper.Desktop.Service\Klipper.Desktop.Service.csproj">
+      <Project>{9ebc2e5c-e2cb-4edc-9ff2-931cb9a0bc1c}</Project>
+      <Name>Klipper.Desktop.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NetCore\Models.Core\Models.Core.csproj">
+      <Project>{4c0c7c26-1404-45db-abe1-9e203de86e61}</Project>
+      <Name>Models.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -589,9 +597,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controls\Documents\" />
-    <Folder Include="Controls\Salary\" />
-    <Folder Include="Controls\Settings\" />
+    <Folder Include="Views\Documents\" />
+    <Folder Include="Views\Salary\" />
+    <Folder Include="Views\Settings\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="License.txt" />

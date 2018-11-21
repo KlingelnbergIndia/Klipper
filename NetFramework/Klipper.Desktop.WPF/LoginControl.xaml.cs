@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Klipper.Desktop.Service.Login;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -45,10 +46,10 @@ namespace Klipper.Desktop.WPF
             var username = UsernameTextbox.Text;
             var password = PasswordTextbox.Text;
 
-            var success = new LoginLauncher().Login(username, password);
+            var success = LoginManager.Instance.Login(username, password);
             if(success)
             {
-                new ApplicationLauncher().Launch();
+                ApplicationLauncher.Instance.Launch();
                 Closed?.Invoke(this, null);
             }
             else
@@ -59,7 +60,14 @@ namespace Klipper.Desktop.WPF
 
         private void ForgotPasswordLabel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            LoginLauncher.OnPasswordForgotten(UsernameTextbox.Text);
+            try
+            {
+                LoginManager.Instance.HandleForgottenPassword(UsernameTextbox.Text);
+            }
+            catch(Exception exp)
+            {
+                MessageBox.Show(exp.Message);
+            }
         }
 
         private void PasswordTextbox_TextChanged(object sender, TextChangedEventArgs e)
