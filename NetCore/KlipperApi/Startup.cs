@@ -1,7 +1,8 @@
 ﻿using Common.DataAccess;
 using Common.Logging;
 using KlipperApi.Controllers.Attendance;
-using KlipperApi.DataAccess;
+using KlipperApi.Controllers.Auth;
+using KlipperApi.Controllers.Employees;
 using KlipperAuthorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -89,7 +90,7 @@ namespace KlipperApi
                 .AddDefaultTokenProviders();
 
             services.AddSingleton<IUserRepository, UserRepository>();
-            services.AddSingleton<IEmployeeAccessor, EmployeeAccessor>();
+            services.AddSingleton<IEmployeesAccessor, EmployeesAccessor>();
             services.AddSingleton<IAttendanceAccessor, AttendanceAccessor>();
 
             services.AddAuthentication(options =>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using Common;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace AttendanceApi
@@ -12,6 +13,12 @@ namespace AttendanceApi
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseUrls(new string[]
+                    {
+                        AddressResolver.GetAddress("AttendanceApi", true),
+                        AddressResolver.GetAddress("AttendanceApi", false),
+                    })
+            ;
     }
 }

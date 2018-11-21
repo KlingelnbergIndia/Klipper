@@ -2,7 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using MongoDB.Bson;
-using Models.Core.Helpers;
+using Common;
 
 namespace Models.Core
 {

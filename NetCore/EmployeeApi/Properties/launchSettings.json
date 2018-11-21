@@ -3,8 +3,6 @@
     "PeopleApi": {
       "commandName": "Project",
       "launchBrowser": false,
-      "launchUrl": "api/values",
-      "applicationUrl": "https://localhost:6001;http://localhost:6000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

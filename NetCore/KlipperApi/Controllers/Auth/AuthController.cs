@@ -7,13 +7,13 @@ using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Models.Core.Authentication;
-using KlipperApi.DataAccess;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using KlipperAuthorization;
+using KlipperApi.Controllers.Employees;
 
 namespace KlipperApi.Controllers.Auth
 {
@@ -22,12 +22,12 @@ namespace KlipperApi.Controllers.Auth
     public class AuthController : Controller
     {
         private readonly IUserRepository _userRepository;
-        private readonly IEmployeeAccessor _employeeAccessor;
+        private readonly IEmployeesAccessor _employeesAccessor;
 
-        public AuthController(IUserRepository userRepository, IEmployeeAccessor employeeAccessor)
+        public AuthController(IUserRepository userRepository, IEmployeesAccessor employeesAccessor)
         {
             _userRepository = userRepository;
-            _employeeAccessor = employeeAccessor;
+            _employeesAccessor = employeesAccessor;
         }
 
         [HttpPost]
@@ -53,7 +53,7 @@ namespace KlipperApi.Controllers.Auth
                     ExpiresUtc = DateTimeOffset.UtcNow.AddDays(3650)
                 };
 
-                var employee = await _employeeAccessor.GetEmployeeAsync(returnedUser.ID);
+                var employee = await _employeesAccessor.GetEmployeeByIdAsync(returnedUser.ID);
                 var roles = employee.Roles;
                 SessionCache.Employees.Add(user.UserName, employee);
 
