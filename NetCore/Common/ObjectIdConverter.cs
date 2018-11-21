@@ -1,10 +1,8 @@
 ﻿using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Models.Core.Helpers
+namespace Common
 {
     public class ObjectIdConverter : JsonConverter
     {

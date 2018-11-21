@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using Models.Core.Authentication;
 using MongoDB.Driver;
 
-namespace KlipperApi.DataAccess
+namespace KlipperApi.Controllers.Auth
 {
     public class AuthContext
     {

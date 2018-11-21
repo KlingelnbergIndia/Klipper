@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using KlipperApi.DataAccess;
+using KlipperApi.Controllers.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Core.HR.Attendance;
@@ -14,19 +14,16 @@ namespace KlipperApi.Controllers.Attendance
     public class AttendanceController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
-        private readonly IEmployeeAccessor _employeeAccessor;
         private readonly IAttendanceAccessor _attendanceAccessor;
         private readonly IAuthorizationService _authorizationService;
 
         public AttendanceController(
             IAuthorizationService authorizationService,
             IUserRepository userRepository, 
-            IEmployeeAccessor employeeAccessor,
             IAttendanceAccessor attendanceAccessor)
         {
             _authorizationService = authorizationService;
             _userRepository = userRepository;
-            _employeeAccessor = employeeAccessor;
             _attendanceAccessor = attendanceAccessor;
         }
 

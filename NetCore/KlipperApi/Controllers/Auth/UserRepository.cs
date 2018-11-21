@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace KlipperApi.DataAccess
+namespace KlipperApi.Controllers.Auth
 {
     public class UserRepository : IUserRepository
     {

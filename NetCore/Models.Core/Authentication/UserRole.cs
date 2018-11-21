@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
-using Models.Core.Helpers;
+using Common;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
