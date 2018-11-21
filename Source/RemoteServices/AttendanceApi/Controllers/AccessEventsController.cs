@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AttendanceApi.DataAccess.Interfaces;
 using Common.Infrastructure;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Core.HR.Attendance;
-using Newtonsoft.Json;
 
 namespace AttendanceApi.Controllers
 {

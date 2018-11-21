@@ -61,7 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\NetCore\Common\ObjectIdConverter.cs">
+    <Compile Include="..\..\RemoteServices\Common\ObjectIdConverter.cs">
       <Link>ObjectIdConverter.cs</Link>
     </Compile>
     <Compile Include="AccessDBReader.cs" />
@@ -74,8 +74,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\NetCore\Models.Core\Models.Core.csproj">
-      <Project>{4c0c7c26-1404-45db-abe1-9e203de86e61}</Project>
+    <ProjectReference Include="..\..\Models\Models.Core\Models.Core.csproj">
+      <Project>{d6e51ef4-0a69-434c-bf18-ce6ab3478efb}</Project>
       <Name>Models.Core</Name>
     </ProjectReference>
   </ItemGroup>

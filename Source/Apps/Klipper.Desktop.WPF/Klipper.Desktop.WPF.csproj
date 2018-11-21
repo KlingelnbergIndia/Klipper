@@ -634,16 +634,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\NetCore\Klipper.Desktop.Service\Klipper.Desktop.Service.csproj">
-      <Project>{9ebc2e5c-e2cb-4edc-9ff2-931cb9a0bc1c}</Project>
-      <Name>Klipper.Desktop.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\NetCore\Models.Core\Models.Core.csproj">
-      <Project>{4c0c7c26-1404-45db-abe1-9e203de86e61}</Project>
-      <Name>Models.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Generic\Analysis_white.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -676,6 +666,16 @@
     <Resource Include="Images\refresh.png" />
     <Resource Include="Images\update-user.png" />
     <Resource Include="Images\user_pic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Models\Models.Core\Models.Core.csproj">
+      <Project>{d6e51ef4-0a69-434c-bf18-ce6ab3478efb}</Project>
+      <Name>Models.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Klipper.Desktop.Service\Klipper.Desktop.Service.csproj">
+      <Project>{390a91bf-39a9-4871-928a-4f34612e2dc1}</Project>
+      <Name>Klipper.Desktop.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
