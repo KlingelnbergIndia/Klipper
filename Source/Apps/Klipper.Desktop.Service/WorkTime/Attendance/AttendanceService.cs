@@ -1,4 +1,5 @@
-﻿using Klipper.Desktop.Service.Login;
+﻿using Common;
+using Klipper.Desktop.Service.Login;
 using Models.Core.HR.Attendance;
 using Newtonsoft.Json;
 using System;
@@ -38,25 +39,17 @@ namespace Klipper.Desktop.Service.WorkTime.Attendance
 
         #endregion
 
-        #region Fields
-
-        HttpClient _httpClient = new HttpClient() { BaseAddress = new Uri("http://localhost:7000/") };
-
-        #endregion
-
         #region Public methods
 
         public IEnumerable<AccessEvent> GetAccessEvents(int employeeId, DateTime startDate, DateTime endDate)
         {
-            _httpClient.DefaultRequestHeaders.Authorization =
-                new System.Net.Http.Headers.AuthenticationHeaderValue(
-                    "Bearer", Auth.SessionToken);
+            var client = CommonHelper.GetClient("KlipperApi", Auth.SessionToken);
 
             var startStr = startDate.Year.ToString() + "-" + startDate.Month.ToString() + "-" + startDate.Day.ToString();
             var endStr = endDate.Year.ToString() + "-" + endDate.Month.ToString() + "-" + endDate.Day.ToString();
             var str = "api/attendance/" + employeeId.ToString() + "/" + startStr + "/" + endStr;
 
-            HttpResponseMessage response = _httpClient.GetAsync(str).Result;
+            HttpResponseMessage response = client.GetAsync(str).Result;
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = response.Content.ReadAsStringAsync().Result;

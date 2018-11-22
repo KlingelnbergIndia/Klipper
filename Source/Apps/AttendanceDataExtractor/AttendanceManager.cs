@@ -270,25 +270,11 @@ namespace AttendanceDataExtractor
         //            ID = v.ID,
         //            UserName = v.FirstName + "." + v.LastName,
         //            Email = v.FirstName + "." + v.LastName + "@Klingelnberg.com",
-        //            PasswordHash = ToSha256(v.FirstName + "$xyz987")
+        //            PasswordHash = Common.CommonHelper.ToSha256(v.FirstName + "$xyz987")
         //        };
         //        collection.InsertOne(user);
         //    }
         //}
-
-        internal static string ToSha256(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input)) return string.Empty;
-
-            using (var sha = SHA256.Create())
-            {
-                var bytes = Encoding.ASCII.GetBytes(input);
-                var hash = sha.ComputeHash(bytes);
-                return Convert.ToBase64String(hash);
-            }
-
-        }
-
 
         #endregion
     }

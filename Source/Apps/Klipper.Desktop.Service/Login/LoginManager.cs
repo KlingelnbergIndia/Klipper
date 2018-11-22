@@ -1,4 +1,5 @@
-﻿using Models.Core.Authentication;
+﻿using Common;
+using Models.Core.Authentication;
 using Models.Core.Employment;
 using Newtonsoft.Json;
 using System;
@@ -58,7 +59,7 @@ namespace Klipper.Desktop.Service.Login
 
         public bool Login(string username, string password)
         {
-            var hash = ToSha256(password);
+            var hash = CommonHelper.ToSha256(password);
             return LoginWithHashedPassword(username, hash);
         }
 
@@ -69,8 +70,7 @@ namespace Klipper.Desktop.Service.Login
                 UserName = username,
                 PasswordHash = hash
             };
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:7000/");
+            var client = CommonHelper.GetClient(AddressResolver.GetAddress("KlipperApi", false));
             var json = JsonConvert.SerializeObject(user, Formatting.Indented);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -98,20 +98,8 @@ namespace Klipper.Desktop.Service.Login
             var t = JsonConvert.DeserializeObject<TokenResponse>(jsonString);
             return t.Token;
         }
-
-        internal string ToSha256(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input)) return string.Empty;
-
-            using (var sha = SHA256.Create())
-            {
-                var bytes = Encoding.ASCII.GetBytes(input);
-                var hash = sha.ComputeHash(bytes);
-                return Convert.ToBase64String(hash);
-            }
-
-        }
-
-
     }
 }
+
+
+
