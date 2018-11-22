@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Klipper.Desktop.WPF.Views.Main
 {
     /// <summary>
-    /// Interaction logic for SalaryControl.xaml
+    /// Interaction logic for AccountsControl.xaml
     /// </summary>
-    public partial class SalaryControl : UserControl
+    public partial class AccountsControl : UserControl
     {
-        public SalaryControl()
+        public AccountsControl()
         {
             InitializeComponent();
         }
