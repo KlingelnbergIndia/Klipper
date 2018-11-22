@@ -61,8 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\RemoteServices\Common\CommonHelper.cs">
+      <Link>Common\CommonHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\RemoteServices\Common\ObjectIdConverter.cs">
-      <Link>ObjectIdConverter.cs</Link>
+      <Link>Common\ObjectIdConverter.cs</Link>
     </Compile>
     <Compile Include="AccessDBReader.cs" />
     <Compile Include="AttendanceManager.cs" />

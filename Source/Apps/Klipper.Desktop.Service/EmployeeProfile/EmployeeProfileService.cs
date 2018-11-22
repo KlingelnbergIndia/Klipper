@@ -3,6 +3,7 @@ using System;
 using System.Net.Http;
 using Models.Core.Employment;
 using Klipper.Desktop.Service.Login;
+using Common;
 
 namespace Klipper.Desktop.Service.EmployeeProfile
 {
@@ -35,23 +36,14 @@ namespace Klipper.Desktop.Service.EmployeeProfile
 
         #endregion
 
-        #region Fields
-
-        HttpClient _httpClient = new HttpClient() { BaseAddress = new Uri("http://localhost:7000/") };
-
-        #endregion
-
         #region Public methods
 
         public Employee GetEmployeeById(int employeeId)
         {
-            _httpClient.DefaultRequestHeaders.Authorization =
-                new System.Net.Http.Headers.AuthenticationHeaderValue(
-                    "Bearer", Auth.SessionToken);
-
+            var client = CommonHelper.GetClient("KlipperApi", Auth.SessionToken);
             var str = "api/employees/" + employeeId.ToString();
 
-            HttpResponseMessage response = _httpClient.GetAsync(str).Result;
+            HttpResponseMessage response = client.GetAsync(str).Result;
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = response.Content.ReadAsStringAsync().Result;
@@ -66,14 +58,12 @@ namespace Klipper.Desktop.Service.EmployeeProfile
 
         public Employee GetEmployeeByUserName(string userName)
         {
-            _httpClient.DefaultRequestHeaders.Authorization =
-                new System.Net.Http.Headers.AuthenticationHeaderValue(
-                    "Bearer", Auth.SessionToken);
+            var client = CommonHelper.GetClient("KlipperApi", Auth.SessionToken);
 
             //KK: Please add this action on Employees controller in KlipperAPI
-            var str = "api/employees/ByUserName?UserName=" + userName;
+            var str = "api/employees/ByUserName?userName=" + userName;
 
-            HttpResponseMessage response = _httpClient.GetAsync(str).Result;
+            HttpResponseMessage response = client.GetAsync(str).Result;
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = response.Content.ReadAsStringAsync().Result;
