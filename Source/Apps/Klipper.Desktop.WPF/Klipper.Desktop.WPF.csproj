@@ -107,7 +107,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Connectors\AbstractConnector.cs" />
+    <Compile Include="Connectors\IConnector.cs" />
     <Compile Include="Connectors\MainConnector.cs" />
+    <Compile Include="Connectors\Main\AccountsConnector.cs" />
+    <Compile Include="Connectors\Main\AdminConnector.cs" />
+    <Compile Include="Connectors\Main\DocumentsConnector.cs" />
+    <Compile Include="Connectors\Main\HelpConnector.cs" />
+    <Compile Include="Connectors\Main\HomeConnector.cs" />
+    <Compile Include="Connectors\Main\ManagementConnector.cs" />
+    <Compile Include="Connectors\Main\SettingsConnector.cs" />
+    <Compile Include="Connectors\Main\WorkTimeConnector.cs" />
     <Compile Include="SingleInstance.cs" />
     <Page Include="Views\Main\AdminControl.xaml">
       <SubType>Designer</SubType>
@@ -137,7 +147,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Main\SalaryControl.xaml">
+    <Page Include="Views\Main\AccountsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,8 +189,8 @@
     <Compile Include="Views\Main\ManagementControl.xaml.cs">
       <DependentUpon>ManagementControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\SalaryControl.xaml.cs">
-      <DependentUpon>SalaryControl.xaml</DependentUpon>
+    <Compile Include="Views\Main\AccountsControl.xaml.cs">
+      <DependentUpon>AccountsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Main\SettingsControl.xaml.cs">
       <DependentUpon>SettingsControl.xaml</DependentUpon>
@@ -590,9 +600,6 @@
     <Folder Include="Views\Documents\" />
     <Folder Include="Views\Salary\" />
     <Folder Include="Views\Settings\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="License.txt" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">

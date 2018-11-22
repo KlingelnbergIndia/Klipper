@@ -4,9 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Klipper.Desktop.WPF.Views.Main"
+             xmlns:navigators="clr-namespace:Sparkle.Controls.Navigators;assembly=Sparkle"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Border Background="{DynamicResource BackgroundBase_06}">
+            <navigators:HamburgerNavigator 
+                x:Name="TheNavigator"
+                />
+
+        </Border>
     </Grid>
 </UserControl>

@@ -1,13 +1,23 @@
-﻿using Klipper.Desktop.Service.Login;
+﻿using Klipper.Desktop.Service.EmployeeProfile;
+using Klipper.Desktop.Service.Login;
+using Klipper.Desktop.WPF.Connectors.Main;
+using Klipper.Desktop.WPF.Views.Main;
+using Models.Core.Employment;
+using Sparkle.Appearance;
+using Sparkle.Controls.Buttons;
+using Sparkle.Controls.Navigators;
+using Sparkle.Controls.Panels;
+using Sparkle.Controls.Toolbars;
+using Sparkle.Controls.Workflows;
+using Sparkle.DataStructures;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Klipper.Desktop.WPF.Connectors
 {
-    public class MainConnector
+    public class MainConnector : AbstractConnector
     {
         #region Instance
 
@@ -31,7 +41,9 @@ namespace Klipper.Desktop.WPF.Connectors
         }
 
         private MainConnector()
+            : base(null, null)
         {
+            Initialize();
         }
 
         #endregion
@@ -42,19 +54,168 @@ namespace Klipper.Desktop.WPF.Connectors
 
         #endregion
 
-        public void Initialize()
+        #region Properties
+
+        public HamburgerNavigator MainMenuNavigator { get; private set; } = null;
+        public WindowHeaderPanel TopPanel { get; private set; } = null;
+        public ContentControl BottomPanel { get; private set; } = null;
+        public VerticalToolbar SideToolbar { get; private set; } = null;
+        public MultiColorTextPanel StatusPanel { get; private set; } = null;
+        public MultiColorTextPanel TopTextPanel { get; private set; } = null;
+
+        #endregion
+
+        #region Public methods
+
+        public override void Initialize()
         {
+            if(Initialized)
+            {
+                return;
+            }
             LoginManager.Instance.LoginSuccessful += OnLoginSuccessful;
+
+            LoadViews();
         }
 
-        #region Event handlers
-
-        private void OnLoginSuccessful(object sender, string e)
+        private void LoadViews()
         {
+            MainMenuNavigator = (Ui as StockApplicationWindow).Navigator;
+            TopPanel = (Ui as StockApplicationWindow).TopPanel;
+            BottomPanel = (Ui as StockApplicationWindow).BottomPanel;
+            SideToolbar = (Ui as StockApplicationWindow).SideToolbar;
 
-            LoginSuccessful?.Invoke(this, e);
+            LoadMainMenuItems();
+            LoadTopPanel();
+            LoadBottomPanel();
+            LoadSideToolbar();
+        }
+
+        internal void HandleWindowClose()
+        {
+            //throw new NotImplementedException();
         }
 
         #endregion
+
+        #region Loading methods
+
+        private void LoadMainMenuItems()
+        {
+            MainMenuNavigator.Menu.HeaderText = "Main Menu";
+            MainMenuNavigator.Menu.CollapsedWidth = 50.0;
+            MainMenuNavigator.Menu.ExpandedWidth = 200.0;
+            MainMenuNavigator.Menu.MenuSelectionChanged += OnMenuSelectionChanged;
+            MainMenuNavigator.Menu.SelectedIndex = 0;
+            MainMenuNavigator.Menu.Expand();
+
+            var connector = MainConnector.Instance;
+            AddChildrenConnectors(connector);
+
+            foreach (var childTag in connector.Children)
+            {
+                var control = connector.Child(childTag).Ui;
+                var imageStr = connector.Tag.Replace(" ", "");
+                var item = new SelectableItem(childTag, control, "./Images/MainMenu/" + imageStr + "_white.png") { IconHeight = 35, IconWidth = 35, ItemHeight = 50 };
+                MainMenuNavigator.Menu.AddMenuItem(item);
+            }
+        }
+
+        private static void AddChildrenConnectors(MainConnector connector)
+        {
+            connector.AddChild("Home", new HomeConnector("Home", connector, new HomeControl()));
+            connector.AddChild("Work Time", new WorkTimeConnector("Work Time", connector, new WorkTimeControl()));
+            connector.AddChild("Accounts", new AccountsConnector("Home", connector, new AccountsControl()));
+            connector.AddChild("Documents", new DocumentsConnector("Documents", connector, new DocumentsControl()));
+            connector.AddChild("Admin", new AdminConnector("Admin", connector, new AdminControl()));
+            connector.AddChild("Management", new ManagementConnector("Management", connector, new ManagementControl()));
+            connector.AddChild("Settings", new SettingsConnector("Settings", connector, new SettingsControl()));
+            connector.AddChild("Help", new HelpConnector("Help", connector, new HelpControl()));
+        }
+
+        private void LoadSideToolbar()
+        {
+            SideToolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
+            var iconSize = 35.0;
+            SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Save_environment", iconSize, () => { MessageBox.Show("Save test environment clicked."); }, "Save test environment", true));
+            SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Load_environment", iconSize, () => { MessageBox.Show("Load test environment clicked."); }, "Load test environment", true));
+            SideToolbar.AddToolSeparator();
+            SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Create_test", iconSize, () => { MessageBox.Show("Create test clicked."); }, "Create a automated regression test", true));
+            SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Test_manager", iconSize, () => { MessageBox.Show("Test manager clicked."); }, "Open test manager", true));
+            SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Report_bug", iconSize, () => { MessageBox.Show("Report bug clicked."); }, "Report a bug/issue", true));
+        }
+
+        private void LoadBottomPanel()
+        {
+            StatusPanel = new MultiColorTextPanel()
+            {
+                IsSelectable = true,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                HorizontalContentAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                SelectedBackground = AppearanceManager.GetCurrentSkinResource("BackgroundBase_05") as Brush,
+            };
+            BottomPanel.Content = StatusPanel;
+            StatusPanel.IsSelectable = true;
+            StatusPanel.Clicked += (s, e) => { MessageBox.Show("Override action when clicked on text-panel, such as showing session log."); };
+            StatusPanel.SetText("One can add application status here.", new SolidColorBrush(Colors.YellowGreen));
+            StatusPanel.AddText(" Click to execute the registered action.", new SolidColorBrush(Colors.Orange));
+        }
+
+        private void LoadTopPanel()
+        {
+            TopPanel.Loaded += (s, e) =>
+            {
+                //var iconSize = 35.0;
+                //w.TopToolContainer.Children.Add(GetToolbarButton("Krypton/Save", iconSize, () => { MessageBox.Show("Save drawing changes clicked."); }, "Save drawing changes"));
+            };
+        }
+
+        private void LoadNavigator()
+        {
+        }
+
+        private ToolButton GetToolbarButton(string iconId, double iconSize, Action action, string toolTip, bool showGlow = false)
+        {
+            var s = "./Images/" + iconId;
+            var btn = new ToolButton(s + "_enabled.png", s + "_disabled.png", s + "_mouse_over.png");
+            btn.Width = iconSize;
+            btn.Height = iconSize;
+            btn.VerticalAlignment = VerticalAlignment.Center;
+            btn.Action = action;
+            btn.TooltipText = toolTip;
+            btn.GlowOnMouseOver = showGlow;
+            btn.MouseOverGlowColor = Colors.SkyBlue;
+            return btn;
+        }
+
+        #endregion
+
+
+        #region Event handlers
+
+        private void OnLoginSuccessful(object sender, string userName)
+        {
+            Employee employee = EmployeeProfileService.Instance.GetEmployeeByUserName(userName);
+            if (employee != null)
+            {
+                TopTextPanel.SetText(employee.FirstName + " " + employee.LastName, new SolidColorBrush(Colors.Azure));
+            }
+        }
+
+        private void OnMenuSelectionChanged(object sender, SelectableItemSelectionChangedEventArgs e)
+        {
+            if (StatusPanel == null)
+            {
+                return;
+            }
+            var currItem = e.Current;
+            var title = currItem.Header;
+            StatusPanel.SetText("Current Session: ", new SolidColorBrush(Colors.YellowGreen));
+            StatusPanel.AddText(title, new SolidColorBrush(Colors.Orange));
+        }
+        #endregion
+
     }
 }
