@@ -1,5 +1,4 @@
-﻿using Sparkle.Controls.Navigators;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,22 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Klipper.Desktop.WPF.Views.Main
+namespace Klipper.Desktop.WPF.Views.WorkTime
 {
     /// <summary>
-    /// Interaction logic for WorkTimeControl.xaml
+    /// Interaction logic for RegularizationControl.xaml
     /// </summary>
-    public partial class WorkTimeControl : UserControl
+    public partial class RegularizationControl : UserControl
     {
-        public WorkTimeControl()
+        public RegularizationControl()
         {
             InitializeComponent();
         }
-
-        #region Properties
-
-        public HamburgerNavigator Navigator { get { return this.TheNavigator; } }
-
-        #endregion
     }
 }

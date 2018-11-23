@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Threading;
 using Klipper.Desktop.Service.Login;
+using Klipper.Desktop.WPF.Connectors;
 using Microsoft.Shell;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,7 @@ namespace Klipper.Desktop.WPF
 
         private void StartApp(object sender, StartupEventArgs e)
         {
+            //Extract login data from vault
             var loginData = ExtractLoginData();
             if (loginData == null)
             {

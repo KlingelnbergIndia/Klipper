@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using KlipperAuthorization.Requirements.Attendance;
 using KlipperAuthorization.Requirements.Leaves;
+using KlipperAuthorization.Requirements.Employees;
 
 namespace KlipperAuthorization
 {
@@ -11,6 +12,7 @@ namespace KlipperAuthorization
         {
             services.AddTransient<IAuthorizationHandler, ReadAttendanceRequirementHandler>();
             services.AddTransient<IAuthorizationHandler, ReadLeavesRequirementHandler>();
+            services.AddTransient<IAuthorizationHandler, ReadBasicEmployeeInfoRequirementHandler>();
             return services;
         }
 

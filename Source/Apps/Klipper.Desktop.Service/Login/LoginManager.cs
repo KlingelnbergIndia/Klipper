@@ -1,4 +1,6 @@
 ﻿using Common;
+using Klipper.Desktop.Service.EmployeeProfile;
+using Klipper.Desktop.Service.Session;
 using Models.Core.Authentication;
 using Models.Core.Employment;
 using Newtonsoft.Json;
@@ -38,10 +40,6 @@ namespace Klipper.Desktop.Service.Login
 
         #endregion
 
-        #region Events
-        public event EventHandler<string> LoginSuccessful = null;
-        #endregion
-
         #region Properties
 
         public Employee CurrentEmployee { get; private set; } 
@@ -79,7 +77,11 @@ namespace Klipper.Desktop.Service.Login
             {
                 Auth.SessionToken = ExtractToken(response);
                 StoreToVault(username, hash);
-                LoginSuccessful?.Invoke(this, username);
+                Employee employee = EmployeeProfileService.Instance.GetEmployeeByUserName(username);
+                if (employee != null)
+                {
+                    SessionContext.CurrentSubject = employee;
+                }
                 return true;
             }
             return false;
