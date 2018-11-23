@@ -1,0 +1,126 @@
+﻿<UserControl x:Class="Klipper.Desktop.WPF.LoginControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Klipper.Desktop.WPF"
+             xmlns:textboxes="clr-namespace:Sparkle.Controls.TextBoxes;assembly=Sparkle"
+             xmlns:buttons="clr-namespace:Sparkle.Controls.Buttons;assembly=Sparkle"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Sparkle;component/StylesAndTemplates/InputElements.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid HorizontalAlignment="Left" 
+          VerticalAlignment="Top" 
+          Background="Transparent">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="100"/>
+            <ColumnDefinition MinWidth="200"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                   Text="Klipper"
+                   FontSize="22"
+                   FontWeight="ExtraBold"
+                   HorizontalAlignment="Center"
+                   Margin="0">
+            <TextBlock.Foreground>
+                <LinearGradientBrush>
+                    <GradientStop Color="#FFFC7F00" Offset="0.045"/>
+                    <GradientStop Color="#FF00FC30" Offset="0.208"/>
+                    <GradientStop Color="#FFFCF400" Offset="0.42"/>
+                    <GradientStop Color="#FFBB00FC" Offset="0.641"/>
+                    <GradientStop Color="#FF00FCF7" Offset="0.827"/>
+                    <GradientStop Color="#FFFC6D00" Offset="0.974"/>
+
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+        </TextBlock>
+
+        <TextBlock Grid.Row="2" Grid.Column="0"
+                   Text="User name"
+                   FontSize="13"
+                   FontFamily="Segoe UI"
+                   Foreground="LightGray"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Margin="10 0"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0"
+                   Text="Password"
+                   FontSize="13"
+                   FontFamily="Segoe UI"
+                   Foreground="LightGray"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Margin="10 0"/>
+
+        <textboxes:StringInputTextBox
+            x:Name="UsernameTextbox"
+                    Text="Gourav.Joshi"
+                    Grid.Row="2" Grid.Column="1"
+                    RegEx="^[a-zA-Z\.]{2,30}$"
+                    Margin="16 2" 
+                    FontSize="13"
+                    HorizontalAlignment="Stretch"
+                    Foreground="YellowGreen"
+                    Style="{StaticResource SparkTextBoxStyleWithErrorTemplate}"
+                    Background="{DynamicResource BackgroundBase_05}"
+                    BorderBrush="{DynamicResource BackgroundBase_05}"
+                    TextChanged="UsernameTextbox_TextChanged"
+                    TextAlignment="Left">
+        </textboxes:StringInputTextBox>
+
+        <textboxes:StringInputTextBox
+            x:Name="PasswordTextbox"
+                    Text="Gourav$xyz987"
+                    Grid.Row="3" Grid.Column="1"
+                    Margin="16 2" 
+                    FontSize="13"
+                    HorizontalAlignment="Stretch"
+                    Foreground="Orange"
+                    Style="{StaticResource SparkTextBoxStyleWithErrorTemplate}"
+                    Background="{DynamicResource BackgroundBase_05}"
+                    BorderBrush="{DynamicResource BackgroundBase_05}"
+                    TextChanged="PasswordTextbox_TextChanged"
+                    TextAlignment="Left">
+        </textboxes:StringInputTextBox>
+        <buttons:PanelButton 
+                    Grid.Row="4" Grid.Column="1"
+                    Margin="10 0"
+                    HorizontalAlignment="Right"
+                    ButtonText="Login"
+                    IsEnabled="{Binding ShouldEnableLoginButton}"
+                    Clicked="Login_Clicked"/>
+        
+        <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+                   Text="Forgot password?"
+                   FontSize="10"
+                   FontStyle="Italic"
+                   FontFamily="Segoe UI"
+                   Foreground="LightSeaGreen"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   x:Name="ForgotPasswordLabel"
+                   Cursor="Hand"
+                   MouseLeftButtonUp="ForgotPasswordLabel_MouseLeftButtonUp"
+                   Margin="10 0"/>
+
+    </Grid>
+</UserControl>

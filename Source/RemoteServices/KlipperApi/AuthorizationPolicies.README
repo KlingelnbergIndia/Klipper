@@ -1,0 +1,28 @@
+﻿{
+  "Authorization": {
+    "roles": [ "HR", "TeamLeader", "Employee", "Admin" ],
+    "Policies": [
+      "ReadAttendance",
+      "ReadLeaves",
+      "ReadRegularization",
+      "RequestLeave",
+      "DeleteLeave",
+      "ApproveLeave",
+      "RejectLeave",
+      "RequestRegularization",
+      "DeleteRegularization",
+      "ApproveRegularization",
+      "RejectRegularization",
+      "ReadBasicEmployeeInfo",
+      "ReadAdvancedEmployeeInfo",
+      "UpdateBasicEmployeeInfo",
+      "UpdateAdvancedEmployeeInfo",
+      "CreateUser",
+      "DeleteUser",
+      "UpdateUser",
+      "CreateHolidays",
+      "DeleteHolidays",
+      "UpdateHolidays"
+    ]
+  }
+}
