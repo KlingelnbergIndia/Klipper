@@ -61,7 +61,13 @@ namespace Klipper.Desktop.WPF.Connectors
             {
                 return;
             }
+            LoadViews();
             Initialized = true;
+        }
+
+        protected virtual void LoadViews()
+        {
+
         }
 
     }
