@@ -43,7 +43,7 @@ namespace Klipper.Desktop.Service.WorkTime.Attendance
 
         public IEnumerable<AccessEvent> GetAccessEvents(int employeeId, DateTime startDate, DateTime endDate)
         {
-            var client = CommonHelper.GetClient("KlipperApi", Auth.SessionToken);
+            var client = CommonHelper.GetClient(AddressResolver.GetAddress("KlipperApi", false), Auth.SessionToken);
 
             var startStr = startDate.Year.ToString() + "-" + startDate.Month.ToString() + "-" + startDate.Day.ToString();
             var endStr = endDate.Year.ToString() + "-" + endDate.Month.ToString() + "-" + endDate.Day.ToString();

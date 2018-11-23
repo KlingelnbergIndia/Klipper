@@ -25,7 +25,7 @@ namespace KlipperApi.Controllers.Employees
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = "ReadEmployeeInfo_Basic")]
+        [Authorize(Policy = "ReadBasicEmployeeInfo")]
         public async Task<IActionResult> Get(int employeeId)
         {
             var e = await _employeesAccessor.GetEmployeeByIdAsync(employeeId) as Employee;
@@ -33,7 +33,7 @@ namespace KlipperApi.Controllers.Employees
         }
 
         [HttpGet("ByUserName")]
-        [Authorize(Policy = "ReadEmployeeInfo_Basic")]
+        [Authorize(Policy = "ReadBasicEmployeeInfo")]
         public async Task<IActionResult> Get(string userName)
         {
             var e = await _employeesAccessor.GetEmployeeByUserName(userName) as Employee;

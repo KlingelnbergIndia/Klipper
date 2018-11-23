@@ -1,7 +1,7 @@
 ﻿using KlipperAuthorization.Requirements.Attendance;
+using KlipperAuthorization.Requirements.Employees;
+using KlipperAuthorization.Requirements.Leaves;
 using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
 
 namespace KlipperAuthorization
 {
@@ -14,6 +14,8 @@ namespace KlipperAuthorization
         public void Load(AuthorizationOptions options)
         {
             AttendancePolicies.Load(options);
+            EmployeePolicies.Load(options);
+            LeavePolicies.Load(options);
         }
     }
 }

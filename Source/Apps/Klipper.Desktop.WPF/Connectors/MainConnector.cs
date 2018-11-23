@@ -1,8 +1,6 @@
-﻿using Klipper.Desktop.Service.EmployeeProfile;
-using Klipper.Desktop.Service.Login;
+﻿using Klipper.Desktop.Service.Session;
 using Klipper.Desktop.WPF.Connectors.Main;
 using Klipper.Desktop.WPF.Views.Main;
-using Models.Core.Employment;
 using Sparkle.Appearance;
 using Sparkle.Controls.Buttons;
 using Sparkle.Controls.Navigators;
@@ -43,14 +41,13 @@ namespace Klipper.Desktop.WPF.Connectors
         private MainConnector()
             : base(null, null)
         {
-            Initialize();
         }
 
         #endregion
 
         #region Events
 
-        public event EventHandler<string> LoginSuccessful = null;
+        //public event EventHandler<string> XYZEvent = null;
 
         #endregion
 
@@ -61,7 +58,9 @@ namespace Klipper.Desktop.WPF.Connectors
         public ContentControl BottomPanel { get; private set; } = null;
         public VerticalToolbar SideToolbar { get; private set; } = null;
         public MultiColorTextPanel StatusPanel { get; private set; } = null;
-        public MultiColorTextPanel TopTextPanel { get; private set; } = null;
+        public MultiColorTextPanel TopRightTextPanel { get; private set; } = null;
+        public StackPanel TopLeftContainer { get; private set; } = null;
+        public StackPanel TopRightContainer { get; private set; } = null;
 
         #endregion
 
@@ -73,22 +72,24 @@ namespace Klipper.Desktop.WPF.Connectors
             {
                 return;
             }
-            LoginManager.Instance.LoginSuccessful += OnLoginSuccessful;
-
             LoadViews();
         }
 
         private void LoadViews()
         {
-            MainMenuNavigator = (Ui as StockApplicationWindow).Navigator;
-            TopPanel = (Ui as StockApplicationWindow).TopPanel;
-            BottomPanel = (Ui as StockApplicationWindow).BottomPanel;
-            SideToolbar = (Ui as StockApplicationWindow).SideToolbar;
-
+            PopulateLayoutElements();
             LoadMainMenuItems();
             LoadTopPanel();
             LoadBottomPanel();
             LoadSideToolbar();
+        }
+
+        private void PopulateLayoutElements()
+        {
+            MainMenuNavigator = (Ui as StockApplicationWindow).Navigator;
+            TopPanel = (Ui as StockApplicationWindow).TopPanel;
+            BottomPanel = (Ui as StockApplicationWindow).BottomPanel;
+            SideToolbar = (Ui as StockApplicationWindow).SideToolbar;
         }
 
         internal void HandleWindowClose()
@@ -114,8 +115,10 @@ namespace Klipper.Desktop.WPF.Connectors
 
             foreach (var childTag in connector.Children)
             {
-                var control = connector.Child(childTag).Ui;
-                var imageStr = connector.Tag.Replace(" ", "");
+                var childConnector = connector.Child(childTag);
+                var control = childConnector.Ui;
+                var tag = childConnector.Tag;
+                var imageStr = tag.Replace(" ", "");
                 var item = new SelectableItem(childTag, control, "./Images/MainMenu/" + imageStr + "_white.png") { IconHeight = 35, IconWidth = 35, ItemHeight = 50 };
                 MainMenuNavigator.Menu.AddMenuItem(item);
             }
@@ -125,7 +128,7 @@ namespace Klipper.Desktop.WPF.Connectors
         {
             connector.AddChild("Home", new HomeConnector("Home", connector, new HomeControl()));
             connector.AddChild("Work Time", new WorkTimeConnector("Work Time", connector, new WorkTimeControl()));
-            connector.AddChild("Accounts", new AccountsConnector("Home", connector, new AccountsControl()));
+            connector.AddChild("Accounts", new AccountsConnector("Accounts", connector, new AccountsControl()));
             connector.AddChild("Documents", new DocumentsConnector("Documents", connector, new DocumentsControl()));
             connector.AddChild("Admin", new AdminConnector("Admin", connector, new AdminControl()));
             connector.AddChild("Management", new ManagementConnector("Management", connector, new ManagementControl()));
@@ -147,33 +150,68 @@ namespace Klipper.Desktop.WPF.Connectors
 
         private void LoadBottomPanel()
         {
-            StatusPanel = new MultiColorTextPanel()
+            BottomPanel.Loaded += (s, e) =>
             {
-                IsSelectable = true,
-                HorizontalAlignment = HorizontalAlignment.Left,
-                HorizontalContentAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Center,
-                VerticalContentAlignment = VerticalAlignment.Center,
-                SelectedBackground = AppearanceManager.GetCurrentSkinResource("BackgroundBase_05") as Brush,
+                StatusPanel = new MultiColorTextPanel()
+                {
+                    IsSelectable = true,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    HorizontalContentAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    VerticalContentAlignment = VerticalAlignment.Center,
+                    SelectedBackground = AppearanceManager.GetCurrentSkinResource("BackgroundBase_05") as Brush,
+                };
+                BottomPanel.Content = StatusPanel;
+                StatusPanel.IsSelectable = true;
+                StatusPanel.Clicked += (sender, args) => { MessageBox.Show("Override action when clicked on text-panel, such as showing session log."); };
+                StatusPanel.SetText("One can add application status here.", new SolidColorBrush(Colors.YellowGreen));
+                StatusPanel.AddText(" Click to execute the registered action.", new SolidColorBrush(Colors.Orange));
             };
-            BottomPanel.Content = StatusPanel;
-            StatusPanel.IsSelectable = true;
-            StatusPanel.Clicked += (s, e) => { MessageBox.Show("Override action when clicked on text-panel, such as showing session log."); };
-            StatusPanel.SetText("One can add application status here.", new SolidColorBrush(Colors.YellowGreen));
-            StatusPanel.AddText(" Click to execute the registered action.", new SolidColorBrush(Colors.Orange));
         }
 
         private void LoadTopPanel()
         {
+
             TopPanel.Loaded += (s, e) =>
             {
                 //var iconSize = 35.0;
-                //w.TopToolContainer.Children.Add(GetToolbarButton("Krypton/Save", iconSize, () => { MessageBox.Show("Save drawing changes clicked."); }, "Save drawing changes"));
-            };
-        }
+                //(Ui as StockApplicationWindow).TopToolContainer.Children.Add(GetToolbarButton("Krypton/Save", iconSize, () => { MessageBox.Show("Save drawing changes clicked."); }, "Save drawing changes"));
 
-        private void LoadNavigator()
-        {
+                TopLeftContainer = new StackPanel()
+                {
+                    Orientation = Orientation.Horizontal,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                (Ui as StockApplicationWindow).TopToolContainer.Children.Add(TopLeftContainer);
+                TopRightContainer = new StackPanel()
+                {
+                    Orientation = Orientation.Horizontal,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                (Ui as StockApplicationWindow).TopToolContainer.Children.Add(TopRightContainer);
+                TopPanel.UpdateLayout();
+
+                TopRightTextPanel = new MultiColorTextPanel()
+                {
+                    IsSelectable = true,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    HorizontalContentAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    VerticalContentAlignment = VerticalAlignment.Center,
+                    SelectedBackground = AppearanceManager.GetCurrentSkinResource("BackgroundBase_05") as Brush,
+                };
+                TopRightTextPanel.IsSelectable = true;
+                TopRightTextPanel.Clicked += (sender, args) => { MessageBox.Show("Popup current user info dialog!"); };
+                TopRightContainer.Children.Add(TopRightTextPanel);
+                TopRightContainer.Children.Add(new VerticalSeparator());
+                if (SessionContext.CurrentSubject != null)
+                {
+                    TopRightTextPanel.SetText(SessionContext.CurrentSubject.FirstName + " " + SessionContext.CurrentSubject.LastName, new SolidColorBrush(Colors.YellowGreen));
+                }
+            };
+
         }
 
         private ToolButton GetToolbarButton(string iconId, double iconSize, Action action, string toolTip, bool showGlow = false)
@@ -194,15 +232,6 @@ namespace Klipper.Desktop.WPF.Connectors
 
 
         #region Event handlers
-
-        private void OnLoginSuccessful(object sender, string userName)
-        {
-            Employee employee = EmployeeProfileService.Instance.GetEmployeeByUserName(userName);
-            if (employee != null)
-            {
-                TopTextPanel.SetText(employee.FirstName + " " + employee.LastName, new SolidColorBrush(Colors.Azure));
-            }
-        }
 
         private void OnMenuSelectionChanged(object sender, SelectableItemSelectionChangedEventArgs e)
         {

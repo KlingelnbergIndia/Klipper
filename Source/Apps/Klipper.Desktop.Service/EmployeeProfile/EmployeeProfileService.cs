@@ -40,7 +40,7 @@ namespace Klipper.Desktop.Service.EmployeeProfile
 
         public Employee GetEmployeeById(int employeeId)
         {
-            var client = CommonHelper.GetClient("KlipperApi", Auth.SessionToken);
+            var client = CommonHelper.GetClient(AddressResolver.GetAddress("KlipperApi", false), Auth.SessionToken);
             var str = "api/employees/" + employeeId.ToString();
 
             HttpResponseMessage response = client.GetAsync(str).Result;
@@ -58,7 +58,7 @@ namespace Klipper.Desktop.Service.EmployeeProfile
 
         public Employee GetEmployeeByUserName(string userName)
         {
-            var client = CommonHelper.GetClient("KlipperApi", Auth.SessionToken);
+            var client = CommonHelper.GetClient(AddressResolver.GetAddress("KlipperApi", false), Auth.SessionToken);
 
             //KK: Please add this action on Employees controller in KlipperAPI
             var str = "api/employees/ByUserName?userName=" + userName;

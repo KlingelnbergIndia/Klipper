@@ -36,7 +36,7 @@
 
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
                    Text="Klipper"
-                   FontSize="25"
+                   FontSize="22"
                    FontWeight="ExtraBold"
                    HorizontalAlignment="Center"
                    Margin="0">
@@ -55,7 +55,7 @@
 
         <TextBlock Grid.Row="2" Grid.Column="0"
                    Text="User name"
-                   FontSize="14"
+                   FontSize="13"
                    FontFamily="Segoe UI"
                    Foreground="LightGray"
                    VerticalAlignment="Center"
@@ -64,7 +64,7 @@
 
         <TextBlock Grid.Row="3" Grid.Column="0"
                    Text="Password"
-                   FontSize="14"
+                   FontSize="13"
                    FontFamily="Segoe UI"
                    Foreground="LightGray"
                    VerticalAlignment="Center"
@@ -77,7 +77,7 @@
                     Grid.Row="2" Grid.Column="1"
                     RegEx="^[a-zA-Z\.]{2,30}$"
                     Margin="16 2" 
-                    FontSize="16"
+                    FontSize="13"
                     HorizontalAlignment="Stretch"
                     Foreground="YellowGreen"
                     Style="{StaticResource SparkTextBoxStyleWithErrorTemplate}"
@@ -92,9 +92,9 @@
                     Text="Gourav$xyz987"
                     Grid.Row="3" Grid.Column="1"
                     Margin="16 2" 
-                    FontSize="16"
+                    FontSize="13"
                     HorizontalAlignment="Stretch"
-                    Foreground="YellowGreen"
+                    Foreground="Orange"
                     Style="{StaticResource SparkTextBoxStyleWithErrorTemplate}"
                     Background="{DynamicResource BackgroundBase_05}"
                     BorderBrush="{DynamicResource BackgroundBase_05}"
