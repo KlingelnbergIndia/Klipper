@@ -1,11 +1,5 @@
-﻿using Models.Core.Authentication;
-using Newtonsoft.Json;
-using Sparkle.Appearance;
+﻿using Sparkle.Appearance;
 using Sparkle.Controls.Dialogs;
-using System;
-using System.Net.Http;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 

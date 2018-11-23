@@ -66,25 +66,20 @@ namespace Klipper.Desktop.WPF.Connectors
 
         #region Public methods
 
-        public override void Initialize()
-        {
-            if(Initialized)
-            {
-                return;
-            }
-            LoadViews();
-        }
+        #endregion
 
-        private void LoadViews()
+        #region Loading methods
+
+        protected override void LoadViews()
         {
-            PopulateLayoutElements();
+            AssignLayoutElementProperties();
             LoadMainMenuItems();
             LoadTopPanel();
             LoadBottomPanel();
             LoadSideToolbar();
         }
 
-        private void PopulateLayoutElements()
+        private void AssignLayoutElementProperties()
         {
             MainMenuNavigator = (Ui as StockApplicationWindow).Navigator;
             TopPanel = (Ui as StockApplicationWindow).TopPanel;
@@ -92,60 +87,51 @@ namespace Klipper.Desktop.WPF.Connectors
             SideToolbar = (Ui as StockApplicationWindow).SideToolbar;
         }
 
-        internal void HandleWindowClose()
-        {
-            //throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region Loading methods
-
         private void LoadMainMenuItems()
         {
-            MainMenuNavigator.Menu.HeaderText = "Main Menu";
-            MainMenuNavigator.Menu.CollapsedWidth = 50.0;
-            MainMenuNavigator.Menu.ExpandedWidth = 200.0;
-            MainMenuNavigator.Menu.MenuSelectionChanged += OnMenuSelectionChanged;
-            MainMenuNavigator.Menu.SelectedIndex = 0;
-            MainMenuNavigator.Menu.Expand();
-
-            var connector = MainConnector.Instance;
-            AddChildrenConnectors(connector);
-
-            foreach (var childTag in connector.Children)
+            MainMenuNavigator.Loaded += (s, e) =>
             {
-                var childConnector = connector.Child(childTag);
-                var control = childConnector.Ui;
-                var tag = childConnector.Tag;
-                var imageStr = tag.Replace(" ", "");
-                var item = new SelectableItem(childTag, control, "./Images/MainMenu/" + imageStr + "_white.png") { IconHeight = 35, IconWidth = 35, ItemHeight = 50 };
-                MainMenuNavigator.Menu.AddMenuItem(item);
-            }
-        }
+                MainMenuNavigator.Menu.HeaderText = "Main Menu";
+                MainMenuNavigator.Menu.CollapsedWidth = 50.0;
+                MainMenuNavigator.Menu.ExpandedWidth = 200.0;
+                MainMenuNavigator.Menu.MenuSelectionChanged += OnMenuSelectionChanged;
+                MainMenuNavigator.Menu.SelectedIndex = 0;
+                MainMenuNavigator.Menu.Expand();
 
-        private static void AddChildrenConnectors(MainConnector connector)
-        {
-            connector.AddChild("Home", new HomeConnector("Home", connector, new HomeControl()));
-            connector.AddChild("Work Time", new WorkTimeConnector("Work Time", connector, new WorkTimeControl()));
-            connector.AddChild("Accounts", new AccountsConnector("Accounts", connector, new AccountsControl()));
-            connector.AddChild("Documents", new DocumentsConnector("Documents", connector, new DocumentsControl()));
-            connector.AddChild("Admin", new AdminConnector("Admin", connector, new AdminControl()));
-            connector.AddChild("Management", new ManagementConnector("Management", connector, new ManagementControl()));
-            connector.AddChild("Settings", new SettingsConnector("Settings", connector, new SettingsControl()));
-            connector.AddChild("Help", new HelpConnector("Help", connector, new HelpControl()));
+                AddChild("Home", new HomeConnector("Home", this, new HomeControl()));
+                AddChild("Work Time", new WorkTimeConnector("Work Time", this, new WorkTimeControl()));
+                AddChild("Accounts", new AccountsConnector("Accounts", this, new AccountsControl()));
+                AddChild("Documents", new DocumentsConnector("Documents", this, new DocumentsControl()));
+                AddChild("Admin", new AdminConnector("Admin", this, new AdminControl()));
+                AddChild("Management", new ManagementConnector("Management", this, new ManagementControl()));
+                AddChild("Settings", new SettingsConnector("Settings", this, new SettingsControl()));
+                AddChild("Help", new HelpConnector("Help", this, new HelpControl()));
+
+                foreach (var childTag in this.Children)
+                {
+                    var childConnector = this.Child(childTag);
+                    var control = childConnector.Ui;
+                    var tag = childConnector.Tag;
+                    var imageStr = tag.Replace(" ", "");
+                    var item = new SelectableItem(childTag, control, "./Images/MainMenu/" + imageStr + "_white.png") { IconHeight = 35, IconWidth = 35, ItemHeight = 50 };
+                    MainMenuNavigator.Menu.AddMenuItem(item);
+                }
+            };
         }
 
         private void LoadSideToolbar()
         {
-            SideToolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
-            var iconSize = 35.0;
-            SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Save_environment", iconSize, () => { MessageBox.Show("Save test environment clicked."); }, "Save test environment", true));
-            SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Load_environment", iconSize, () => { MessageBox.Show("Load test environment clicked."); }, "Load test environment", true));
-            SideToolbar.AddToolSeparator();
-            SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Create_test", iconSize, () => { MessageBox.Show("Create test clicked."); }, "Create a automated regression test", true));
-            SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Test_manager", iconSize, () => { MessageBox.Show("Test manager clicked."); }, "Open test manager", true));
-            SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Report_bug", iconSize, () => { MessageBox.Show("Report bug clicked."); }, "Report a bug/issue", true));
+            SideToolbar.Loaded += (s, e) =>
+            {
+                SideToolbar.HorizontalAlignment = HorizontalAlignment.Stretch;
+                var iconSize = 35.0;
+                SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Save_environment", iconSize, () => { MessageBox.Show("Save test environment clicked."); }, "Save test environment", true));
+                SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Load_environment", iconSize, () => { MessageBox.Show("Load test environment clicked."); }, "Load test environment", true));
+                SideToolbar.AddToolSeparator();
+                SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Create_test", iconSize, () => { MessageBox.Show("Create test clicked."); }, "Create a automated regression test", true));
+                SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Test_manager", iconSize, () => { MessageBox.Show("Test manager clicked."); }, "Open test manager", true));
+                SideToolbar.AddTool(GetToolbarButton("DeveloperToolbox/Report_bug", iconSize, () => { MessageBox.Show("Report bug clicked."); }, "Report a bug/issue", true));
+            };
         }
 
         private void LoadBottomPanel()
@@ -171,7 +157,6 @@ namespace Klipper.Desktop.WPF.Connectors
 
         private void LoadTopPanel()
         {
-
             TopPanel.Loaded += (s, e) =>
             {
                 //var iconSize = 35.0;
@@ -214,20 +199,6 @@ namespace Klipper.Desktop.WPF.Connectors
 
         }
 
-        private ToolButton GetToolbarButton(string iconId, double iconSize, Action action, string toolTip, bool showGlow = false)
-        {
-            var s = "./Images/" + iconId;
-            var btn = new ToolButton(s + "_enabled.png", s + "_disabled.png", s + "_mouse_over.png");
-            btn.Width = iconSize;
-            btn.Height = iconSize;
-            btn.VerticalAlignment = VerticalAlignment.Center;
-            btn.Action = action;
-            btn.TooltipText = toolTip;
-            btn.GlowOnMouseOver = showGlow;
-            btn.MouseOverGlowColor = Colors.SkyBlue;
-            return btn;
-        }
-
         #endregion
 
 
@@ -244,7 +215,32 @@ namespace Klipper.Desktop.WPF.Connectors
             StatusPanel.SetText("Current Session: ", new SolidColorBrush(Colors.YellowGreen));
             StatusPanel.AddText(title, new SolidColorBrush(Colors.Orange));
         }
+
+        internal void HandleWindowClose()
+        {
+            //throw new NotImplementedException();
+        }
+
         #endregion
+
+        #region Private methods
+
+        private ToolButton GetToolbarButton(string iconId, double iconSize, Action action, string toolTip, bool showGlow = false)
+        {
+            var s = "./Images/" + iconId;
+            var btn = new ToolButton(s + "_enabled.png", s + "_disabled.png", s + "_mouse_over.png");
+            btn.Width = iconSize;
+            btn.Height = iconSize;
+            btn.VerticalAlignment = VerticalAlignment.Center;
+            btn.Action = action;
+            btn.TooltipText = toolTip;
+            btn.GlowOnMouseOver = showGlow;
+            btn.MouseOverGlowColor = Colors.SkyBlue;
+            return btn;
+        }
+
+        #endregion
+
 
     }
 }
