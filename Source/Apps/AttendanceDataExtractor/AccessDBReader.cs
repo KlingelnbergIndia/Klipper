@@ -23,7 +23,7 @@ namespace AttendanceDataExtractor
         {
             try
             {
-                CopyDataBaseFile();
+                //CopyDataBaseFile();
 
                 _accessDBconnection.Open();
 

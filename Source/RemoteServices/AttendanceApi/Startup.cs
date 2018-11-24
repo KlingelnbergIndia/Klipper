@@ -1,5 +1,6 @@
 ﻿using AttendanceApi.DataAccess.Implementation;
 using AttendanceApi.DataAccess.Interfaces;
+using Common.DataAccess;
 using Common.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using Common.DataAccess;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace AttendanceApi
 {
@@ -55,7 +56,22 @@ namespace AttendanceApi
             services.AddMvcCore()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddAuthorization()
-                .AddJsonFormatters();
+                .AddJsonFormatters()
+                .AddApiExplorer();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "Attendance Api",
+                    Contact = new Contact
+                    {
+                        Name = "Kiran Kharade",
+                        Email = "Kiran.Kharade@klingelnberg.com"
+                    }
+                });
+            });
 
             //services.AddAuthentication(options =>
             //{
@@ -101,8 +117,17 @@ namespace AttendanceApi
             {
                 app.UseHsts();
             }
+
             app.UseMiddleware<SerilogMiddleware>();
             //app.UseAuthentication();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Attendance API V1");
+                c.RoutePrefix = string.Empty;
+            });
+
             app.UseMvc();
         }
     }

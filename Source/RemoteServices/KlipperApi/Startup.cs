@@ -19,6 +19,7 @@ using Models.Core.Authentication;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
+using Swashbuckle.AspNetCore.Swagger;
 using System.Text;
 
 namespace KlipperApi
@@ -80,6 +81,20 @@ namespace KlipperApi
                 })
                 .AddJsonFormatters();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "Klipper Api",
+                    Contact = new Contact
+                    {
+                        Name = "Kiran Kharade",
+                        Email = "Kiran.Kharade@klingelnberg.com"
+                    }
+                });
+            });
+
             services.AddIdentity<User, IdentityRole>()
                 .AddDefaultTokenProviders();
 
@@ -125,6 +140,14 @@ namespace KlipperApi
             {
                 app.UseHsts();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Klipper API V1");
+                c.RoutePrefix = string.Empty;
+            });
+
             // add this middleware to make roles and permissions available as claims
             // this is mainly useful for using the classic [Authorize(Roles="foo")] and IsInRole functionality
             // this is not needed if you use the client library directly or the new policy-based authorization framework in ASP.NET Core
