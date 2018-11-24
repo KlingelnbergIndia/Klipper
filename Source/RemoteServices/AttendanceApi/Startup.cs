@@ -83,12 +83,6 @@ namespace AttendanceApi
 
         private void AddMongoDBRelatedServices(IServiceCollection services)
         {
-            services.Configure<DBConnectionSettings>(options =>
-            {
-                options.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
-                options.Database = Configuration.GetSection("MongoConnection:Database").Value;
-            });
-
             services.AddTransient<IAccessPointRepository, AccessPointRepository>();
             services.AddTransient<IAccessEventRepository, AccessEventRepository>();
         }
