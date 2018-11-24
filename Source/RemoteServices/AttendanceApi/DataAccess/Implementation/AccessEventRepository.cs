@@ -157,7 +157,7 @@ namespace AttendanceApi.DataAccess.Implementation
             {
                 var r = await _context.AccessEvents.FindAsync(filter);
                 var accessEventsList = r.ToList();
-                if (accessEventsList == null) // r.Current.GetEnumerator().Current
+                if (accessEventsList == null)
                 {
                     return false;
                 }
