@@ -1,5 +1,4 @@
-﻿using Common.DataAccess;
-using Common.Logging;
+﻿using Common.Logging;
 using EmployeeApi.DataAccess.Implementation;
 using EmployeeApi.DataAccess.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -67,7 +66,7 @@ namespace EmployeeApi
                     Contact = new Contact
                     {
                         Name = "Kiran Kharade",
-                        Email = "Kiran.Kharade@klingelnberg.com"
+                        Email = "KiranAKharade@gmail.com"
                     }
                 });
             });

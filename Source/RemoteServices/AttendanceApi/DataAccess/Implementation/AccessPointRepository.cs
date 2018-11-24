@@ -135,7 +135,7 @@ namespace AttendanceApi.DataAccess.Implementation
             {
                 var r = await _context.AccessPoints.FindAsync(filter);
                 var accessPointsList = r.ToList();
-                if (accessPointsList == null) // r.Current.GetEnumerator().Current
+                if (accessPointsList == null)
                 {
                     return false;
                 }

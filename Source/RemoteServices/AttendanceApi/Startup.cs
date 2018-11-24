@@ -1,6 +1,5 @@
 ﻿using AttendanceApi.DataAccess.Implementation;
 using AttendanceApi.DataAccess.Interfaces;
-using Common.DataAccess;
 using Common.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -68,22 +67,10 @@ namespace AttendanceApi
                     Contact = new Contact
                     {
                         Name = "Kiran Kharade",
-                        Email = "Kiran.Kharade@klingelnberg.com"
+                        Email = "KiranAKharade@gmail.com"
                     }
                 });
             });
-
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer(o =>
-            //{
-            //    o.Authority = "https://localhost:49333";
-            //    o.Audience = "AttendanceApi";
-            //    o.RequireHttpsMetadata = false;
-            //});
 
             //Using identity server 4
             //services.AddAuthentication("Bearer")

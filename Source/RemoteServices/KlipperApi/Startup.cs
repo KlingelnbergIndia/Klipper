@@ -1,5 +1,4 @@
-﻿using Common.DataAccess;
-using Common.Logging;
+﻿using Common.Logging;
 using KlipperApi.Controllers.Attendance;
 using KlipperApi.Controllers.Auth;
 using KlipperApi.Controllers.Employees;
@@ -64,8 +63,6 @@ namespace KlipperApi
 
             services.AddMvcCore(options =>
                     {
-                        //For policy server... this sets up a default authorization policy for the application in this case, 
-                        //authenticated users are required (besides controllers/actions that have [AllowAnonymous]
                         var policy = new AuthorizationPolicyBuilder()
                             .RequireAuthenticatedUser()
                             .Build();
@@ -90,7 +87,7 @@ namespace KlipperApi
                     Contact = new Contact
                     {
                         Name = "Kiran Kharade",
-                        Email = "Kiran.Kharade@klingelnberg.com"
+                        Email = "KiranAKharade@gmail.com"
                     }
                 });
             });
