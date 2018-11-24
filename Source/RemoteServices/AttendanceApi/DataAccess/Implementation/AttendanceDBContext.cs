@@ -1,28 +1,37 @@
-﻿using Common.DataAccess;
-using Models.Core.HR.Attendance;
-using Microsoft.Extensions.Options;
+﻿using Models.Core.HR.Attendance;
 using MongoDB.Driver;
+using Common;
 
 namespace AttendanceApi.DataAccess.Implementation
 {
-    public class AttendanceDBContext : DBContext
+    public class AttendanceDBContext
     {
+        protected readonly IMongoDatabase _database = null;
+
         #region Instance
 
-        public static AttendanceDBContext Instance { get; private set; } = null;
+        private static AttendanceDBContext _instance = null;
 
-        public static AttendanceDBContext GetInstance(IOptions<DBConnectionSettings> settings)
+        public static AttendanceDBContext Instance
         {
-            if (Instance == null)
+            get
             {
-                Instance = new AttendanceDBContext(settings);
+                if (_instance == null)
+                {
+                    _instance = new AttendanceDBContext();
+                }
+                return _instance;
             }
-            return Instance;
         }
 
         #endregion
 
-        public AttendanceDBContext(IOptions<DBConnectionSettings> settings) : base(settings) { }
+        public AttendanceDBContext()
+        {
+            var connectionString = DBConfigurator.GetConnectionString("AttendanceDB");
+            var mongoClient = new MongoClient(connectionString);
+            _database = mongoClient.GetDatabase("AttendanceDB");
+        }
 
         public IMongoCollection<AccessEvent> AccessEvents => _database.GetCollection<AccessEvent>("AccessEvents");
         public IMongoCollection<AccessPoint> AccessPoints => _database.GetCollection<AccessPoint>("AccessPoints");

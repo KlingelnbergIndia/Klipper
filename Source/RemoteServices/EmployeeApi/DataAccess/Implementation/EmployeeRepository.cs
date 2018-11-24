@@ -1,24 +1,22 @@
 ﻿using EmployeeApi.DataAccess.Interfaces;
 using Models.Core.Employment;
-using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Common.DataAccess;
 
 namespace EmployeeApi.DataAccess.Implementation
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        private readonly PeopleDBContext _context = null;
+        private readonly EmployeeDBContext _context = null;
         readonly ILogger _logger = Log.ForContext<EmployeeRepository>();
 
-        public EmployeeRepository(IOptions<DBConnectionSettings> settings)
+        public EmployeeRepository()
         {
-            _context = PeopleDBContext.GetInstance(settings);
+            _context = EmployeeDBContext.Instance;
         }
 
         public async Task<IEnumerable<Employee>> GetAllEmployees()

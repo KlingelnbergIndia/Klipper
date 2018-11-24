@@ -17,9 +17,9 @@ namespace AttendanceApi.DataAccess.Implementation
         private readonly AttendanceDBContext _context = null;
         readonly ILogger _logger = Log.ForContext<AccessPointRepository>();
 
-        public AccessPointRepository(IOptions<DBConnectionSettings> settings)
+        public AccessPointRepository()
         {
-            _context = AttendanceDBContext.GetInstance(settings);
+            _context = AttendanceDBContext.Instance;
         }
 
         public async Task<IEnumerable<AccessPoint>> GetAllAccessPoints()

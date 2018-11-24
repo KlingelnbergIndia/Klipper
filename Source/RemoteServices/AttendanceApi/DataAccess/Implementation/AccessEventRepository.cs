@@ -17,9 +17,9 @@ namespace AttendanceApi.DataAccess.Implementation
         private readonly AttendanceDBContext _context = null;
         readonly ILogger _logger = Log.ForContext<AccessEventRepository>();
 
-        public AccessEventRepository(IOptions<DBConnectionSettings> settings)
+        public AccessEventRepository()
         {
-            _context = AttendanceDBContext.GetInstance(settings);
+            _context = AttendanceDBContext.Instance;
         }
 
         public async Task<IEnumerable<AccessEvent>> GetAllAccessEvents()
