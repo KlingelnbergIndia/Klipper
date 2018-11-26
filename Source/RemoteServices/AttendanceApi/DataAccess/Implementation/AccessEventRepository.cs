@@ -1,7 +1,5 @@
 using AttendanceApi.DataAccess.Interfaces;
-using Common.DataAccess;
 using Models.Core.HR.Attendance;
-using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Serilog;

@@ -1,5 +1,4 @@
-﻿using Common.DataAccess;
-using Models.Core.Employment;
+﻿using Models.Core.Employment;
 using Models.Core.Operationals;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;

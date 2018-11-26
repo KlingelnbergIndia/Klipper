@@ -19,8 +19,6 @@
     <Compile Include="..\Common\AddressResolver.cs" Link="Common\AddressResolver.cs" />
     <Compile Include="..\Common\CommonHelper.cs" Link="Common\CommonHelper.cs" />
     <Compile Include="..\Common\DBConfigurator.cs" Link="Common\DBConfigurator.cs" />
-    <Compile Include="..\Common\DBConnectionSettings.cs" Link="Common\DBConnectionSettings.cs" />
-    <Compile Include="..\Common\DBContext.cs" Link="Common\DBContext.cs" />
     <Compile Include="..\Common\LoggingConfigurator.cs" Link="Common\LoggingConfigurator.cs" />
     <Compile Include="..\Common\NoCacheAttribute.cs" Link="Common\NoCacheAttribute.cs" />
     <Compile Include="..\Common\SerilogMiddleware.cs" Link="Common\SerilogMiddleware.cs" />
