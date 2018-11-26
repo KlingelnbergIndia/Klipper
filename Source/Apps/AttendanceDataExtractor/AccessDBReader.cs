@@ -27,7 +27,6 @@ namespace AttendanceDataExtractor
 
                 _accessDBconnection.Open();
 
-                ReadDepartments();
                 ReadEmployees();
                 ReadAccessDevices();
 

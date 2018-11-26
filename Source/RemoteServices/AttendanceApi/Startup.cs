@@ -1,5 +1,6 @@
 ﻿using AttendanceApi.DataAccess.Implementation;
 using AttendanceApi.DataAccess.Interfaces;
+using Common;
 using Common.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,8 +28,8 @@ namespace AttendanceApi
             Configuration = builder.Build();
 
             Log.Logger = new LoggerConfiguration()
-                    //.ReadFrom.Configuration(Configuration)
-                    .WriteTo.Async(a => a.File("AttendanceApi_log_.log", rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true), blockWhenFull: true)
+                    .WriteTo.Async(a => a.File(LoggingConfigurator.GetConfiguration("AttendanceApi").Path + "AttendanceApi_log_.log", 
+                                rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true), blockWhenFull: true)
                     .Enrich.FromLogContext()
                     .MinimumLevel.ControlledBy(new LoggingLevelSwitch() { MinimumLevel = LogEventLevel.Information })
                     .Enrich.WithEnvironmentUserName()
