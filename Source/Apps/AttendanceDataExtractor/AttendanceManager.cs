@@ -4,8 +4,6 @@ using Models.Core.Operationals;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace AttendanceDataExtractor
 {
@@ -50,23 +48,13 @@ namespace AttendanceDataExtractor
             _client = new MongoClient("mongodb://localhost:27017");
             _database = _client.GetDatabase("AttendanceDB");
 
-            _employeesCollection = _database.GetCollection<Employee>("Employees");
-            _departmentsCollection = _database.GetCollection<Department>("Departments");
-            _accessPointsCollection = _database.GetCollection<AccessPoint>("AccessPoints");
+            //_accessPointsCollection = _database.GetCollection<AccessPoint>("AccessPoints");
             _accessEventsCollection = _database.GetCollection<AccessEvent>("AccessEvents");
 
-            foreach (var v in Departments)
-            {
-                AddDepartment(v);
-            }
-            foreach (var v in Employees)
-            {
-                AddEmployee(v);
-            }
-            foreach (var v in AccessPoints)
-            {
-                AddAccessPoint(v);
-            }
+            //foreach (var v in AccessPoints)
+            //{
+            //    AddAccessPoint(v);
+            //}
             foreach (var v in MonthlyAccessLogs)
             {
                 foreach (var e in v.AccessEvents)

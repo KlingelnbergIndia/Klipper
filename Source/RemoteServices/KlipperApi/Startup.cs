@@ -1,4 +1,5 @@
-﻿using Common.Logging;
+﻿using Common;
+using Common.Logging;
 using KlipperApi.Controllers.Attendance;
 using KlipperApi.Controllers.Auth;
 using KlipperApi.Controllers.Employees;
@@ -37,7 +38,8 @@ namespace KlipperApi
             Configuration = builder.Build();
 
             Log.Logger = new LoggerConfiguration()
-                    .WriteTo.Async(a => a.File("KlipperApi_log_.log", rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true), blockWhenFull: true)
+                    .WriteTo.Async(a => a.File(LoggingConfigurator.GetConfiguration("KlipperApi").Path + "KlipperApi_log_.log", 
+                                rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true), blockWhenFull: true)
                     .Enrich.FromLogContext()
                     .MinimumLevel.ControlledBy(new LoggingLevelSwitch() { MinimumLevel = LogEventLevel.Information })
                     .Enrich.WithEnvironmentUserName()
