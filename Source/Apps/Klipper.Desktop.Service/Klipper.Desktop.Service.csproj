@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\RemoteServices\Common\AddressResolver.cs" Link="Common\AddressResolver.cs" />
-    <Compile Include="..\..\RemoteServices\Common\CommonHelper.cs" Link="Common\CommonHelper.cs" />
+    <Compile Include="..\..\Common\AddressResolver.cs" Link="Common\AddressResolver.cs" />
+    <Compile Include="..\..\Common\CommonHelper.cs" Link="Common\CommonHelper.cs" />
   </ItemGroup>
 
   <ItemGroup>
