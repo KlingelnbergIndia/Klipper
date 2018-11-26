@@ -1,5 +1,3 @@
-using Common.DataAccess;
-using Microsoft.Extensions.Options;
 using Models.Core.Authentication;
 using MongoDB.Bson;
 using MongoDB.Driver;
