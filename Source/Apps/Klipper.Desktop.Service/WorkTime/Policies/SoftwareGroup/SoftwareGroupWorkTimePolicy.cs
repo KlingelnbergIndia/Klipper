@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Models.Core.HR.Attendance;
 
-namespace Klipper.Desktop.Service.WorkTime.Policies.Default
+namespace Klipper.Desktop.Service.WorkTime.Policies.SoftwareGroup
 {
-    public class DefaultWorkTimePolicy : BaseWorkTimePolicy
+    public class SoftwareGroupWorkTimePolicy : BaseWorkTimePolicy
     {
-        public DefaultWorkTimePolicy()
+        public SoftwareGroupWorkTimePolicy()
         {
             PopulateRules();
         }
