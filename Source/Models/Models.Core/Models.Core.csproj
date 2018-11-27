@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="HR\Attendance\PolicyViolation.cs" />
+    <Compile Remove="HR\Attendance\WorkDay.cs" />
+    <Compile Remove="HR\Attendance\WorkTimeViolation.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\..\Common\ObjectIdConverter.cs" Link="Common\ObjectIdConverter.cs" />
   </ItemGroup>
 

@@ -1,5 +1,5 @@
 ﻿using Common;
-using Klipper.Desktop.Service.EmployeeProfile;
+using Klipper.Desktop.Service.EmployeeServices;
 using Klipper.Desktop.Service.Session;
 using Models.Core.Authentication;
 using Models.Core.Employment;
@@ -79,7 +79,7 @@ namespace Klipper.Desktop.Service.Login
             {
                 Auth.SessionToken = ExtractToken(response);
                 StoreToVault(username, hash);
-                Employee employee = EmployeeProfileService.Instance.GetEmployeeByUserName(username);
+                Employee employee = EmployeeService.Instance.GetEmployeeByUserName(username);
                 if (employee != null)
                 {
                     SessionContext.CurrentSubject = employee;

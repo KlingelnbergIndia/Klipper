@@ -20,6 +20,8 @@
 
   <ItemGroup>
     <Folder Include="Common\" />
+    <Folder Include="WorkTime\Policies\DesignGroup\" />
+    <Folder Include="WorkTime\Policies\SoftwareGroup\" />
   </ItemGroup>
 
 </Project>

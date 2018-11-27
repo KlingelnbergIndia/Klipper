@@ -4,25 +4,32 @@ using System.Net.Http;
 using Models.Core.Employment;
 using Klipper.Desktop.Service.Login;
 using Common;
+using Klipper.Desktop.Service.WorkTime;
+using Klipper.Desktop.Service.WorkTime.Policies;
 
-namespace Klipper.Desktop.Service.EmployeeProfile
+namespace Klipper.Desktop.Service.EmployeeServices
 {
-    public class EmployeeProfileService
+    public class EmployeeService
     {
         #region Instance
 
-        static EmployeeProfileService _instance = null;
+        static EmployeeService _instance = null;
 
-        public static EmployeeProfileService Instance
+        public static EmployeeService Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = new EmployeeProfileService();
+                    _instance = new EmployeeService();
                 }
                 return _instance;
             }
+        }
+
+        internal static IWorkTimePolicy GetWorkTimePolicy(int employeeId)
+        {
+            throw new NotImplementedException();
         }
 
         public static void DeleteInstance()
@@ -30,7 +37,7 @@ namespace Klipper.Desktop.Service.EmployeeProfile
             _instance = null;
         }
 
-        private EmployeeProfileService()
+        private EmployeeService()
         {
         }
 
