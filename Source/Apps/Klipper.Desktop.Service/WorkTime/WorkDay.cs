@@ -1,4 +1,4 @@
-﻿using Klipper.Desktop.Service.EmployeeServices;
+﻿using Klipper.Desktop.Service.Employees;
 using Models.Core.HR.Attendance;
 using System;
 using System.Collections.Generic;
@@ -39,7 +39,7 @@ namespace Klipper.Desktop.Service.WorkTime
             AllAccessEvents = accessEvents.OrderBy(x => x.EventTime).ToList();
             AllRegularizations = regularizations;
             ApprovedLeave = approvedLeave;
-            AppliedPolicy = EmployeeService.GetWorkTimePolicy(employeeId);
+            AppliedPolicy = EmployeeService.Instance.GetWorkTimePolicy(employeeId);
         }
 
         #endregion
@@ -79,6 +79,9 @@ namespace Klipper.Desktop.Service.WorkTime
         public TimeSpan GymnasiumTimeSpan { get; private set; } = TimeSpan.FromMinutes(0);
         public bool FlaggedForViolation { get; private set; } = false;
         public List<WorkTimeViolation> Violations { get; private set; } = new List<WorkTimeViolation>();
+        public TimeSpan WorkTime { get; private set; } = TimeSpan.FromDays(0);
+        public bool IsPresent { get { return AllAccessEvents.Count > 0;  }  }
+        public bool NeedsRegularization { get; private set; } = true;
         public TimeSpan TotalDuration
         {
             get
@@ -86,40 +89,18 @@ namespace Klipper.Desktop.Service.WorkTime
                 return LastAccessEvent.EventTime - FirstAccessEvent.EventTime;
             }
         }
-        public TimeSpan WorkTime
-        {
-            get
-            {
-                return TimeSpan.FromDays(0);
-            }
-        }
-        public bool IsPresent
-        {
-            get
-            {
-                return AllAccessEvents.Count > 0;
-            }
-        }
-        public bool NeedsRegularization
-        {
-            get
-            {
-                return false;
-            }
-        }
-
         #endregion
 
         #region Public methods
 
-        public List<AccessEvent> TotalSwipes(string accessPointName)
+        public List<AccessEvent> SwipesAtAccessPoint(string accessPointName)
         {
             return AllAccessEvents.Where(x => x.AccessPointName == accessPointName).ToList();
         }
 
-        public int TotalSwipeCount(string accessPointName)
+        public int SwipeCountAtAccessPoint(string accessPointName)
         {
-            return TotalSwipes(accessPointName).Count;
+            return SwipesAtAccessPoint(accessPointName).Count;
         }
 
         #endregion
@@ -128,14 +109,29 @@ namespace Klipper.Desktop.Service.WorkTime
 
         private void Process()
         {
+            CalculateTimeSpan_Gym();
+            CalculateTimeSpan_Recreation();
+            CalculateTimeSpan_OutsidePremises();
+            CalculateTimeSpan_Work();
+            CompensateForApprovedLeave();
+        }
+
+        private void CalculateTimeSpan_Work()
+        {
             throw new NotImplementedException();
         }
 
-        private void CalculateGymnasiumTime()
+        private void CalculateTimeSpan_OutsidePremises()
         {
+            throw new NotImplementedException();
         }
 
-        private void CalculateRecreationLunchTime()
+        private void CalculateTimeSpan_Recreation()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CalculateTimeSpan_Gym()
         {
             throw new NotImplementedException();
         }
