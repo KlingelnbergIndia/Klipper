@@ -1,5 +1,5 @@
 ﻿using Common;
-using Klipper.Desktop.Service.EmployeeServices;
+using Klipper.Desktop.Service.Employees;
 using Klipper.Desktop.Service.Session;
 using Models.Core.Authentication;
 using Models.Core.Employment;

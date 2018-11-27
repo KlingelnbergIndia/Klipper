@@ -6,30 +6,26 @@ using Klipper.Desktop.Service.Login;
 using Common;
 using Klipper.Desktop.Service.WorkTime;
 using Klipper.Desktop.Service.WorkTime.Policies;
+using Models.Core.Operationals;
 
-namespace Klipper.Desktop.Service.EmployeeServices
+namespace Klipper.Desktop.Service.Departments
 {
-    public class EmployeeService
+    public class DepartmentService
     {
         #region Instance
 
-        static EmployeeService _instance = null;
+        static DepartmentService _instance = null;
 
-        public static EmployeeService Instance
+        public static DepartmentService Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = new EmployeeService();
+                    _instance = new DepartmentService();
                 }
                 return _instance;
             }
-        }
-
-        internal static IWorkTimePolicy GetWorkTimePolicy(int employeeId)
-        {
-            throw new NotImplementedException();
         }
 
         public static void DeleteInstance()
@@ -37,7 +33,7 @@ namespace Klipper.Desktop.Service.EmployeeServices
             _instance = null;
         }
 
-        private EmployeeService()
+        private DepartmentService()
         {
         }
 
@@ -45,17 +41,17 @@ namespace Klipper.Desktop.Service.EmployeeServices
 
         #region Public methods
 
-        public Employee GetEmployeeById(int employeeId)
+        public Department GetDepartmentById(int departmentId)
         {
             var client = CommonHelper.GetClient(AddressResolver.GetAddress("KlipperApi", false), Auth.SessionToken);
-            var str = "api/employees/" + employeeId.ToString();
+            var str = "api/departments/" + departmentId.ToString();
 
             HttpResponseMessage response = client.GetAsync(str).Result;
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = response.Content.ReadAsStringAsync().Result;
-                var employee = JsonConvert.DeserializeObject<Employee>(jsonString);
-                return employee;
+                var department = JsonConvert.DeserializeObject<Department>(jsonString);
+                return department;
             }
             else
             {
@@ -63,19 +59,19 @@ namespace Klipper.Desktop.Service.EmployeeServices
             }
         }
 
-        public Employee GetEmployeeByUserName(string userName)
+        public Department GetDepartmentByName(string departmentName)
         {
             var client = CommonHelper.GetClient(AddressResolver.GetAddress("KlipperApi", false), Auth.SessionToken);
 
             //KK: Please add this action on Employees controller in KlipperAPI
-            var str = "api/employees/ByUserName?userName=" + userName;
+            var str = "api/departments/ByName?departmentName=" + departmentName;
 
             HttpResponseMessage response = client.GetAsync(str).Result;
             if (response.IsSuccessStatusCode)
             {
                 var jsonString = response.Content.ReadAsStringAsync().Result;
-                var employee = JsonConvert.DeserializeObject<Employee>(jsonString);
-                return employee;
+                var department = JsonConvert.DeserializeObject<Department>(jsonString);
+                return department;
             }
             else
             {
