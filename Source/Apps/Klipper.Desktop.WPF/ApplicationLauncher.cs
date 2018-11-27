@@ -9,7 +9,7 @@ using Sparkle.DataStructures;
 using Sparkle.Controls.Navigators;
 using Klipper.Desktop.WPF.Views.Main;
 using Klipper.Desktop.WPF.Connectors;
-using Klipper.Desktop.Service.EmployeeProfile;
+using Klipper.Desktop.Service.EmployeeServices;
 using Models.Core.Employment;
 using Klipper.Desktop.WPF.Connectors.Main;
 
