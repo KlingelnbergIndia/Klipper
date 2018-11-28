@@ -29,6 +29,6 @@ namespace Models.Core.HR.Attendance
         [BsonDateTimeOptions]
         public DateTime EventTime { get; set; }
 
-        public bool ManualEntry { get; set; } = false;
+        public bool IsManualEntry { get; set; } = false;
     }
 }
