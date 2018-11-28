@@ -6,14 +6,21 @@ namespace Klipper.Desktop.Service.WorkTime.Policies
 {
     public enum WorkTimeViolationType
     {
-        Unknown,
-        TimeDurationViolation_TotalDurationLessThan6Hours,
-        TimeDurationViolation_RecreationLunchTimeMoreThan45Min,
-        TimeSlotViolation_RecreationLunchTime,
-        TimeSlotViolation_GymnasiumBefore5pm,
-        OddAccessEvents_Recreation,
-        OddAccessEvents_Gymnasium,
-        OddAccessEvents_PremisesEntry,
+        Unknown = 0,
+        TimeDurationViolation_TotalDurationLessThan6Hours = 1,
+        TimeDurationViolation_RecreationLunchTimeMoreThan45Min = 2,
+        TimeSlotViolation_RecreationLunchTime = 3,
+        TimeSlotViolation_GymnasiumBefore5pm = 4,
+        OddAccessEvents_Recreation = 5,
+        OddAccessEvents_Gymnasium = 6,
+        OddAccessEvents_PremisesEntry = 7,
+        WorkingOnLeaveDay = 8,
+        WorkingOnWeekend = 9,
+        WorkingOnHoliday = 10,
+        AbsentWithoutLeave = 11,
+        AbsentWithHalfDayLeave = 12,
+        LateEntry = 13,
+        EarlyLeaving = 14,
     };
 
     public enum ViolationLevel
@@ -22,7 +29,8 @@ namespace Klipper.Desktop.Service.WorkTime.Policies
         Severe,
         Medium,
         Low,
-        Ignorable
+        Ignorable,
+        Strange
     };
 
     public class WorkTimeViolation : PolicyViolation
@@ -44,11 +52,18 @@ namespace Klipper.Desktop.Service.WorkTime.Policies
             { WorkTimeViolationType.Unknown, new Tuple<string, ViolationLevel>("Unknown work-time violation", ViolationLevel.Unknown)},
             { WorkTimeViolationType.TimeDurationViolation_TotalDurationLessThan6Hours, new Tuple<string, ViolationLevel>("Time duration violation: Total work-time less than 6 hours.", ViolationLevel.Severe)},
             { WorkTimeViolationType.TimeDurationViolation_RecreationLunchTimeMoreThan45Min, new Tuple<string, ViolationLevel>("Time duration violation: Recreation lunch time more than 45 hours.", ViolationLevel.Medium) },
-            { WorkTimeViolationType.TimeSlotViolation_RecreationLunchTime, new Tuple<string, ViolationLevel>("Time slot violation: REcreation lunch time used outside stipulated slot.", ViolationLevel.Low) },
+            { WorkTimeViolationType.TimeSlotViolation_RecreationLunchTime, new Tuple<string, ViolationLevel>("Time slot violation: REcreation lunch time used outside stipulated slot.", ViolationLevel.Medium) },
             { WorkTimeViolationType.TimeSlotViolation_GymnasiumBefore5pm, new Tuple<string, ViolationLevel>("Time slot violation: Gymnasium used before 5 p.m.", ViolationLevel.Low) },
             { WorkTimeViolationType.OddAccessEvents_Recreation, new Tuple<string, ViolationLevel>("Odd number of accesses for recreation room.", ViolationLevel.Medium) },
             { WorkTimeViolationType.OddAccessEvents_Gymnasium, new Tuple<string, ViolationLevel>("Odd number of accesses for Gymnasium.", ViolationLevel.Medium) },
-            { WorkTimeViolationType.OddAccessEvents_PremisesEntry,new Tuple<string, ViolationLevel>("Odd number of accesses for premises entry gate.", ViolationLevel.Medium) }
+            { WorkTimeViolationType.OddAccessEvents_PremisesEntry,new Tuple<string, ViolationLevel>("Odd number of accesses for premises entry gate.", ViolationLevel.Medium) },
+            { WorkTimeViolationType.WorkingOnLeaveDay, new Tuple<string, ViolationLevel>("Working on leave day.", ViolationLevel.Strange) },
+            { WorkTimeViolationType.WorkingOnWeekend, new Tuple<string, ViolationLevel>("Working on weekend.", ViolationLevel.Strange) },
+            { WorkTimeViolationType.WorkingOnHoliday, new Tuple<string, ViolationLevel>("Working on holiday.", ViolationLevel.Strange) },
+            { WorkTimeViolationType.AbsentWithoutLeave, new Tuple<string, ViolationLevel>("Absent without leave.", ViolationLevel.Severe) },
+            { WorkTimeViolationType.AbsentWithHalfDayLeave, new Tuple<string, ViolationLevel>("Absent with half day leave.", ViolationLevel.Severe) },
+            { WorkTimeViolationType.LateEntry, new Tuple<string, ViolationLevel>("Late entry.", ViolationLevel.Medium) },
+            { WorkTimeViolationType.EarlyLeaving, new Tuple<string, ViolationLevel>("Early leaving.", ViolationLevel.Medium) },
         };
 
         #endregion

@@ -6,7 +6,7 @@ using System;
 
 namespace Models.Core.HR.Attendance
 {
-    public enum RegularizationType
+    public enum RegularizationReasonType
     {
         OutstationDuty,
         CustomerVisit,
@@ -15,6 +15,12 @@ namespace Models.Core.HR.Attendance
         Exhibition,
         WorkFromOtherLocation,
         OfficialWorkOutside,
+    }
+
+    public enum RegularizationType
+    {
+        ManualTimeEventEntry,
+        BlockTimeSpanEntry
     }
 
     public enum RegularizationStatus
@@ -40,9 +46,15 @@ namespace Models.Core.HR.Attendance
 
         public int EmployeeID { get; set; }
 
-        public RegularizationType LeaveType { get; set; }
+        public RegularizationReasonType ReasonType { get; set; } = RegularizationReasonType.CustomerVisit;
 
-        public RegularizationStatus LeaveStatus { get; set; }
+        public RegularizationType RegularizationType { get; set; } = RegularizationType.ManualTimeEventEntry;
+
+        public AccessEvent ManualEventEntry { get; set; } = null;
+
+        public TimeSpan BlockTimeSpanEntry { get; set; } = TimeSpan.FromHours(0);
+
+        public RegularizationStatus Status { get; set; }
 
         public string Description { get; set; }
     }
