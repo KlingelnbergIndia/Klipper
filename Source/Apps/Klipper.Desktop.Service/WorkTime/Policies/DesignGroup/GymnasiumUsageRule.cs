@@ -7,7 +7,7 @@ namespace Klipper.Desktop.Service.WorkTime.Policies.DesignGroup
     {
         public bool Validate(WorkDay context)
         {
-            throw new NotImplementedException();
+            return PolicyHelper.CheckGymnasiumUsage(context, 17);
         }
     }
 }

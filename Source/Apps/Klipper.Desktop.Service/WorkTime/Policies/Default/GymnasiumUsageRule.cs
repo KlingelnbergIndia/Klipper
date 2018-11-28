@@ -7,9 +7,7 @@ namespace Klipper.Desktop.Service.WorkTime.Policies.Default
     {
         public bool Validate(WorkDay context)
         {
-
-
-            return true;
+            return PolicyHelper.CheckGymnasiumUsage(context, 17);
         }
     }
 }
