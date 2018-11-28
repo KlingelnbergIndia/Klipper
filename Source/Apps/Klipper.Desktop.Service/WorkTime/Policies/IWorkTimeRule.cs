@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Klipper.Desktop.Service.WorkTime.Policies
 {
     public interface IWorkTimeRule
     {
-        Tuple<bool, WorkTimeViolation, object> Validate(WorkDay context);
+        bool Validate(WorkDay context);
     }
 }

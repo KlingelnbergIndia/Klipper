@@ -44,6 +44,8 @@ namespace Models.Core.HR.Attendance
 
         public LeaveType LeaveType { get; set; }
 
+        public bool IsHalfDay { get; set; }
+
         public LeaveStatus LeaveStatus { get; set; }
 
         public string Description { get; set; }

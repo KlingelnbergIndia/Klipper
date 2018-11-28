@@ -74,14 +74,18 @@ namespace Klipper.Desktop.Service.WorkTime
         public List<AccessEvent> AllAccessEvents { get; set; }
         public List<Regularization> AllRegularizations { get; private set; }
         public Leave ApprovedLeave { get; set; } = null;
+        public TimeSpan LeaveTimeCompensation { get; private set; } = TimeSpan.FromMinutes(0);
+        public TimeSpan BlockRegularizationCompensation { get; private set; } = TimeSpan.FromMinutes(0);
         public TimeSpan OutsidePremisesTimeSpan { get; private set; } = TimeSpan.FromMinutes(0);
         public TimeSpan RecreationTimeSpan { get; private set; } = TimeSpan.FromMinutes(0);
         public TimeSpan GymnasiumTimeSpan { get; private set; } = TimeSpan.FromMinutes(0);
-        public bool FlaggedForViolation { get; private set; } = false;
+        public bool FlaggedForSevereViolation { get; private set; } = false;
         public List<WorkTimeViolation> Violations { get; private set; } = new List<WorkTimeViolation>();
         public TimeSpan WorkTime { get; private set; } = TimeSpan.FromDays(0);
         public bool IsPresent { get { return AllAccessEvents.Count > 0;  }  }
         public bool NeedsRegularization { get; private set; } = true;
+        public bool IsWeekEnd { get; private set; } = false;
+        public bool IsHoliday { get; private set; } = false;
         public TimeSpan TotalDuration
         {
             get
@@ -109,41 +113,179 @@ namespace Klipper.Desktop.Service.WorkTime
 
         private void Process()
         {
-            CalculateTimeSpan_Gym();
-            CalculateTimeSpan_Recreation();
-            CalculateTimeSpan_OutsidePremises();
-            CalculateTimeSpan_Work();
-            CompensateForApprovedLeave();
-        }
+            NeedsRegularization = false;
 
-        private void CalculateTimeSpan_Work()
-        {
-            throw new NotImplementedException();
+            IsHoliday = CheckIfHoliday();
+            IsWeekEnd = AppliedPolicy.IsWeekend(Date);
+            if (IsHoliday && IsPresent) Violations.Add(WorkTimeViolation.GetViolation(WorkTimeViolationType.WorkingOnHoliday, AllAccessEvents));
+            if (IsWeekEnd && IsPresent) Violations.Add(WorkTimeViolation.GetViolation(WorkTimeViolationType.WorkingOnWeekend, AllAccessEvents));
+            if (IsHoliday || IsWeekEnd)
+            {
+                return;
+            }
+
+            if(IsPresent)
+            {
+                CalculateTimeSpan_Gym();
+                CalculateTimeSpan_Recreation();
+                CalculateTimeSpan_OutsidePremises();
+                CompensateForApprovedLeave();
+                CompensateForBlockRegularization();
+
+                //Calculation of work time should be after all the other calculations
+                CalculateTimeSpan_Work();
+
+                AppliedPolicy.Validate(WorkTimeRules.GymnasiumUsageRule);
+                AppliedPolicy.Validate(WorkTimeRules.RecreationUsageRule);
+                AppliedPolicy.Validate(WorkTimeRules.TotalLunchDurationRule);
+                AppliedPolicy.Validate(WorkTimeRules.TotalWorkHoursPerDayRule);
+                AppliedPolicy.Validate(WorkTimeRules.WorkStartEndTimingRule);
+            }
+            else
+            {
+                if (ApprovedLeave == null)
+                {
+                    //No leave applied yet and is absent 
+                    Violations.Add(WorkTimeViolation.GetViolation(WorkTimeViolationType.AbsentWithoutLeave));
+                }
+                if (ApprovedLeave != null && ApprovedLeave.IsHalfDay)
+                {
+                    //Half day leave applied and is absent 
+                    Violations.Add(WorkTimeViolation.GetViolation(WorkTimeViolationType.AbsentWithHalfDayLeave));
+                }
+            }
+            FlaggedForSevereViolation = Violations.Where(v => v.Level == ViolationLevel.Severe).ToList().Count > 0;
         }
 
         private void CalculateTimeSpan_OutsidePremises()
         {
-            throw new NotImplementedException();
+            var swipes = SwipesAtAccessPoint("Main Entry").OrderBy(x => x.EventTime).ToList();
+            if (swipes.Count % 2 == 1)
+            {
+                Violations.Add(WorkTimeViolation.GetViolation(WorkTimeViolationType.OddAccessEvents_PremisesEntry, swipes));
+            }
+            else
+            {
+                TimeSpan outPremisesTime = TimeSpan.FromDays(0);
+                if (swipes.Count > 2)
+                {
+                    for (int i = 1; i < swipes.Count; i += 2)
+                    {
+                        var a = swipes[i].EventTime;
+                        var b = swipes[i + 1].EventTime;
+                        outPremisesTime += (b - a);
+                    }
+                }
+                OutsidePremisesTimeSpan = outPremisesTime;
+            }
         }
 
         private void CalculateTimeSpan_Recreation()
         {
-            throw new NotImplementedException();
+            var swipes = SwipesAtAccessPoint("Recreation").OrderBy(x => x.EventTime).ToList();
+            if (swipes.Count % 2 == 1)
+            {
+                Violations.Add(WorkTimeViolation.GetViolation(WorkTimeViolationType.OddAccessEvents_Recreation, swipes));
+            }
+            else
+            {
+                TimeSpan recreationTime = TimeSpan.FromDays(0);
+                for (int i = 1; i < swipes.Count; i += 2)
+                {
+                    var a = swipes[i].EventTime;
+                    var b = swipes[i + 1].EventTime;
+                    recreationTime += (b - a);
+                }
+                RecreationTimeSpan = recreationTime;
+            }
         }
 
         private void CalculateTimeSpan_Gym()
         {
-            throw new NotImplementedException();
+            var swipes = SwipesAtAccessPoint("Gym").OrderBy(x => x.EventTime).ToList();
+            if (swipes.Count % 2 == 1)
+            {
+                Violations.Add(WorkTimeViolation.GetViolation(WorkTimeViolationType.OddAccessEvents_Gymnasium, swipes));
+            }
+            else
+            {
+                TimeSpan gymnasiumTime = TimeSpan.FromDays(0);
+                for (int i = 1; i < swipes.Count; i += 2)
+                {
+                    var a = swipes[i].EventTime;
+                    var b = swipes[i + 1].EventTime;
+                    gymnasiumTime += (b - a);
+                }
+                GymnasiumTimeSpan = gymnasiumTime;
+            }
         }
 
         private void CompensateForApprovedLeave()
         {
+            if(ApprovedLeave == null)
+            {
+                LeaveTimeCompensation = TimeSpan.FromHours(0);
+                return;
+            }
+            if(ApprovedLeave.IsHalfDay)
+            {
+                LeaveTimeCompensation = TimeSpan.FromHours(4.5);
+            }
+            else
+            {
+                LeaveTimeCompensation = TimeSpan.FromHours(9.0);
+                if(IsPresent)
+                {
+                    Violations.Add(WorkTimeViolation.GetViolation(WorkTimeViolationType.WorkingOnLeaveDay, AllAccessEvents));
+                }
+            }
+        }
 
+        private void CompensateForBlockRegularization()
+        {
+            BlockRegularizationCompensation = TimeSpan.FromHours(0);
+            if (AllRegularizations.Count == 0)
+            {
+                return;
+            }
+            var regularizationsWithBlockEntry = AllRegularizations.Where(r => r.RegularizationType == RegularizationType.BlockTimeSpanEntry).ToList();
+
+            if (regularizationsWithBlockEntry.Count > 0)
+            {
+                foreach(var r in regularizationsWithBlockEntry)
+                {
+                    BlockRegularizationCompensation += r.BlockTimeSpanEntry;
+                }
+            }
+        }
+
+        private void CalculateTimeSpan_Work()
+        {
+            var violationsNeedingRegularizations = Violations.Where(v => v.Level == ViolationLevel.Severe || v.Level == ViolationLevel.Medium).ToList();
+            if(violationsNeedingRegularizations.Count > 0)
+            {
+                NeedsRegularization = true;
+            }
+
+            var combinedDurationOfLunchAndRecreation = OutsidePremisesTimeSpan + RecreationTimeSpan;
+            var excess = TimeSpan.FromMinutes(45.0) - combinedDurationOfLunchAndRecreation;
+            WorkTime = TotalDuration + LeaveTimeCompensation + BlockRegularizationCompensation - (excess + OutsidePremisesTimeSpan + GymnasiumTimeSpan);
+        }
+
+        private bool CheckIfHoliday()
+        {
+            var holidays = WorkTimeService.Instance.GetHolidaysByYear(Date.Year);
+            foreach (var h in holidays)
+            {
+                if (h.Year == Date.Year && h.Month == Date.Month && h.Day == Date.Day)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         #endregion
 
     }
 }
-
-

@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Klipper.Desktop.Service.WorkTime.Policies.Default
 {
     internal class GymnasiumUsageRule : IWorkTimeRule
     {
-        public Tuple<bool, WorkTimeViolation, object> Validate(WorkDay context)
+        public bool Validate(WorkDay context)
         {
 
 
-            return null;
+            return true;
         }
     }
 }

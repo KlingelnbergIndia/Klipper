@@ -5,13 +5,12 @@ namespace Klipper.Desktop.Service.WorkTime.Policies
 {
     public interface IWorkTimePolicy
     {
-
-        Dictionary<string, IWorkTimeRule> Rules { get; }
-
         IWorkTimeRule GetRule(string ruleName);
 
-        Tuple<bool, WorkTimeViolation, object> Validate(string ruleName);
+        bool Validate(string ruleName);
 
         void SetWorkdayContext(WorkDay workDay);
+
+        bool IsWeekend(DateTime day);
     }
 }
