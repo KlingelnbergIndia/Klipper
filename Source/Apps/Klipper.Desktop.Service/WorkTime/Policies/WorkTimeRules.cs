@@ -8,7 +8,6 @@ namespace Klipper.Desktop.Service.WorkTime.Policies
     {
         public static string WorkStartEndTimingRule = "WorkStartEndTimingRule";
         public static string TotalWorkHoursPerDayRule = "TotalWorkHoursPerDayRule";
-        public static string TotalLunchDurationRule = "TotalLunchDurationRule";
         public static string GymnasiumUsageRule = "GymnasiumUsageRule";
         public static string RecreationUsageRule = "RecreationUsageRule";
         public static string OddAccessEventsRule = "OddAccessEventsRule";

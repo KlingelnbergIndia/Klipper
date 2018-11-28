@@ -47,7 +47,6 @@ namespace Klipper.Desktop.Service.WorkTime.Policies
         {
             Rules.Add(WorkTimeRules.WorkStartEndTimingRule, typeof(Klipper.Desktop.Service.WorkTime.Policies.CommonRules.FixedWorkStartEndTimingRule));
             Rules.Add(WorkTimeRules.TotalWorkHoursPerDayRule, typeof(Klipper.Desktop.Service.WorkTime.Policies.Default.TotalWorkHoursPerDayRule));
-            Rules.Add(WorkTimeRules.TotalLunchDurationRule, typeof(Klipper.Desktop.Service.WorkTime.Policies.CommonRules.TotalLunchDurationRule));
             Rules.Add(WorkTimeRules.GymnasiumUsageRule, typeof(Klipper.Desktop.Service.WorkTime.Policies.Default.GymnasiumUsageRule));
             Rules.Add(WorkTimeRules.RecreationUsageRule, typeof(Klipper.Desktop.Service.WorkTime.Policies.CommonRules.RecreationUsageRule));
         }
