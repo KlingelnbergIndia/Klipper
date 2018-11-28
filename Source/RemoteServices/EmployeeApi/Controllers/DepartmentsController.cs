@@ -4,8 +4,6 @@ using EmployeeApi.DataAccess.Interfaces;
 using Models.Core.Operationals;
 using Common.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authorization;
 
 namespace EmployeeApi.Controllers
 {

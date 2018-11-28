@@ -8,6 +8,7 @@ using System;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Klipper.Desktop.Service.Login
 {
@@ -58,7 +59,8 @@ namespace Klipper.Desktop.Service.Login
         public bool Login(string username, string password)
         {
             var hash = CommonHelper.ToSha256(password);
-            return LoginWithHashedPassword(username, hash);
+            var success = LoginWithHashedPassword(username, hash);
+            return success;
         }
 
         public bool LoginWithHashedPassword(string username, string hash)
@@ -72,7 +74,7 @@ namespace Klipper.Desktop.Service.Login
             var json = JsonConvert.SerializeObject(user, Formatting.Indented);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = client.PostAsync("api/auth/login", httpContent).Result;
+            var response = client.PostAsync("api/auth/login", httpContent).Result;
             if (response.IsSuccessStatusCode)
             {
                 Auth.SessionToken = ExtractToken(response);

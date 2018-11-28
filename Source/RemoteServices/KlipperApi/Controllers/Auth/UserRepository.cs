@@ -1,5 +1,3 @@
-using Common.DataAccess;
-using Microsoft.Extensions.Options;
 using Models.Core.Authentication;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -15,9 +13,9 @@ namespace KlipperApi.Controllers.Auth
         private readonly AuthContext _context = null;
         readonly ILogger _logger = Log.ForContext<UserRepository>();
 
-        public UserRepository(IOptions<DBConnectionSettings> settings)
+        public UserRepository()
         {
-            _context = AuthContext.GetInstance(settings);
+            _context = AuthContext.Instance;
         }
 
         public async Task<IEnumerable<User>> GetAllUsers()

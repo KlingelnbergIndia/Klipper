@@ -26,10 +26,10 @@ namespace AttendancePushApp
         static void Main(string[] args)
         {
 
-            PushDB<Department>("OperationalsDB", "Departments");
+            //PushDB<Department>("OperationalsDB", "Departments");
             //PushDB<Employee>("EmployeeDB", "Employees");
 
-            //PushAttendanceToAPI();
+            PushAttendanceToAPI();
         }
 
         private static void PushAttendanceToAPI()

@@ -1,4 +1,4 @@
-﻿using Common.DataAccess;
+﻿using Common;
 using Common.Logging;
 using KlipperApi.Controllers.Attendance;
 using KlipperApi.Controllers.Auth;
@@ -38,7 +38,8 @@ namespace KlipperApi
             Configuration = builder.Build();
 
             Log.Logger = new LoggerConfiguration()
-                    .WriteTo.Async(a => a.File("KlipperApi_log_.log", rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true), blockWhenFull: true)
+                    .WriteTo.Async(a => a.File(LoggingConfigurator.GetConfiguration("KlipperApi").Path + "KlipperApi_log_.log", 
+                                rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true), blockWhenFull: true)
                     .Enrich.FromLogContext()
                     .MinimumLevel.ControlledBy(new LoggingLevelSwitch() { MinimumLevel = LogEventLevel.Information })
                     .Enrich.WithEnvironmentUserName()
@@ -64,8 +65,6 @@ namespace KlipperApi
 
             services.AddMvcCore(options =>
                     {
-                        //For policy server... this sets up a default authorization policy for the application in this case, 
-                        //authenticated users are required (besides controllers/actions that have [AllowAnonymous]
                         var policy = new AuthorizationPolicyBuilder()
                             .RequireAuthenticatedUser()
                             .Build();
@@ -90,15 +89,9 @@ namespace KlipperApi
                     Contact = new Contact
                     {
                         Name = "Kiran Kharade",
-                        Email = "Kiran.Kharade@klingelnberg.com"
+                        Email = "KiranAKharade@gmail.com"
                     }
                 });
-            });
-
-            services.Configure<DBConnectionSettings>(options =>
-            {
-                options.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
-                options.Database = Configuration.GetSection("MongoConnection:Database").Value;
             });
 
             services.AddIdentity<User, IdentityRole>()

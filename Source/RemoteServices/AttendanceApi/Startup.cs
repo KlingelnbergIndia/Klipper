@@ -1,6 +1,6 @@
 ﻿using AttendanceApi.DataAccess.Implementation;
 using AttendanceApi.DataAccess.Interfaces;
-using Common.DataAccess;
+using Common;
 using Common.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,8 +28,8 @@ namespace AttendanceApi
             Configuration = builder.Build();
 
             Log.Logger = new LoggerConfiguration()
-                    //.ReadFrom.Configuration(Configuration)
-                    .WriteTo.Async(a => a.File("AttendanceApi_log_.log", rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true), blockWhenFull: true)
+                    .WriteTo.Async(a => a.File(LoggingConfigurator.GetConfiguration("AttendanceApi").Path + "AttendanceApi_log_.log", 
+                                rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true), blockWhenFull: true)
                     .Enrich.FromLogContext()
                     .MinimumLevel.ControlledBy(new LoggingLevelSwitch() { MinimumLevel = LogEventLevel.Information })
                     .Enrich.WithEnvironmentUserName()
@@ -68,22 +68,10 @@ namespace AttendanceApi
                     Contact = new Contact
                     {
                         Name = "Kiran Kharade",
-                        Email = "Kiran.Kharade@klingelnberg.com"
+                        Email = "KiranAKharade@gmail.com"
                     }
                 });
             });
-
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer(o =>
-            //{
-            //    o.Authority = "https://localhost:49333";
-            //    o.Audience = "AttendanceApi";
-            //    o.RequireHttpsMetadata = false;
-            //});
 
             //Using identity server 4
             //services.AddAuthentication("Bearer")
@@ -99,12 +87,6 @@ namespace AttendanceApi
 
         private void AddMongoDBRelatedServices(IServiceCollection services)
         {
-            services.Configure<DBConnectionSettings>(options =>
-            {
-                options.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
-                options.Database = Configuration.GetSection("MongoConnection:Database").Value;
-            });
-
             services.AddTransient<IAccessPointRepository, AccessPointRepository>();
             services.AddTransient<IAccessEventRepository, AccessEventRepository>();
         }

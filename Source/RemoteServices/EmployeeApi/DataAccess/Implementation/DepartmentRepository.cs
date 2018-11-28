@@ -6,17 +6,16 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Common.DataAccess;
 
 namespace EmployeeApi.DataAccess.Implementation
 {
     public class DepartmentRepository : IDepartmentRepository
     {
-        private readonly PeopleDBContext _context = null;
+        private readonly EmployeeDBContext _context = null;
 
-        public DepartmentRepository(IOptions<DBConnectionSettings> settings)
+        public DepartmentRepository()
         {
-            _context = PeopleDBContext.GetInstance(settings);
+            _context = EmployeeDBContext.Instance;
         }
 
         public async Task AddDepartment(Department item)

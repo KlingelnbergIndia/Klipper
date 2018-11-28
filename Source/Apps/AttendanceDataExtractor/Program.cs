@@ -14,8 +14,8 @@ namespace AttendanceDataExtractor
         {
             AccessDBReader.Read();
 
-            var accessPoints = JsonConvert.SerializeObject(AttendanceManager.AccessPoints, Formatting.Indented);
-            System.IO.File.WriteAllText(@"C:\Temp\Attendance\AccessPoints.txt", accessPoints);
+            //var accessPoints = JsonConvert.SerializeObject(AttendanceManager.AccessPoints, Formatting.Indented);
+            //System.IO.File.WriteAllText(@"C:\Temp\Attendance\AccessPoints.txt", accessPoints);
 
             //var employees = JsonConvert.SerializeObject(AttendanceManager.Employees, Formatting.Indented);
             //System.IO.File.WriteAllText(@"C:\Temp\Attendance\Employees.txt", employees);

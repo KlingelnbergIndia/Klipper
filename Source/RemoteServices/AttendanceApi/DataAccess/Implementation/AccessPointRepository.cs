@@ -1,8 +1,5 @@
 using AttendanceApi.DataAccess.Interfaces;
-using Common.DataAccess;
 using Models.Core.HR.Attendance;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Serilog;
@@ -17,9 +14,9 @@ namespace AttendanceApi.DataAccess.Implementation
         private readonly AttendanceDBContext _context = null;
         readonly ILogger _logger = Log.ForContext<AccessPointRepository>();
 
-        public AccessPointRepository(IOptions<DBConnectionSettings> settings)
+        public AccessPointRepository()
         {
-            _context = AttendanceDBContext.GetInstance(settings);
+            _context = AttendanceDBContext.Instance;
         }
 
         public async Task<IEnumerable<AccessPoint>> GetAllAccessPoints()
@@ -135,7 +132,7 @@ namespace AttendanceApi.DataAccess.Implementation
             {
                 var r = await _context.AccessPoints.FindAsync(filter);
                 var accessPointsList = r.ToList();
-                if (accessPointsList == null) // r.Current.GetEnumerator().Current
+                if (accessPointsList == null)
                 {
                     return false;
                 }

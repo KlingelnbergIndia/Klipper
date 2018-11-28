@@ -1,0 +1,40 @@
+use AttendanceDB;
+
+db.createUser(
+   {
+     user: "ApiUser",
+     pwd: "Attendance#98765",
+     roles: [ "readWrite", "dbAdmin" ]
+   }
+);
+
+use AuthDB;
+
+db.createUser(
+   {
+     user: "ApiUser",
+     pwd: "Auth#98765",
+     roles: [ "readWrite", "dbAdmin" ]
+   }
+);
+
+use EmployeeDB;
+
+db.createUser(
+   {
+     user: "ApiUser",
+     pwd: "Employee#98765",
+     roles: [ "readWrite", "dbAdmin" ]
+   }
+);
+
+use OperationalsDB;
+
+db.createUser(
+   {
+     user: "ApiUser",
+     pwd: "Employee#98765",
+     roles: [ "readWrite", "dbAdmin" ]
+   }
+);
+
