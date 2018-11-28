@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Klipper.Desktop.Service.WorkTime.Policies.SoftwareGroup
+namespace Klipper.Desktop.Service.WorkTime.Policies.CommonRules
 {
-    internal class GymnasiumUsageRule : IWorkTimeRule
+    internal class FlexibleWorkStartEndTimingRule : IWorkTimeRule
     {
         public bool Validate(WorkDay context)
         {

@@ -1,14 +1,11 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Net.Http;
 using Models.Core.Employment;
 using Klipper.Desktop.Service.Login;
 using Common;
-using Klipper.Desktop.Service.WorkTime;
 using Klipper.Desktop.Service.WorkTime.Policies;
 using Klipper.Desktop.Service.Departments;
 using Klipper.Desktop.Service.WorkTime.Policies.SoftwareGroup;
-using Klipper.Desktop.Service.WorkTime.Policies.Default;
 using Klipper.Desktop.Service.WorkTime.Policies.DesignGroup;
 
 namespace Klipper.Desktop.Service.Employees
@@ -97,7 +94,7 @@ namespace Klipper.Desktop.Service.Employees
             {
                 return new DesignGroupWorkTimePolicy();
             }
-            return new DefaultWorkTimePolicy();
+            return new BaseWorkTimePolicy();
         }
 
         #endregion

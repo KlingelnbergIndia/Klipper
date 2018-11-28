@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Klipper.Desktop.Service.WorkTime.Policies.Default
+namespace Klipper.Desktop.Service.WorkTime.Policies.CommonRules
 {
-    internal class TotalWorkHoursPerDayRule : IWorkTimeRule
+    internal class TotalLunchDurationRule : IWorkTimeRule
     {
         public bool Validate(WorkDay context)
         {
