@@ -99,7 +99,8 @@ namespace Klipper.Desktop.Service.WorkTime
 
         public List<AccessEvent> SwipesAtAccessPoint(string accessPointName)
         {
-            return AllAccessEvents.Where(x => x.AccessPointName == accessPointName).ToList();
+            var swipes = AllAccessEvents.Where(x => x.AccessPointName == accessPointName).ToList();
+            return swipes.OrderBy(x => x.EventTime).ToList();
         }
 
         public int SwipeCountAtAccessPoint(string accessPointName)
@@ -137,7 +138,6 @@ namespace Klipper.Desktop.Service.WorkTime
 
                 AppliedPolicy.Validate(WorkTimeRules.GymnasiumUsageRule);
                 AppliedPolicy.Validate(WorkTimeRules.RecreationUsageRule);
-                AppliedPolicy.Validate(WorkTimeRules.TotalLunchDurationRule);
                 AppliedPolicy.Validate(WorkTimeRules.TotalWorkHoursPerDayRule);
                 AppliedPolicy.Validate(WorkTimeRules.WorkStartEndTimingRule);
             }

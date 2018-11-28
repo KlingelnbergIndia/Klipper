@@ -8,19 +8,22 @@ namespace Klipper.Desktop.Service.WorkTime.Policies
     {
         Unknown = 0,
         TimeDurationViolation_TotalDurationLessThan6Hours = 1,
-        TimeDurationViolation_RecreationLunchTimeMoreThan45Min = 2,
-        TimeSlotViolation_RecreationLunchTime = 3,
-        TimeSlotViolation_GymnasiumBefore5pm = 4,
-        OddAccessEvents_Recreation = 5,
-        OddAccessEvents_Gymnasium = 6,
-        OddAccessEvents_PremisesEntry = 7,
-        WorkingOnLeaveDay = 8,
-        WorkingOnWeekend = 9,
-        WorkingOnHoliday = 10,
-        AbsentWithoutLeave = 11,
-        AbsentWithHalfDayLeave = 12,
-        LateEntry = 13,
-        EarlyLeaving = 14,
+        TimeDurationViolation_TotalDurationLessThan9Hours = 2,
+        TimeDurationViolation_RecreationLunchTimeMoreThan45Min = 3,
+        TimeSlotViolation_RecreationLunchTime = 4,
+        TimeSlotViolation_GymnasiumBefore5pm = 5,
+        OddAccessEvents_Recreation = 6,
+        OddAccessEvents_Gymnasium = 7,
+        OddAccessEvents_PremisesEntry = 8,
+        WorkingOnLeaveDay = 9,
+        WorkingOnWeekend = 10,
+        WorkingOnHoliday = 11,
+        AbsentWithoutLeave = 12,
+        AbsentWithHalfDayLeave = 13,
+        LateEntry = 14,
+        EarlyLeaving = 15,
+        StayingLate = 16,
+        StayingVeryLate = 17,
     };
 
     public enum ViolationLevel
@@ -51,6 +54,7 @@ namespace Klipper.Desktop.Service.WorkTime.Policies
         {
             { WorkTimeViolationType.Unknown, new Tuple<string, ViolationLevel>("Unknown work-time violation", ViolationLevel.Unknown)},
             { WorkTimeViolationType.TimeDurationViolation_TotalDurationLessThan6Hours, new Tuple<string, ViolationLevel>("Time duration violation: Total work-time less than 6 hours.", ViolationLevel.Severe)},
+            { WorkTimeViolationType.TimeDurationViolation_TotalDurationLessThan9Hours, new Tuple<string, ViolationLevel>("Time duration violation: Total work-time less than 8.5 hours.", ViolationLevel.Severe)},
             { WorkTimeViolationType.TimeDurationViolation_RecreationLunchTimeMoreThan45Min, new Tuple<string, ViolationLevel>("Time duration violation: Recreation lunch time more than 45 hours.", ViolationLevel.Medium) },
             { WorkTimeViolationType.TimeSlotViolation_RecreationLunchTime, new Tuple<string, ViolationLevel>("Time slot violation: REcreation lunch time used outside stipulated slot.", ViolationLevel.Medium) },
             { WorkTimeViolationType.TimeSlotViolation_GymnasiumBefore5pm, new Tuple<string, ViolationLevel>("Time slot violation: Gymnasium used before 5 p.m.", ViolationLevel.Low) },
@@ -64,6 +68,8 @@ namespace Klipper.Desktop.Service.WorkTime.Policies
             { WorkTimeViolationType.AbsentWithHalfDayLeave, new Tuple<string, ViolationLevel>("Absent with half day leave.", ViolationLevel.Severe) },
             { WorkTimeViolationType.LateEntry, new Tuple<string, ViolationLevel>("Late entry.", ViolationLevel.Medium) },
             { WorkTimeViolationType.EarlyLeaving, new Tuple<string, ViolationLevel>("Early leaving.", ViolationLevel.Medium) },
+            { WorkTimeViolationType.StayingLate, new Tuple<string, ViolationLevel>("Staying late.", ViolationLevel.Medium) },
+            { WorkTimeViolationType.StayingVeryLate, new Tuple<string, ViolationLevel>("Staying very late.", ViolationLevel.Severe) },
         };
 
         #endregion
