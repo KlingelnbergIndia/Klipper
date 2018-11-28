@@ -7,8 +7,11 @@ namespace Klipper.Desktop.Service.WorkTime.Policies.Default
     {
         public bool Validate(WorkDay context)
         {
-
-
+            if(context.WorkTime < TimeSpan.FromHours(8.5))
+            {
+                context.Violations.Add(new WorkTimeViolation(WorkTimeViolationType.TimeDurationViolation_TotalDurationLessThan9Hours));
+                return false;
+            }
             return true;
         }
     }
