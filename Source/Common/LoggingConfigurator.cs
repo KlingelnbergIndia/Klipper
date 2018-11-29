@@ -36,6 +36,13 @@ namespace Common
                     Path = "C:/Temp/ApiLogs/"
                 }
             },
+            {
+                "OperationalsApi",
+                new LoggingConfiguration()
+                {
+                    Path = "C:/Temp/ApiLogs/"
+                }
+            },
         };
 
         static public LoggingConfiguration GetConfiguration(string serviceName)

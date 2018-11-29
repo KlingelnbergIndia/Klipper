@@ -15,7 +15,8 @@
         "Secret": "Klipperapi@12345",
         "AllowedScopes": [
           "AttendanceApi",
-          "EmployeeApi"
+          "EmployeeApi",
+          "OperationalsApi"
         ]
       },
       {
@@ -38,6 +39,10 @@
       {
         "Name": "EmployeeApi",
         "DisplayName": "Employee Api"
+      },
+      {
+        "Name": "OperationalsApi",
+        "DisplayName": "Operationals Api"
       },
       {
         "Name": "KlipperApi",
