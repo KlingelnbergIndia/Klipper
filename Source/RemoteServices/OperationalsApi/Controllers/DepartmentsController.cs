@@ -35,6 +35,13 @@ namespace OperationalsApi.Controllers
             return GetDepartmentById_Internal(id);
         }
 
+        // GET api/departments/ByDepartmentName?departmentName=Design
+        [HttpGet("ByDepartmentName")]
+        public Task<Department> Get(string departmentName)
+        {
+            return GetDepartmentByName_Internal(departmentName);
+        }
+
         // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody] Department value)
@@ -68,6 +75,11 @@ namespace OperationalsApi.Controllers
         private async Task<Department> GetDepartmentById_Internal(int id)
         {
             return await _departmentsRepository.GetDepartment(id) ?? new Department();
+        }
+
+        private async Task<Department> GetDepartmentByName_Internal(string departmentName)
+        {
+            return await _departmentsRepository.GetDepartmentByName(departmentName) ?? new Department();
         }
 
         #endregion
