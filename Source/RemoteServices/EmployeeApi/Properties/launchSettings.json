@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "PeopleApi": {
+    "EmployeeApi": {
       "commandName": "Project",
       "launchBrowser": false,
       "environmentVariables": {
