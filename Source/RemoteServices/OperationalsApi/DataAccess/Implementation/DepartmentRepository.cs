@@ -71,6 +71,23 @@ namespace OperationalsApi.DataAccess.Implementation
             }
         }
 
+        public async Task<Department> GetDepartmentByName(string departmentName)
+        {
+            try
+            {
+                var filter = Builders<Department>.Filter.Eq("Name", departmentName);
+
+                return await _context.Departments
+                                .Find(filter)
+                                .FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
+        }
+
         public async Task<bool> RemoveAllDepartments()
         {
             try
