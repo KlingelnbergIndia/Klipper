@@ -35,6 +35,15 @@ namespace Common
                 }
             },
             {
+                "OperationalsApi",
+                new ServiceAddress()
+                {
+                    Address = "localhost",
+                    Port = "4000",
+                    PortHttps = "4001"
+                }
+            },
+            {
                 "KlipperApi",
                 new ServiceAddress()
                 {
