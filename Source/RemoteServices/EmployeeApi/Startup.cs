@@ -86,7 +86,6 @@ namespace EmployeeApi
         private void AddMongoDBRelatedServices(IServiceCollection services)
         {
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-            services.AddTransient<IDepartmentRepository, DepartmentRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

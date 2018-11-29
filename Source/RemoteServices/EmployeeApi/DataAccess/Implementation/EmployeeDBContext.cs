@@ -1,6 +1,4 @@
 ﻿using Models.Core.Employment;
-using Models.Core.Operationals;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Common;
 
@@ -36,6 +34,5 @@ namespace EmployeeApi.DataAccess.Implementation
         }
 
         public IMongoCollection<Employee> Employees => _database.GetCollection<Employee>("Employees");
-        public IMongoCollection<Department> Departments => _database.GetCollection<Department>("Departments");
     }
 }

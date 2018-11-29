@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using EmployeeApi.DataAccess.Interfaces;
+using OperationalsApi.DataAccess.Interfaces;
 using Models.Core.Operationals;
 using Common.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EmployeeApi.Controllers
+namespace OperationalsApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
