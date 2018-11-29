@@ -16,7 +16,8 @@ namespace Models.Core.HR.Attendance
         MaternalLeave,
         CompensatoryOff,
         EducationalLeave,
-        Sabattical
+        Sabattical,
+        UnpaidLeave
     }
 
     public enum LeaveStatus
