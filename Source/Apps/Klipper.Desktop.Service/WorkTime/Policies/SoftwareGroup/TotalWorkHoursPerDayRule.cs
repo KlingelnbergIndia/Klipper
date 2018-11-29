@@ -9,7 +9,7 @@ namespace Klipper.Desktop.Service.WorkTime.Policies.SoftwareGroup
         {
             if (context.WorkTime < TimeSpan.FromHours(6))
             {
-                context.Violations.Add(new WorkTimeViolation(WorkTimeViolationType.TimeDurationViolation_TotalDurationLessThan9Hours));
+                context.Violations.Add(new WorkTimeViolation(WorkTimeViolationType.TimeDurationViolation_TotalDurationLessThan6Hours));
                 return false;
             }
             return true;
