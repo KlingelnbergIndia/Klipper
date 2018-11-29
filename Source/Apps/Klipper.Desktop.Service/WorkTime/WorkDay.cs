@@ -268,8 +268,12 @@ namespace Klipper.Desktop.Service.WorkTime
             }
 
             var combinedDurationOfLunchAndRecreation = OutsidePremisesTimeSpan + RecreationTimeSpan;
-            var excess = TimeSpan.FromMinutes(45.0) - combinedDurationOfLunchAndRecreation;
-            WorkTime = TotalDuration + LeaveTimeCompensation + BlockRegularizationCompensation - (excess + OutsidePremisesTimeSpan + GymnasiumTimeSpan);
+            var excess = combinedDurationOfLunchAndRecreation - TimeSpan.FromMinutes(45.0);
+            if(excess < TimeSpan.FromMinutes(0))
+            {
+                excess = TimeSpan.FromMinutes(0);
+            }
+            WorkTime = TotalDuration + LeaveTimeCompensation + BlockRegularizationCompensation - (excess + GymnasiumTimeSpan);
         }
 
         private bool CheckIfHoliday()
