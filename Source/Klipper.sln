@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KlipperApi", "RemoteService
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KlipperAuthorization", "RemoteServices\KlipperAuthorization\KlipperAuthorization.csproj", "{B1EE1E12-7B33-4216-992B-956C6C901D2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperationalsApi", "RemoteServices\OperationalsApi\OperationalsApi.csproj", "{46DC4DD8-4758-40E6-A61D-8B3DD145E66B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{B1EE1E12-7B33-4216-992B-956C6C901D2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1EE1E12-7B33-4216-992B-956C6C901D2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1EE1E12-7B33-4216-992B-956C6C901D2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46DC4DD8-4758-40E6-A61D-8B3DD145E66B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46DC4DD8-4758-40E6-A61D-8B3DD145E66B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46DC4DD8-4758-40E6-A61D-8B3DD145E66B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46DC4DD8-4758-40E6-A61D-8B3DD145E66B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{1F8E91A4-4C43-4BC5-98CB-2011A2FC373A} = {D5C65AAD-D858-44E6-BF0A-61159BA9D37A}
 		{82F2F74F-717E-45A5-AFC6-ED33AC66D5DC} = {D5C65AAD-D858-44E6-BF0A-61159BA9D37A}
 		{B1EE1E12-7B33-4216-992B-956C6C901D2D} = {D5C65AAD-D858-44E6-BF0A-61159BA9D37A}
+		{46DC4DD8-4758-40E6-A61D-8B3DD145E66B} = {D5C65AAD-D858-44E6-BF0A-61159BA9D37A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2C157D0D-629A-439B-8079-1A2231792540}
