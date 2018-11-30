@@ -50,5 +50,12 @@ namespace Models.Core.HR.Attendance
         public LeaveStatus LeaveStatus { get; set; }
 
         public string Description { get; set; }
+
+        public int ApprovingAuthorityID { get; set; }
+
+        public int NoOfDays { get; set; }
+        
+        [BsonDateTimeOptions]
+        public DateTime CreationDate { get; set; }
     }
 }

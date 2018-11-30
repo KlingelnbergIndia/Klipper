@@ -16,6 +16,8 @@ namespace Models.Core.HR.Attendance
 
         public int CarriedForwardBalance { get; set; }
 
+        public LeaveBalance LeaveBalance { get; set; }
+
         public List<Leave> ApprovedEarnedLeaves { get; set; }
 
         public List<Leave> ApprovedSickLeaves { get; set; }
