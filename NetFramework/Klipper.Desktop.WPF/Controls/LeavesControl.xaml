@@ -4,9 +4,54 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Klipper.Desktop.WPF.Controls"
+             xmlns:tabs="clr-namespace:Sparkle.Controls.Tabs;assembly=Sparkle"
+             xmlns:buttons="clr-namespace:Sparkle.Controls.Buttons;assembly=Sparkle"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Sparkle;component/StylesAndTemplates/InputElements.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
-            
+        <Border
+            Grid.Row="0"  Grid.Column="0" 
+            Background="{DynamicResource BackgroundBase_06}"/>
+        <StackPanel 
+            Grid.Row="0" Grid.Column="0"
+            Orientation="Vertical" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Top">
+
+            <TextBlock Margin="15" 
+                FontSize="40" 
+                Text="LEAVE MANAGEMENT SYSTEM" 
+                FontWeight="ExtraBold"
+                Foreground="BlueViolet"
+                HorizontalAlignment="Center"/>
+            <Border 
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch" 
+                Background="{DynamicResource BackgroundBase_09}">
+                <tabs:Tabber
+                    x:Name="TheTabber"
+                    PaneBackground="{DynamicResource BackgroundBase_06}"
+                    Margin="12"
+                    />
+            </Border>
+
+            <Button Content="Apply new Leave" 
+                    Click="applyLeave"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right"
+                    HorizontalContentAlignment="Center"
+                    FontSize="30"
+                    FontWeight="Bold"/>
+
+        </StackPanel>
+
+
     </Grid>
 </UserControl>

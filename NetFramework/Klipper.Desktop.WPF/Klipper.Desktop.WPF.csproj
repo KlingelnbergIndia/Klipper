@@ -81,6 +81,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ApplyLeaveControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\AttendanceControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -117,6 +121,9 @@
     <Compile Include="Auth.cs" />
     <Compile Include="Controls\AdminControl.xaml.cs">
       <DependentUpon>AdminControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ApplyLeaveControl.xaml.cs">
+      <DependentUpon>ApplyLeaveControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\AttendanceControl.xaml.cs">
       <DependentUpon>AttendanceControl.xaml</DependentUpon>
