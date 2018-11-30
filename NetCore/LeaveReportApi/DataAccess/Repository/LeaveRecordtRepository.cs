@@ -70,14 +70,22 @@ namespace LeaveReportApi.LeaveReportDataAccess.Repository
             }
             return totalLeavesRecord;
         }
-        public int CheckBalance(int empId)
+        public Dictionary<string, int> GetCheckBalance(int empId)
         {
-            int personalLeave = 21, sickLeave = 6;
+            int personalLeave = 21, sickLeave = 6,totalLeave;
             var leavesofEmp = _context.LeaveCollection.Find(y => y.EmployeeID.Equals(empId) && y.LeaveStatus==LeaveStatus.Approved).ToList();
             personalLeave -= leavesofEmp.Where(leave => leave.LeaveType == LeaveType.PersonalLeave).Count();
             sickLeave -= leavesofEmp.Where(leave => leave.LeaveType == LeaveType.SickLeave).Count();
-            var data = new { personalLeave, sickLeave };
-            return 1;
+            totalLeave = personalLeave + sickLeave;
+            Dictionary< string,int> dictionary = new Dictionary<string, int>();
+
+            dictionary.Add("personalLeave", personalLeave);
+
+            dictionary.Add("sickLeave", sickLeave);
+
+            dictionary.Add("totalLeave", totalLeave);
+
+            return dictionary;
         }
     }
 }

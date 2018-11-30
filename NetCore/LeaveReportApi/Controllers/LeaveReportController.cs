@@ -70,11 +70,9 @@ namespace EmployeeApi.Controllers
         [Route("CheckBalance/empId")]
         public IActionResult GetBalance(int empId)
         {
-            int personalLeave = 21, sickLeave = 6,TotalBalance;
-            TotalBalance = personalLeave + sickLeave;
-            _leaveReportService.CheckBalance(empId);
-            List<LeaveRecord> list = _leaveReportService.LeavesForAllEmployee();
-            return Ok(list);
+            Dictionary< string,int> dictionary ;
+            dictionary = _leaveReportService.GetCheckBalance(empId);
+            return Ok(dictionary);
         }
     }
 }

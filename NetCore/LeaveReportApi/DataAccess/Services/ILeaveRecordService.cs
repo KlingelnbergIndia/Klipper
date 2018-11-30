@@ -12,6 +12,6 @@ namespace LeaveReportApi.LeaveReportDataAccess.Services
         List<LeaveRecord> LeavesForAllEmployee();
         LeaveRecord TotalLeaveByEmpId(int empId);
         List<LeaveRecord> TotalLeaveInTeam(Department department);
-        int CheckBalance(int empId);
+        Dictionary<string, int> GetCheckBalance(int empId);
     }
 }
