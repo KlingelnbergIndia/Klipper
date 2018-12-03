@@ -4,11 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:progress="clr-namespace:Sparkle.Controls.Progress;assembly=Sparkle"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" >
 
-
-    <Grid>
+    <Grid ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" Height="400">
         <StackPanel Name="LoaderPanel" Visibility="Visible">
             <Border 
 				CornerRadius="4"
@@ -18,20 +16,26 @@
                 <progress:Loader x:Name="DataLoaderAnimation"  Margin="15 100"/>
             </Border>
         </StackPanel>
-
-        <ListView Name="employeeList" Visibility="Hidden" Background="#222D34" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" Loaded="EmployeeList_LoadedAsync">
+        
+        <ListView Name="employeeList" 
+                  Visibility="Hidden" 
+                  Background="#222D34" 
+                  VerticalAlignment="Stretch" 
+                  HorizontalAlignment="Stretch" 
+                  Loaded="EmployeeList_LoadedAsync">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
                         <Border Grid.Column="0" BorderBrush="#404B52" Background="#003c56" BorderThickness="1" Margin="2" >
-                            <Image Margin="1" Height="70" Source="pack://application:,,,/Images/profilePic.png"></Image>
+                            <Image Margin="1" Height="70" Width="70" Stretch="UniformToFill" Source="{Binding Photo}"/>
                         </Border>
-                        <Border Grid.Column="1" BorderThickness="1" Margin="1" >
+                        <Border Grid.Column="1" BorderThickness="0" Margin="1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*"/>
@@ -56,24 +60,18 @@
                                     <TextBlock Text="Title:" Foreground="YellowGreen" Margin="1"/>
                                     <TextBlock Text="{Binding Title}" Foreground="#aeb1b2" Margin="1"/>
                                 </StackPanel>
-                                <!--<StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Margin="5 0 10 0" >
-                                                    <TextBlock Text="Birth Date:" Foreground="YellowGreen" Margin="1"/>
-                                                    <TextBlock Text="{Binding BirthDate}" Foreground="#aeb1b2" Margin="1"/>
-                                                </StackPanel>-->
                                 <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="3"  Margin="5 0 10 0">
                                     <TextBlock Text="Email:" Foreground="YellowGreen" Margin="1"/>
                                     <TextBlock Text="{Binding Email}" Foreground="#aeb1b2" Margin="1"/>
                                 </StackPanel>
-                                <!--<StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2"  Margin="5 0 10 0">
-                                                    <TextBlock Text="Gender:" Foreground="YellowGreen" Margin="1"/>
-                                                    <TextBlock Text="{Binding Gender}" Foreground="#aeb1b2" Margin="1"/>
-                                                </StackPanel>-->
                             </Grid>
+                        </Border>
+                        <Border Grid.Column="2" HorizontalAlignment="Right" >
+                            <Image Margin="1" Height="70" Width="70" Stretch="UniformToFill" Source="{Binding Photo}"/>
                         </Border>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
     </Grid>
 </UserControl>

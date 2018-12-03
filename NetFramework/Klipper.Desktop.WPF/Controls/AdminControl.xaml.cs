@@ -85,7 +85,7 @@ namespace Klipper.Desktop.WPF.Controls
             {
                 InteractionArea.Content = new EmployeeListPanelControl(); //load dynamic panel
             }
-            else
+            else if(e.Current.Header.Equals("Settings", StringComparison.OrdinalIgnoreCase))
             {
                 InteractionArea.Content = null;
             }
@@ -113,6 +113,11 @@ namespace Klipper.Desktop.WPF.Controls
             btn.Clicked += (s, args) => { dlg.Close(); };
             dlg.AddButton(btn);
             dlg.ShowDialog();
+        }
+
+        private void RefreshEmployee_click(object sender, RoutedEventArgs e)
+        {
+            InteractionArea.Content = new EmployeeListPanelControl();
         }
     }
 }

@@ -6,6 +6,7 @@ using Sparkle.DataStructures;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace Klipper.Desktop.WPF.CustomControls
 {
@@ -23,6 +25,7 @@ namespace Klipper.Desktop.WPF.CustomControls
     {
         public event EventHandler Closed = null;
         private int _SelectedIndex = 0;
+        private static byte[] profileImageByteSream;
         public int SelectedIndex
         {
             get { return _SelectedIndex; }
@@ -68,6 +71,7 @@ namespace Klipper.Desktop.WPF.CustomControls
         {
             try
             {
+                
                 Employee empData = new Employee()
                 {
                     ID = Convert.ToInt32(IDTextBox.Text),
@@ -85,6 +89,7 @@ namespace Klipper.Desktop.WPF.CustomControls
                     PANNumber = PanNumberTextBox.Text,
                     AadharNumber = AadharNumberTextBox.Text,
                     JoiningDate = DateTime.UtcNow,
+                    Photo = profileImageByteSream
                 };
                 using (HttpClient _client = new HttpClient())
                 {
@@ -127,6 +132,31 @@ namespace Klipper.Desktop.WPF.CustomControls
         private void SaveButton_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void UploadButton_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            var profileImagePicker = new Microsoft.Win32.OpenFileDialog();
+            profileImagePicker.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+
+            if ((bool)profileImagePicker.ShowDialog())
+            {
+                profileImageByteSream = File.ReadAllBytes(profileImagePicker.FileName);
+                using (var memStream = new MemoryStream(profileImageByteSream))
+                {
+                    BitmapFrame image = BitmapFrame.Create(memStream,
+                        BitmapCreateOptions.IgnoreImageCache,
+                        BitmapCacheOption.OnLoad);
+                    ProfileImage.Source = image;
+                }
+            }
+        }
+
+        private void ThisUserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            profileImageByteSream = null;
         }
     }
 }

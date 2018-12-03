@@ -2,11 +2,13 @@
 using Models.Core.Employment;
 using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace Klipper.Desktop.WPF.CustomControls
 {
@@ -15,9 +17,19 @@ namespace Klipper.Desktop.WPF.CustomControls
     /// </summary>
     public partial class EmployeeListPanelControl : UserControl
     {
+        private readonly byte[] defaultProfileImage;
         public EmployeeListPanelControl()
         {
             InitializeComponent();
+           
+            using (MemoryStream ms = new MemoryStream())
+            {
+                BitmapImage DefaultProfileImage = new BitmapImage(new Uri("pack://application:,,,/Images/profilePic.png"));
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(DefaultProfileImage));
+                encoder.Save(ms);
+                defaultProfileImage = ms.ToArray();
+            }
         }
 
         private async Task<IQueryable> GetAllEmployeesAsync()
@@ -38,7 +50,10 @@ namespace Klipper.Desktop.WPF.CustomControls
                     x.Email,
                     FullName = $"{x.Prefix} {x.FirstName} {x.LastName}",
                     Gender = ((Gender)x.Gender).ToString(),
-                }).AsQueryable();
+                    Photo = x.Photo ?? defaultProfileImage,
+                })
+                .OrderByDescending(x=>x.ID)
+                .AsQueryable();
             return jsonData;
         }
 
@@ -47,7 +62,7 @@ namespace Klipper.Desktop.WPF.CustomControls
             DataLoaderAnimation.LoadingText = "Loading data...";
             DataLoaderAnimation.SwitchToLoader();
             employeeList.ItemsSource = await GetAllEmployeesAsync();
-            await Task.Delay(3000);
+            await Task.Delay(1000);
             LoaderPanel.Visibility = Visibility.Hidden;
             employeeList.Visibility = Visibility.Visible;
         }

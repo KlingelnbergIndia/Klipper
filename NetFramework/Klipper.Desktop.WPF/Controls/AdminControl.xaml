@@ -45,7 +45,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
-                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <StackPanel Background="#404B52" Grid.Row="0">
                     <Border BorderThickness="0.5" Margin="0.5" >
@@ -75,7 +75,7 @@
                                     Cursor="Hand" 
                                     Background="Transparent"
                                     ToolTip="Refresh" 
-                                    Click="AddEmployee_click">
+                                    Click="RefreshEmployee_click">
                                 <Image Height="40" Width="40" Cursor="Hand" ToolTip="Refresh" 
                                        Source="pack://application:,,,/Images/refresh.png"/>
                             </Button>
@@ -114,7 +114,7 @@
 
                     <ContentControl x:Name="InteractionArea" 
                         HorizontalAlignment="Stretch" 
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Stretch"/>
 
                 </StackPanel>
             </Grid>
