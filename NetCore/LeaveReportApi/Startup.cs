@@ -32,9 +32,9 @@ namespace LeaveReportApi
             services.AddMvcCore();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             //services.AddTransient<IEmployeeRepositoryTest, EmployeeRepositoryTest>();
-            services.AddTransient<ILeaveRecordService, LeaveRecordRepository>();
-            services.AddTransient<ILeaveService, LeaveRepository>();
-            services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+            services.AddTransient<ILeaveRecordRepository, LeaveRecordMongoDbRepository>();
+            services.AddTransient<ILeaveRepositorycs, LeaveMongoDbRepository>();
+            services.AddTransient<IDepartmentRepository, DepartmentMongoDbRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

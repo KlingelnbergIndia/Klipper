@@ -12,15 +12,16 @@ namespace LeaveReportApi.Controllers
     [Route("api/[controller]")]
     public class LeaveController : Controller
     {
-        private ILeaveService _repository;
+        private ILeaveRepositorycs _repository;
 
-        public LeaveController(ILeaveService repository)
+        public LeaveController(ILeaveRepositorycs repository)
         {
             _repository = repository;
         }
+
         //POST api/Leave
-    [HttpPost]
-    public IActionResult Add([FromBody] Leave leave)
+        [HttpPost]
+        public IActionResult Add([FromBody] Leave leave)
         {
             if (leave == null)
             {

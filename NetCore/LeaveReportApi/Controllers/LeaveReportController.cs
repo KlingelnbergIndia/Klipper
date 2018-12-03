@@ -12,96 +12,106 @@ namespace EmployeeApi.Controllers
     [Route("api/[controller]")]
     public class LeaveReportController : Controller
     {
-        private ILeaveRecordService _leaveReportService;
+        private ILeaveRecordRepository _leaveRecordRepository;
         private IDepartmentRepository _departmentRepository;
 
-        public LeaveReportController(ILeaveRecordService leaveRepository1, IDepartmentRepository departmentRepository)
+        public LeaveReportController(ILeaveRecordRepository leaveRecordRepository, IDepartmentRepository departmentRepository)
         {
-            _leaveReportService = leaveRepository1;
+            _leaveRecordRepository = leaveRecordRepository;
             _departmentRepository = departmentRepository;
         }
 
-        // GET api/LeaveReport/TotalLeave
+        // GET api/LeaveReport/TotalLeavesTaken
         [HttpGet]
-        [Route("TotalLeave")]
-        public IActionResult GetTotalLeave()
+        [Route("TotalLeavesTaken")]
+        public IActionResult GetTotalLeavesTaken()
         {
-            List<LeaveRecord> list = _leaveReportService.LeavesForAllEmployee();
-            return Ok(list);
+            List<LeaveRecord> listOfLeaveRecord = _leaveRecordRepository.LeaveOfAllEmployee();
+            return Ok(listOfLeaveRecord);
         }
 
-        // GET api/LeaveReport/empId?empId=63
+        // GET api/LeaveReport/TotalLeavesTakenByEmpId/empId?empId=63
         [HttpGet]
-        [Route("empId")]
-        public IActionResult GetTotalLeaveByEmpId(int empId)
+        [Route("TotalLeavesTakenByEmpId/empId")]
+        public IActionResult GetTotalLeavesTakenByEmpId(int empId)
         {
-            //if (!_employeeRepository.Exists(empId))
-            //{
-            //        throw new Exception("Employee Id is not valid");
-            // }
-            var result = _leaveReportService.TotalLeaveByEmpId(empId);
-            return Ok(result);
+            int employeeId = 0;
+            List<Department> listOfDepartment = _departmentRepository.GetAllDepartment();
+            foreach(var department in listOfDepartment)
+            {
+                employeeId = department.Employees.Find(k=>k.Equals(empId));
+            }
+            if (employeeId==0)
+            {
+                throw new Exception("Employee Id is not valid");
+            }
+            var leavesOfEmployee = _leaveRecordRepository.GetTotalLeaveByEmpId(empId);
+            return Ok(leavesOfEmployee);
         }
 
-        // GET api/LeaveReport/deptId?deptId=13
+        // GET api/LeaveReport/TotalLeavesTakenInTeam/deptId?deptId=13
         [HttpGet]
-        [Route("deptId")]
-        public IActionResult GetTotalLeaveInTeam(int deptId)
+        [Route("TotalLeavesTakenInTeam/DeptId")]
+        public IActionResult GetTotalLeavesTakenInTeam(int deptId)
         {
             Department department = _departmentRepository.GetDepartment(deptId);
-
             if (department == null)
             {
                 throw new Exception("Department Id is not valid");
             }
-
-            List<LeaveRecord> listOfRecord = _leaveReportService.TotalLeaveInTeam(department);
-
-            if (listOfRecord.Count.Equals(0))
+            List<LeaveRecord> listOfLeaveRecord = _leaveRecordRepository.GetTotalLeavesInTeam(department);
+            if (listOfLeaveRecord.Count.Equals(0))
             {
                 return Ok("NO LEAVE TAKEN");
             }
-            var data = new { listOfRecord, listOfRecord.Count };
-            return Ok(data);
-
+            var response = new { listOfLeaveRecord, listOfLeaveRecord.Count };
+            return Ok(response);
         }
 
-        // GET api/LeaveReport/GetBalanceByEmpId/empId?empId=63
+        // GET api/LeaveReport/LeaveBalanceByEmpId/empId?empId=63
         [HttpGet]
-        [Route("GetBalanceByEmpId/empId")]
-        public IActionResult GetBalanceByEmpId(int empId)
+        [Route("LeaveBalanceByEmpId/empId")]
+        public IActionResult GetLeaveBalanceByEmpId(int empId)
         {
-            Dictionary<string, int> dictionary;
-            dictionary = _leaveReportService.GetBalanceByEmp(empId);
-            return Ok(dictionary);
+            int employeeId = 0;
+            List<Department> listOfDepartment = _departmentRepository.GetAllDepartment();
+            foreach (var department in listOfDepartment)
+            {
+                employeeId = department.Employees.Find(k => k.Equals(empId));
+            }
+            if (employeeId == 0)
+            {
+                throw new Exception("Employee Id is not valid");
+            }
+            Dictionary<string, int> leaveBalance;
+            leaveBalance = _leaveRecordRepository.GetLeaveBalanceByEmployee(empId);
+            return Ok(leaveBalance);
         }
 
-        // GET api/LeaveReport/GetBalanceByDeptId/deptId?deptId=13
+        // GET api/LeaveReport/LeaveBalanceByDeptId/deptId?deptId=13
         [HttpGet]
-        [Route("GetBalanceByDeptId/deptId")]
-        public IActionResult GetBalanceByDeptId(int deptId)
+        [Route("LeaveBalanceByDeptId/deptId")]
+        public IActionResult GetLeaveBalanceByDeptId(int deptId)
         {
             Department department = _departmentRepository.GetDepartment(deptId);
-
             if (department == null)
             {
                 throw new Exception("Department Id is not valid");
             }
-            List<Dictionary<int, Dictionary<string, int>>> listOfBalance;
-            listOfBalance = _leaveReportService.GetBalanceByDept(department);
-            return Ok(listOfBalance);
+            List<Dictionary<int, Dictionary<string, int>>> listOfLeaveBalance;
+            listOfLeaveBalance = _leaveRecordRepository.GetLeaveBalanceByDepartment(department);
+            return Ok(listOfLeaveBalance);
         }
 
-        // GET api/LeaveReport/GetBalanceOfAllEmp
+        // GET api/LeaveReport/LeaveBalanceOfAllEmp
         [HttpGet]
-        [Route("GetBalanceOfAllEmp")]
-        public IActionResult GetBalanceOfAllEmployee()
+        [Route("LeaveBalanceOfAllEmp")]
+        public IActionResult GetLeaveBalanceOfAllEmployee()
         {
-            List<Department> department = _departmentRepository.GetAllDepartment();
-            Dictionary<int, List<Dictionary<int, Dictionary<string, int>>>> listOfEmpBalanceByDept;
-            listOfEmpBalanceByDept = _leaveReportService.GetBalanceOfAllEmp(department);
-
-            return Ok(listOfEmpBalanceByDept);
+            List<Department> listOfDepartment = _departmentRepository.GetAllDepartment();
+            Dictionary<int,List<Dictionary<int, Dictionary<string, int>>>> listOfLeaveBalanceByDept;
+            listOfLeaveBalanceByDept = _leaveRecordRepository.GetLeaveBalanceOfAllEmployee(listOfDepartment);
+            return Ok(listOfLeaveBalanceByDept);
         }
     }
 }

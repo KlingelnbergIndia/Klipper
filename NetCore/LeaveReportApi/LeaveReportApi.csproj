@@ -5,10 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="DataAccess\Interfaces\ILeaveRepositorycs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\Common\DBConnectionSettings.cs" Link="Common\DBConnectionSettings.cs" />
     <Compile Include="..\Common\DBContext.cs" Link="Common\DBContext.cs" />
     <Compile Include="..\Common\NoCacheAttribute.cs" Link="Common\NoCacheAttribute.cs" />
     <Compile Include="..\Common\SerilogMiddleware.cs" Link="Common\SerilogMiddleware.cs" />
+    <Compile Include="DataAccess\Interfaces\ILeaveRepositorycs" />
   </ItemGroup>
 
   <ItemGroup>

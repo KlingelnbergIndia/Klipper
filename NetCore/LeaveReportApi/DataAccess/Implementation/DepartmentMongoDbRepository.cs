@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace LeaveReportApi.DataAccess.Repository
 {
-    public class DepartmentRepository:IDepartmentRepository
+    public class DepartmentMongoDbRepository:IDepartmentRepository
     {
         private DeptDbContext _context;
 
-        public DepartmentRepository(IOptions<DBConnectionSettings> settings)
+        public DepartmentMongoDbRepository(IOptions<DBConnectionSettings> settings)
         {
             _context = DeptDbContext.GetInstance(settings);
         }

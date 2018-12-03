@@ -7,10 +7,10 @@ using MongoDB.Driver;
 
 namespace LeaveReportApi.LeaveDataAccess.Repository
 {
-    public class DbContext 
+    public class LeaveDbContext 
     {
         protected readonly IMongoDatabase _database = null;
-        public DbContext(IOptions<DBConnectionSettings> settings)
+        public LeaveDbContext(IOptions<DBConnectionSettings> settings)
         {
             var client = new MongoClient(settings.Value.ConnectionString);
             if (client != null)
@@ -18,14 +18,14 @@ namespace LeaveReportApi.LeaveDataAccess.Repository
                 _database = client.GetDatabase(settings.Value.Database);
             }
         }
-        public static DbContext Instance { get; private set; } = null;
+        public static LeaveDbContext Instance { get; private set; } = null;
 
-        public static DbContext GetInstance(IOptions<DBConnectionSettings> settings)
+        public static LeaveDbContext GetInstance(IOptions<DBConnectionSettings> settings)
         {
           
             if (Instance == null)
             {
-                Instance = new DbContext(settings);
+                Instance = new LeaveDbContext(settings);
             }
             return Instance;
         }

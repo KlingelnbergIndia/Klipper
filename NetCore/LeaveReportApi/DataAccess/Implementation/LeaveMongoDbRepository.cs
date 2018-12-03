@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace LeaveReportApi.LeaveReportDataAccess.Repository
 {
-    public class LeaveRepository:ILeaveService
+    public class LeaveMongoDbRepository:ILeaveRepositorycs
     {
-        public DbContext _context;
+        public LeaveDbContext _context;
 
-        public LeaveRepository(IOptions<DBConnectionSettings> settings)
+        public LeaveMongoDbRepository(IOptions<DBConnectionSettings> settings)
         {
-            _context = DbContext.GetInstance(settings);
+            _context = LeaveDbContext.GetInstance(settings);
         }
         public void AddLeave(Leave leave)
         {

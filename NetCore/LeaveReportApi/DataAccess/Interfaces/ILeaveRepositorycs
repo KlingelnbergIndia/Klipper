@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeaveReportApi.LeaveReportDataAccess.Services
 {
-    public interface ILeaveService
+    public interface ILeaveRepositorycs
     {
        void AddLeave(Leave leave);
     }
