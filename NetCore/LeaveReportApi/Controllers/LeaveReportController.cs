@@ -71,7 +71,7 @@ namespace EmployeeApi.Controllers
         [Route("GetBalanceByEmpId/empId")]
         public IActionResult GetBalanceByEmpId(int empId)
         {
-            Dictionary< string,int> dictionary ;
+            Dictionary<string, int> dictionary;
             dictionary = _leaveReportService.GetBalanceByEmp(empId);
             return Ok(dictionary);
         }

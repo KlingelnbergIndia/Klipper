@@ -18,6 +18,7 @@ namespace LeaveReportApi.LeaveReportDataAccess.Repository
         {
             _context = DbContext.GetInstance(settings);
         }
+
         public List<LeaveRecord> LeavesForAllEmployee()
         {
             
@@ -51,6 +52,7 @@ namespace LeaveReportApi.LeaveReportDataAccess.Repository
             return leaveRecord;
 
         }
+
         public List<LeaveRecord> TotalLeaveInTeam(Department department)
         {
             var distinctEmployees = department.Employees;
@@ -69,6 +71,7 @@ namespace LeaveReportApi.LeaveReportDataAccess.Repository
             }
             return totalLeavesRecord;
         }
+
         public Dictionary<string, int> GetBalanceByEmp(int empId)
         {
             int personalLeave = 21, sickLeave = 6,totalLeave;
@@ -86,6 +89,7 @@ namespace LeaveReportApi.LeaveReportDataAccess.Repository
 
             return dictionary;
         }
+
         public List<Dictionary<int, Dictionary<string,int>>> GetBalanceByDept(Department department)
         {
             var distinctEmployees = department.Employees;
@@ -109,6 +113,7 @@ namespace LeaveReportApi.LeaveReportDataAccess.Repository
             }
             return listOfEmp;
         }
+
         public Dictionary<int, List<Dictionary<int, Dictionary<string, int>>>> GetBalanceOfAllEmp(List<Department> departments)
         {
             Dictionary<int, List<Dictionary<int, Dictionary<string, int>>>> listOfDeptData = new Dictionary<int, List<Dictionary<int, Dictionary<string, int>>>>();
@@ -118,8 +123,6 @@ namespace LeaveReportApi.LeaveReportDataAccess.Repository
                 List<Dictionary<int, Dictionary<string, int>>> listOfEmp = new List<Dictionary<int, Dictionary<string, int>>>();
                 foreach (var emp in department.Employees)
                 {
-                    
-
                     int personalLeave = 21, sickLeave = 6, totalLeave;
                     var leavesofEmp = _context.LeaveCollection.Find(y => y.EmployeeID.Equals(emp) && y.LeaveStatus == LeaveStatus.Approved).ToList();
                     personalLeave -= leavesofEmp.Where(leave => leave.LeaveType == LeaveType.PersonalLeave).Count();
