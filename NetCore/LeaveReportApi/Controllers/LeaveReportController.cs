@@ -83,7 +83,7 @@ namespace EmployeeApi.Controllers
             {
                 throw new Exception("Employee Id is not valid");
             }
-            Dictionary<string, int> leaveBalance;
+            LeaveBalance leaveBalance;
             leaveBalance = _leaveRecordRepository.GetLeaveBalanceByEmployee(empId);
             return Ok(leaveBalance);
         }
@@ -98,7 +98,7 @@ namespace EmployeeApi.Controllers
             {
                 throw new Exception("Department Id is not valid");
             }
-            List<Dictionary<int, Dictionary<string, int>>> listOfLeaveBalance;
+            List<LeaveBalance> listOfLeaveBalance;
             listOfLeaveBalance = _leaveRecordRepository.GetLeaveBalanceByDepartment(department);
             return Ok(listOfLeaveBalance);
         }
@@ -109,7 +109,7 @@ namespace EmployeeApi.Controllers
         public IActionResult GetLeaveBalanceOfAllEmployee()
         {
             List<Department> listOfDepartment = _departmentRepository.GetAllDepartment();
-            Dictionary<int,List<Dictionary<int, Dictionary<string, int>>>> listOfLeaveBalanceByDept;
+            Dictionary<int, List<LeaveBalance>> listOfLeaveBalanceByDept;
             listOfLeaveBalanceByDept = _leaveRecordRepository.GetLeaveBalanceOfAllEmployee(listOfDepartment);
             return Ok(listOfLeaveBalanceByDept);
         }

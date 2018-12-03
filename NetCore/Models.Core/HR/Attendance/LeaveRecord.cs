@@ -22,5 +22,6 @@ namespace Models.Core.HR.Attendance
 
         public List<Leave> PendingAppliedEarnedLeaves { get; set; }
 
+
     }
 }

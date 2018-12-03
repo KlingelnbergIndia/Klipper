@@ -67,66 +67,60 @@ namespace LeaveReportApi.LeaveReportDataAccess.Repository
             return listOfLeaveRecord;
         }
 
-        public Dictionary<string, int> GetLeaveBalanceByEmployee(int empId)
+        public LeaveBalance GetLeaveBalanceByEmployee(int empId)
         {
             int personalLeave = 21, sickLeave = 6, totalLeave;
-            var approvedLeaves = _context.LeaveCollection.Find(y => y.EmployeeID.Equals(empId) && y.LeaveStatus == LeaveStatus.Approved).ToList();
-            personalLeave -= approvedLeaves.Where(leave => leave.LeaveType == LeaveType.PersonalLeave).Count();
-            sickLeave -= approvedLeaves.Where(leave => leave.LeaveType == LeaveType.SickLeave).Count();
-            totalLeave = personalLeave + sickLeave;
-            Dictionary<string, int> leavesRemaining = new Dictionary<string, int>();
-            leavesRemaining.Add("personalLeave", personalLeave);
-            leavesRemaining.Add("sickLeave", sickLeave);
-            leavesRemaining.Add("totalLeave", totalLeave);
-            return leavesRemaining;
+            var leavesofEmp = _context.LeaveCollection.Find(y => y.EmployeeID.Equals(empId) && y.LeaveStatus == LeaveStatus.Approved).ToList();
+            personalLeave -= leavesofEmp.Where(leave => leave.LeaveType == LeaveType.PersonalLeave).Count();
+            sickLeave -= leavesofEmp.Where(leave => leave.LeaveType == LeaveType.SickLeave).Count();
+            LeaveBalance leaveBalance = new LeaveBalance();
+            leaveBalance.EmployeeID = empId;
+            leaveBalance.Personal = personalLeave;
+            leaveBalance.Sick = sickLeave;
+            return leaveBalance;
         }
 
-        public List<Dictionary<int, Dictionary<string, int>>> GetLeaveBalanceByDepartment(Department department)
+        public List<LeaveBalance> GetLeaveBalanceByDepartment(Department department)
         {
             var distinctEmployees = department.Employees;
-            List<Dictionary<int, Dictionary<string, int>>> listOfLeavesRemaining = new List<Dictionary<int, Dictionary<string, int>>>();
+            List<LeaveBalance> listOfLeaveBalance = new List<LeaveBalance>();
             foreach (var employee in distinctEmployees)
             {
                 int personalLeave = 21, sickLeave = 6, totalLeave;
-                var approvedLeaves = _context.LeaveCollection.Find(y => y.EmployeeID.Equals(employee) && y.LeaveStatus == LeaveStatus.Approved).ToList();
-                personalLeave -= approvedLeaves.Where(leave => leave.LeaveType == LeaveType.PersonalLeave).Count();
-                sickLeave -= approvedLeaves.Where(leave => leave.LeaveType == LeaveType.SickLeave).Count();
-                totalLeave = personalLeave + sickLeave;
-                Dictionary<int, Dictionary<string, int>> leavesRemainingByEmployeeId = new Dictionary<int, Dictionary<string, int>>();
-                Dictionary<string, int> leavesRemaining = new Dictionary<string, int>();
-                leavesRemaining.Add("personalLeave", personalLeave);
-                leavesRemaining.Add("sickLeave", sickLeave);
-                leavesRemaining.Add("totalLeave", totalLeave);
-                leavesRemainingByEmployeeId.Add(employee, leavesRemaining);
-                listOfLeavesRemaining.Add(leavesRemainingByEmployeeId);
+                var leavesofEmp = _context.LeaveCollection.Find(y => y.EmployeeID.Equals(employee) && y.LeaveStatus == LeaveStatus.Approved).ToList();
+                personalLeave -= leavesofEmp.Where(leave => leave.LeaveType == LeaveType.PersonalLeave).Count();
+                sickLeave -= leavesofEmp.Where(leave => leave.LeaveType == LeaveType.SickLeave).Count();
+                LeaveBalance leaveBalance = new LeaveBalance();
+                leaveBalance.EmployeeID = employee;
+                leaveBalance.Personal = personalLeave;
+                leaveBalance.Sick = sickLeave;
+                listOfLeaveBalance.Add(leaveBalance);
+
             }
-            return listOfLeavesRemaining;
+            return listOfLeaveBalance;
         }
 
-        public Dictionary<int, List<Dictionary<int, Dictionary<string, int>>>> GetLeaveBalanceOfAllEmployee(List<Department> departments)
+        public Dictionary<int,List<LeaveBalance>> GetLeaveBalanceOfAllEmployee(List<Department> departments)
         {
-            Dictionary<int, List<Dictionary<int, Dictionary<string, int>>>> leavesRemainingByDepartmentId = new Dictionary<int, List<Dictionary<int, Dictionary<string, int>>>>();
+            Dictionary<int, List<LeaveBalance>> leaveBalanceByDept = new Dictionary<int, List<LeaveBalance>>();
             foreach (var department in departments)
             {
-                List<Dictionary<int, Dictionary<string, int>>> listOfLeavesRemaining = new List<Dictionary<int, Dictionary<string, int>>>();
+                List<LeaveBalance> listOfLeaveBalance = new List<LeaveBalance>();
                 foreach (var employee in department.Employees)
                 {
                     int personalLeave = 21, sickLeave = 6, totalLeave;
                     var leavesofEmp = _context.LeaveCollection.Find(y => y.EmployeeID.Equals(employee) && y.LeaveStatus == LeaveStatus.Approved).ToList();
                     personalLeave -= leavesofEmp.Where(leave => leave.LeaveType == LeaveType.PersonalLeave).Count();
                     sickLeave -= leavesofEmp.Where(leave => leave.LeaveType == LeaveType.SickLeave).Count();
-                    totalLeave = personalLeave + sickLeave;
-                    Dictionary<int, Dictionary<string, int>> leavesRemainingByEmployeeId = new Dictionary<int, Dictionary<string, int>>();
-                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
-                    dictionary.Add("personalLeave", personalLeave);
-                    dictionary.Add("sickLeave", sickLeave);
-                    dictionary.Add("totalLeave", totalLeave);
-                    leavesRemainingByEmployeeId.Add(employee, dictionary);
-                    listOfLeavesRemaining.Add(leavesRemainingByEmployeeId);
+                    LeaveBalance leaveBalance = new LeaveBalance();
+                    leaveBalance.EmployeeID = employee;
+                    leaveBalance.Personal = personalLeave;
+                    leaveBalance.Sick = sickLeave;
+                    listOfLeaveBalance.Add(leaveBalance);
                 }
-                leavesRemainingByDepartmentId.Add(department.ID, listOfLeavesRemaining);
+                leaveBalanceByDept.Add(department.ID, listOfLeaveBalance);
             }
-            return leavesRemainingByDepartmentId;
+            return leaveBalanceByDept;
         }
     }
 }
