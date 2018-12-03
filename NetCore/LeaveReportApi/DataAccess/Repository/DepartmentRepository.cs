@@ -23,5 +23,9 @@ namespace LeaveReportApi.DataAccess.Repository
         {
             return _context.DepartmentCollection.Find(k => k.ID.Equals(deptId)).FirstOrDefault();
         }
+        public List<Department> GetAllDepartment()
+        {
+            return _context.DepartmentCollection.Find(_ => true).ToList();
+        }
     }
 }

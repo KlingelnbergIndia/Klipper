@@ -1,4 +1,5 @@
-﻿using Models.Core.HR.Attendance;
+﻿using Models.Core.Employment;
+using Models.Core.HR.Attendance;
 using Models.Core.Operationals;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,6 @@ namespace LeaveReportApi.LeaveReportDataAccess.Services
         List<LeaveRecord> TotalLeaveInTeam(Department department);
         Dictionary<string, int> GetBalanceByEmp(int empId);
         List<Dictionary<int, Dictionary<string, int>>> GetBalanceByDept(Department department);
+        Dictionary<int, List<Dictionary<int, Dictionary<string, int>>>> GetBalanceOfAllEmp(List<Department> departments);
     }
 }

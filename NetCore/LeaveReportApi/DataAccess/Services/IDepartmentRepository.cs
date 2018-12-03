@@ -9,5 +9,6 @@ namespace LeaveReportApi.DataAccess.Services
     public interface IDepartmentRepository
     {
         Department GetDepartment(int deptid);
+        List<Department> GetAllDepartment();
     }
 }

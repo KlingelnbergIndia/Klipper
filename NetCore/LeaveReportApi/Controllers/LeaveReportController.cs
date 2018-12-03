@@ -1,6 +1,7 @@
 ﻿using LeaveReportApi.DataAccess.Services;
 using LeaveReportApi.LeaveReportDataAccess.Services;
 using Microsoft.AspNetCore.Mvc;
+using Models.Core.Employment;
 using Models.Core.HR.Attendance;
 using Models.Core.Operationals;
 using System;
@@ -89,6 +90,18 @@ namespace EmployeeApi.Controllers
             List<Dictionary<int, Dictionary<string, int>>> listOfBalance;
             listOfBalance = _leaveReportService.GetBalanceByDept(department);
             return Ok(listOfBalance);
+        }
+
+        // GET api/LeaveReport/GetBalanceOfAllEmp
+        [HttpGet]
+        [Route("GetBalanceOfAllEmp")]
+        public IActionResult GetBalanceOfAllEmployee()
+        {
+            List<Department> department = _departmentRepository.GetAllDepartment();
+            Dictionary<int, List<Dictionary<int, Dictionary<string, int>>>> listOfEmpBalanceByDept;
+            listOfEmpBalanceByDept = _leaveReportService.GetBalanceOfAllEmp(department);
+
+            return Ok(listOfEmpBalanceByDept);
         }
     }
 }
