@@ -110,13 +110,13 @@
                         </Grid>
                     </Border>
                 </StackPanel>
-                <StackPanel Grid.Row="1" Background="#222D34">
+                <ScrollViewer Grid.Row="1" Background="#222D34">
 
                     <ContentControl x:Name="InteractionArea" 
                         HorizontalAlignment="Stretch" 
                         VerticalAlignment="Center"/>
 
-                </StackPanel>
+                </ScrollViewer>
             </Grid>
         </Border>
 

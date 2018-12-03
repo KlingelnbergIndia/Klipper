@@ -1,5 +1,6 @@
 ﻿using Sparkle.Appearance;
 using Sparkle.Controls.Dialogs;
+using Sparkle.Controls.Panels;
 using Sparkle.Controls.Tabs;
 using Sparkle.DataStructures;
 using System.Collections.Generic;
@@ -44,17 +45,36 @@ namespace Klipper.Desktop.WPF.Controls
         private ContentControl GetControl(string imageName)
         {
             var imageSource = (ImageSource)new ImageSourceConverter().ConvertFromString("./Images/Klingelnberg/" + imageName);
-            var image = new Image()
+            //var image = new Image()
+            //{
+            //    Source = imageSource,
+            //    Width = 650,
+            //    Height = 450,
+            //    Margin = new Thickness(15)
+            //};
+            object controll = null;
+
+            if (imageName == "Klingelnberg_building.jpg")
             {
-                Source = imageSource,
-                Width = 650,
-                Height = 450,
-                Margin = new Thickness(15)
-            };
+                   controll = new SelfControll();
+            }
+            else
+            {
+                controll= new Image()
+                {
+                    Source = imageSource,
+                    Width = 650,
+                    Height = 450,
+                    Margin = new Thickness(15)
+                };
+
+            }
+
+            
 
             return new ContentControl()
             {
-                Content = image,
+                Content = controll,
                 Background = new SolidColorBrush(Colors.Transparent),
                 VerticalAlignment = VerticalAlignment.Stretch,
                 VerticalContentAlignment = VerticalAlignment.Stretch,

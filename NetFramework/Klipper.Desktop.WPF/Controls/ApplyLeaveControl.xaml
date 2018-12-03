@@ -28,7 +28,7 @@
         BorderBrush="{DynamicResource BackgroundBase_16}"
         >
 
-        <Grid>
+        <Grid Background="#222D34">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.3*" ></ColumnDefinition>
                 <ColumnDefinition Width="0.7*" MinWidth="250"></ColumnDefinition>
