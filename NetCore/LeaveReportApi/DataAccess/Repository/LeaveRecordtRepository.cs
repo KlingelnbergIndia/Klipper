@@ -70,7 +70,7 @@ namespace LeaveReportApi.LeaveReportDataAccess.Repository
             }
             return totalLeavesRecord;
         }
-        public Dictionary<string, int> GetCheckBalance(int empId)
+        public Dictionary<string, int> GetBalanceByEmp(int empId)
         {
             int personalLeave = 21, sickLeave = 6,totalLeave;
             var leavesofEmp = _context.LeaveCollection.Find(y => y.EmployeeID.Equals(empId) && y.LeaveStatus==LeaveStatus.Approved).ToList();
@@ -86,6 +86,29 @@ namespace LeaveReportApi.LeaveReportDataAccess.Repository
             dictionary.Add("totalLeave", totalLeave);
 
             return dictionary;
+        }
+        public List<Dictionary<int, Dictionary<string,int>>> GetBalanceByDept(Department department)
+        {
+            var distinctEmployees = department.Employees;
+            List<Dictionary<int, Dictionary<string, int>>> listOfEmp = new List<Dictionary<int, Dictionary<string, int>>>();
+            foreach (var emp in distinctEmployees)
+            {
+                int personalLeave = 21, sickLeave = 6, totalLeave;
+                var leavesofEmp = _context.LeaveCollection.Find(y => y.EmployeeID.Equals(emp) && y.LeaveStatus == LeaveStatus.Approved).ToList();
+                personalLeave -= leavesofEmp.Where(leave => leave.LeaveType == LeaveType.PersonalLeave).Count();
+                sickLeave -= leavesofEmp.Where(leave => leave.LeaveType == LeaveType.SickLeave).Count();
+                totalLeave = personalLeave + sickLeave;
+                Dictionary<int, Dictionary<string, int> > empData= new Dictionary<int, Dictionary<string, int>>();
+
+                Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                dictionary.Add("personalLeave", personalLeave);
+                dictionary.Add("sickLeave", sickLeave);
+                dictionary.Add("totalLeave", totalLeave);
+
+                empData.Add(emp,dictionary);
+                listOfEmp.Add(empData);
+            }
+            return listOfEmp;
         }
     }
 }

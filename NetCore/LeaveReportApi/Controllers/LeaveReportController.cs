@@ -65,14 +65,30 @@ namespace EmployeeApi.Controllers
 
         }
 
-        // GET api/LeaveReport/CheckBalance/empId?empId=63
+        // GET api/LeaveReport/GetBalanceByEmpId/empId?empId=63
         [HttpGet]
-        [Route("CheckBalance/empId")]
-        public IActionResult GetBalance(int empId)
+        [Route("GetBalanceByEmpId/empId")]
+        public IActionResult GetBalanceByEmpId(int empId)
         {
             Dictionary< string,int> dictionary ;
-            dictionary = _leaveReportService.GetCheckBalance(empId);
+            dictionary = _leaveReportService.GetBalanceByEmp(empId);
             return Ok(dictionary);
+        }
+
+        // GET api/LeaveReport/GetBalanceByDeptId/deptId?deptId=13
+        [HttpGet]
+        [Route("GetBalanceByDeptId/deptId")]
+        public IActionResult GetBalanceByDeptId(int deptId)
+        {
+            Department department = _departmentRepository.GetDepartment(deptId);
+
+            if (department == null)
+            {
+                throw new Exception("Department Id is not valid");
+            }
+            List<Dictionary<int, Dictionary<string, int>>> listOfBalance;
+            listOfBalance = _leaveReportService.GetBalanceByDept(department);
+            return Ok(listOfBalance);
         }
     }
 }
