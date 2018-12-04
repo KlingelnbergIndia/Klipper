@@ -1,6 +1,6 @@
-﻿using Sparkle.Appearance;
+﻿using Klipper.Desktop.WPF.Controls.CustomControls;
+using Sparkle.Appearance;
 using Sparkle.Controls.Dialogs;
-using Sparkle.Controls.Panels;
 using Sparkle.Controls.Tabs;
 using Sparkle.DataStructures;
 using System.Collections.Generic;
@@ -52,55 +52,31 @@ namespace Klipper.Desktop.WPF.Controls
             //    Height = 450,
             //    Margin = new Thickness(15)
             //};
-            object controll = null;
+            object control = null;
 
             if (imageName == "Klingelnberg_building.jpg")
             {
-                   controll = new SelfControll();
+                control = new SelfControll();
             }
             else
             {
-                controll= new Image()
-                {
-                    Source = imageSource,
-                    Width = 650,
-                    Height = 450,
-                    Margin = new Thickness(15)
-                };
-
+                control = new LeaveEmployeesList();
             }
-
-            
-
+                       
             return new ContentControl()
             {
-                Content = controll,
+                Content = control,
                 Background = new SolidColorBrush(Colors.Transparent),
                 VerticalAlignment = VerticalAlignment.Stretch,
                 VerticalContentAlignment = VerticalAlignment.Stretch,
                 Margin = new Thickness(0),
-                Padding = new Thickness(0)
+                Padding = new Thickness(10)
             };
 
         }
 
-        private void MenuSelectionChanged(object sender, SelectableItemSelectionChangedEventArgs e)
+        private void MenuSelectionChanged(object sender, SelectableItemSelectionChangedEventArgs selectableItemSelectionChangedEventArgs)
         {
-        }
-
-        private void applyLeave(object sender, RoutedEventArgs e)
-        {
-            AbsoluteModalDialog dialog = new AbsoluteModalDialog();
-
-            var control = new ApplyLeaveControl();
-            control.Closed += (s, args) =>
-            {
-                dialog?.Close();
-            };
-
-            dialog.Child = control;
-            AppearanceManager.SetAppearance(dialog);
-            dialog.ShowDialog();
         }
     }
 }

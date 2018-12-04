@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Klipper.Desktop.WPF.Controls.CustomControls;
+using Sparkle.Appearance;
+using Sparkle.Controls.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +26,23 @@ namespace Klipper.Desktop.WPF.Controls
         public SelfControll()
         {
             InitializeComponent();
+
+            LeaveStatusDetailList.Content = new LeaveList(); //load dynamic panel
+          
+        }
+        private void applyNewLeave(object sender, RoutedEventArgs e)
+        {
+            AbsoluteModalDialog dialog = new AbsoluteModalDialog();
+
+            var control = new ApplyLeaveControl();
+            control.Closed += (s, args) =>
+            {
+                dialog?.Close();
+            };
+
+            dialog.Child = control;
+            AppearanceManager.SetAppearance(dialog);
+            dialog.ShowDialog();
         }
     }
 }

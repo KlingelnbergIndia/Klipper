@@ -90,6 +90,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\CustomControls\LeaveEmployeesList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CustomControls\LeaveList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\HelpControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -140,6 +148,12 @@
     </Compile>
     <Compile Include="Controls\AttendanceControl.xaml.cs">
       <DependentUpon>AttendanceControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomControls\LeaveEmployeesList.xaml.cs">
+      <DependentUpon>LeaveEmployeesList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomControls\LeaveList.xaml.cs">
+      <DependentUpon>LeaveList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\HelpControl.xaml.cs">
       <DependentUpon>HelpControl.xaml</DependentUpon>

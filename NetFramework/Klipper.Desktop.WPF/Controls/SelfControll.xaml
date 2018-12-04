@@ -4,65 +4,110 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Klipper.Desktop.WPF.Controls"
+             xmlns:progress="clr-namespace:Sparkle.Controls.Progress;assembly=Sparkle"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="0,3,0,3">
+             d:DesignHeight="500" d:DesignWidth="1000">
+    <Grid Margin="0,0,0,0"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width=" auto"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
-        <!--for Pichart and summery-->
-        <Grid 
-            Grid.Row="0" 
-            Grid.Column="0"
-            Background="#222D34">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width=".8*"/>
-                <ColumnDefinition Width="1.2*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.3*"/>
-            </Grid.RowDefinitions>
-            <!--Pi chart for total-->
-            <Grid Grid.Column="0"></Grid>
-            <!--Pi chart for Sic-->
-            <Grid Grid.Column="1"></Grid>
 
-            <!--for leave summary-->
-            <Button Grid.Column="2" 
+        <!--<progress:CircularProgress 
+                    x:Name="TotalLeavePichart"
+                    HorizontalAlignment="Center"
+                    Grid.Column="0"
+                    HorizontalContentAlignment="Center"
+                    ProgressSize="175"
+                    ProgressRadius="20"
+                    StrokeBrush="Red"
+                    BackgroundBrush="Green"
+                    StrokeThickness="70"
+                    TextForegroundBrush="White"
+                    TextFontSize="28"
+                    Margin="5"/>
+        <progress:CircularProgress 
+                    x:Name="SickLeavePichart"
+                    Grid.Column="1"
                     HorizontalAlignment="Center" 
+                    HorizontalContentAlignment="Center"
+                    ProgressSize="175"
+                    ProgressRadius="20"
+                    StrokeBrush="Red"
+                    BackgroundBrush="YellowGreen"
+                    StrokeThickness="70"
+                    TextForegroundBrush="White"
+                    TextFontSize="28"
+                    Margin="5"/>-->
+        
+        <!--for short span of time--> 
+        <Label Content="ToTal Leaves Available"
+               Grid.Column="0"
+               Foreground="Gray"
+               Grid.Row="0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"/>
+        <TextBlock Text="30"
+                   HorizontalAlignment="Right"
+                   Grid.Column="0"
+                   Grid.Row="0"
+                   Foreground="Green"
+                   Margin="10"/>
+        
+        <Label Content="ToTal Sick Leaves Available"
+               Grid.Column="1"
+               Foreground="Gray"
+               Grid.Row="0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"/>
+        <TextBlock Text="15"
+                   Margin="10"
+                   HorizontalAlignment="Right"
+                   Grid.Column="1"
+                   Grid.Row="0"
+                   Foreground="Green"/>
+
+
+
+
+        <!--for leave summary-->
+            <!--<Button Grid.Column="2" 
+                    HorizontalAlignment="Right" 
                     VerticalAlignment="Center"
                     Content="Leave summary" 
                     FontSize="16pt" 
                     FontWeight="DemiBold"
                     Background="BurlyWood">
-            </Button>
+            </Button>-->
 
-            <Button Grid.Column="3" 
-                    HorizontalAlignment="Center" 
+        <Button Grid.Column="3" 
+                    HorizontalAlignment="Right" 
                     VerticalAlignment="Center"
-                    Content="Apply New Leave" 
+                    Content="Apply New Leave"
+                    Click="applyNewLeave"
                     FontSize="18pt" 
                     FontWeight="DemiBold">
-            </Button>
-
-        </Grid>
+        </Button>
+        
 
         <!--for list of details-->
-        <ScrollViewer Grid.Row="1" 
-              Grid.Column="0"
+        <ScrollViewer 
+              Grid.Row="1" 
+              Grid.ColumnSpan="4"
               Background="#222D34">
-            <ContentControl x:Name="LeavStatusDetailList"
+            <ContentControl x:Name="LeaveStatusDetailList"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch">
 
             </ContentControl>
-
         </ScrollViewer>
     </Grid>
 </UserControl>

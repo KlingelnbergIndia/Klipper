@@ -15,42 +15,27 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Border
-            Grid.Row="0"  Grid.Column="0" 
-            Background="{DynamicResource BackgroundBase_06}"/>
-        <StackPanel 
-            Grid.Row="0" Grid.Column="0"
-            Orientation="Vertical" 
-            HorizontalAlignment="Center" 
-            VerticalAlignment="Top">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <TextBlock Margin="15" 
-                FontSize="40" 
-                Text="LEAVE MANAGEMENT SYSTEM" 
-                FontWeight="ExtraBold"
-                Foreground="BlueViolet"
-                HorizontalAlignment="Center"/>
-            <Border 
+        <TextBlock Grid.Row="0"
+                   Margin="13" 
+                    FontSize="40" 
+                    Text="LEAVE MANAGEMENT SYSTEM" 
+                    FontWeight="ExtraBold"
+                    Foreground="BlueViolet"
+                    HorizontalAlignment="Center"/>
+
+        <Border Grid.Row="1"
                 HorizontalAlignment="Stretch" 
                 VerticalAlignment="Stretch" 
                 Background="{DynamicResource BackgroundBase_09}">
-                <tabs:Tabber
+            <tabs:Tabber
                     x:Name="TheTabber"
-                    PaneBackground="{DynamicResource BackgroundBase_09}"
-                    Margin="12"
-                    />
-            </Border>
-
-            <Button Content="Apply new Leave" 
-                    Click="applyLeave"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Right"
-                    HorizontalContentAlignment="Center"
-                    FontSize="30"
-                    FontWeight="Bold"/>
-        </StackPanel>
-
-
+                    Margin="0,0,0,0"/>
+        </Border>
     </Grid>
 </UserControl>
