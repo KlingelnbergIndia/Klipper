@@ -1,0 +1,114 @@
+<UserControl x:Class="Klipper.Desktop.WPF.CustomControls.EmployeeListPanelControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:progress="clr-namespace:Sparkle.Controls.Progress;assembly=Sparkle"
+             xmlns:buttons="clr-namespace:Sparkle.Controls.Buttons;assembly=Sparkle"
+             mc:Ignorable="d" 
+             d:DesignHeight="450">
+
+    <Grid ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+        <!--loading bar-->
+        <StackPanel Name="LoaderPanel" Visibility="Visible">
+            <Border 
+				CornerRadius="4"
+                HorizontalAlignment="Center"
+                Margin="50"
+				Background="Transparent">
+                <progress:Loader x:Name="DataLoaderAnimation"  Margin="15 100"/>
+            </Border>
+        </StackPanel>
+
+        <!--employee list panel-->
+        <ListBox Name="employeeList" 
+                  Visibility="Hidden" 
+                  Background="#222D34" 
+                  VerticalAlignment="Stretch" 
+                  HorizontalAlignment="Stretch" 
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  Margin="-1"
+                  Focusable="False"
+                  Loaded="EmployeeList_LoadedAsync">
+            <!--Data header-->
+            <ListBox.Template>
+                <ControlTemplate>
+                    <DockPanel LastChildFill="True">
+                        <Grid DockPanel.Dock="Top" Height="30">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="420"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Foreground="White" Grid.Column="0">Profile Picture</Label>
+                            <Label Foreground="White" Grid.Column="1">Details</Label>
+                            <Label Foreground="White" Grid.Column="2">Action</Label>
+                        </Grid>
+                        <ItemsPresenter></ItemsPresenter>
+                    </DockPanel>
+                </ControlTemplate>
+            </ListBox.Template>
+            <!--DataList-->
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="#222D34">
+                    <Grid VerticalAlignment="Top" HorizontalAlignment="Center"> 
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="420"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" BorderBrush="#404B52" Background="#003c56" BorderThickness="1" Margin="2" >
+                            <Image Margin="1" Height="70" Width="70" Stretch="UniformToFill" Source="{Binding Photo}"/>
+                        </Border>
+
+                        <Border Grid.Column="1" BorderThickness="0" Margin="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Margin="5 0 10 0">
+                                    <TextBlock Text="Name:" Foreground="YellowGreen" Margin="1"/>
+                                    <TextBlock Text="{Binding FullName}" Foreground="#aeb1b2" Margin="1"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0" Margin="5 0 10 0">
+                                    <TextBlock Text="ID:" Foreground="YellowGreen" Margin="1"/>
+                                    <TextBlock Text="{Binding ID}" Foreground="#aeb1b2" Margin="1"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="2" Margin="5 0 10 0" >
+                                    <TextBlock Text="Title:" Foreground="YellowGreen" Margin="1"/>
+                                    <TextBlock Text="{Binding Title}" Foreground="#aeb1b2" Margin="1"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="3"  Margin="5 0 10 0">
+                                    <TextBlock Text="Email:" Foreground="YellowGreen" Margin="1"/>
+                                    <TextBlock Text="{Binding Email}" Foreground="#aeb1b2" Margin="1"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="2">
+                            <buttons:PanelButton 
+                                x:Name="UpdateButton"
+                                Cursor="Hand"
+                                HorizontalAlignment="Right"
+                                Tag="{Binding ID}"
+                                ButtonText="Update"
+                                Clicked="UpdateEmployee_clicked"/>
+                        </Border>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+    </Grid>
+</UserControl>

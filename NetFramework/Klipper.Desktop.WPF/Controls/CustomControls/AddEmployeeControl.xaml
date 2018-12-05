@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              Background="#00202d"
              x:Name="ThisUserControl"
-             d:DesignHeight="450" d:DesignWidth="800" Loaded="ThisUserControl_Loaded">
+             d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -34,7 +34,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel>
                     <Border BorderBrush="#003c56" Background="#003c56" BorderThickness="1" Margin="2" >
-                        <Image Name="ProfileImage" Margin="1" Height="128" Source="pack://application:,,,/Images/profilePic.png"></Image>
+                        <Image Name="ProfileImage" Margin="1" Height="100" Source="{Binding Photo}" Stretch="Fill"/>
                     </Border>
                     <Button x:Name="UploadButton" Content="Upload" Cursor="Hand" Margin="0" Click="UploadButton_Click"></Button>
                 </StackPanel>
@@ -51,13 +51,11 @@
 
                         <StackPanel Grid.Row="0" Grid.Column="0" Margin="0 0 10 0">
                             <TextBlock 
-                                
                                 Text="Title" 
                                 Foreground="YellowGreen" 
                                 Margin="0 5 0 0"/>
                             <TextBox
-                                x:Name="TitleTextBox"
-                                Text="Software Developer"
+                                Text ="{Binding Title}"
                                 Padding="2" 
                                 MinWidth="160"
                                 Foreground="#aeb1b2"
@@ -71,8 +69,7 @@
                                 Foreground="YellowGreen" 
                                 Margin="0 5 0 0"/>
                             <TextBox 
-                                x:Name="IDTextBox"
-                                Text="101"
+                                Text ="{Binding ID}"
                                 MinWidth="70"
                                 Foreground="#aeb1b2"
                                 Background="{DynamicResource BackgroundBase_05}"
@@ -87,11 +84,11 @@
                                 Margin="0 5 0 0"/>
                             <ComboBox 
                                 x:Name="PrefixComboBox"
+                                SelectedValue ="{Binding Prefix}"
                                 Foreground="#aeb1b2"
                                 MinWidth="78"
                                 Background="{DynamicResource BackgroundBase_05}"
                                 BorderBrush="{DynamicResource BackgroundBase_05}"
-                                SelectedValue="Mr."
                                 SelectedValuePath="Content"
                                 Padding="3">
                                 <ComboBoxItem  Name="cbi1">Mr.</ComboBoxItem>
@@ -107,7 +104,7 @@
                                 Margin="0 5 0 0"/>
                             <TextBox 
                                 x:Name="FirstNameTextBox"
-                                Text="Sanket"
+                                Text ="{Binding FirstName}"
                                 MinWidth="80"
                                 Foreground="#aeb1b2"
                                 Background="{DynamicResource BackgroundBase_05}"
@@ -117,12 +114,11 @@
                         <StackPanel Grid.Row="0" Grid.Column="4" Margin="0 0 10 0">
                             <TextBlock 
                                 Text="Last Name" 
-                                
                                 Foreground="YellowGreen" 
                                 Margin="0 5 0 0"/>
                             <TextBox 
                                 x:Name="LastNameTextBox"
-                                Text="Goyal"
+                                Text ="{Binding LastName}"
                                 MinWidth="80"
                                 Foreground="#aeb1b2"
                                 Background="{DynamicResource BackgroundBase_05}"
@@ -145,6 +141,7 @@
                                 Margin="0 5 0 0"/>
                             <DatePicker 
                                 x:Name="BirthdateTextBox"
+                                Text ="{Binding BirthDate}"
                                 Padding="2" 
                                 Foreground="#aeb1b2"
                                 Background="{DynamicResource BackgroundBase_05}"
@@ -158,6 +155,7 @@
                                 Margin="0 5 0 0"/>
                             <selectors:RadioTrain 
                                 x:Name="MyRadioTrain"
+                                DataContext ="{Binding Gender}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 SelectedItem="{Binding SelectedItem, Mode=TwoWay, ElementName=ThisUserControl}"
@@ -171,7 +169,7 @@
                                 Margin="0 5 0 0"/>
                             <TextBox
                                 x:Name="EmailTextBox"
-                                Text="Sanket.Goyal@klingelnberg.com"
+                                Text ="{Binding Email}"
                                 Foreground="#aeb1b2"
                                 MinWidth="200"
                                 Background="{DynamicResource BackgroundBase_05}"
@@ -197,7 +195,7 @@
                                 Margin="0 5 0 0"/>
                             <TextBox
                                 x:Name="MobilenumberTextBox"
-                                Text="+91-9998887771"
+                                Text ="{Binding MobilePhone}"
                                 Foreground="#aeb1b2"
                                 MinWidth="120"
                                 Background="{DynamicResource BackgroundBase_05}"
@@ -212,7 +210,7 @@
                                 Margin="0 5 0 0"/>
                             <TextBox
                                 x:Name="WorkPhoneTextBox"
-                                Text="020-987654"
+                                Text ="{Binding WorkPhone}"
                                 Foreground="#aeb1b2"
                                 Background="{DynamicResource BackgroundBase_05}"
                                 BorderBrush="{DynamicResource BackgroundBase_05}"
@@ -249,7 +247,7 @@
                             Margin="0 5 0 0"/>
                         <TextBox
                             x:Name="PFNumberTextBox"
-                            Text="MH/PUN/205890/XXX" 
+                            Text ="{Binding ProvidentFundNumber}"
                             Foreground="#aeb1b2"
                             Background="{DynamicResource BackgroundBase_05}"
                             BorderBrush="{DynamicResource BackgroundBase_05}"
@@ -264,7 +262,7 @@
                             Margin="0 5 0 0"/>
                         <TextBox
                             x:Name="PFUANNumberTextBox"
-                            Text="908070744012"
+                            Text ="{Binding ProvidentFundUANNumber}"
                             Foreground="#aeb1b2"
                             Background="{DynamicResource BackgroundBase_05}"
                             BorderBrush="{DynamicResource BackgroundBase_05}"
@@ -277,7 +275,7 @@
                             Margin="0 5 0 0"/>
                         <TextBox
                             x:Name="PanNumberTextBox"
-                            Text="AKNPG1843Z"
+                            Text ="{Binding PANNumber}"
                             Foreground="#aeb1b2"
                             Background="{DynamicResource BackgroundBase_05}"
                             BorderBrush="{DynamicResource BackgroundBase_05}"
@@ -291,7 +289,7 @@
                             Margin="0 5 0 0"/>
                         <TextBox
                             x:Name="AadharNumberTextBox"
-                            Text="4988 4454 7326"
+                            Text ="{Binding AadharNumber}"
                             Foreground="#aeb1b2"
                             Background="{DynamicResource BackgroundBase_05}"
                             BorderBrush="{DynamicResource BackgroundBase_05}"
@@ -321,12 +319,11 @@
                 <StackPanel Grid.Row="0" Grid.Column="0" Margin="0 0 10 0">
                     <TextBlock 
                         Text="JoiningDate" 
-                         
                         Foreground="YellowGreen" 
                         Margin="0 5 0 0"/>
                     <TextBox
                         x:Name="JoiningDateTextBox"
-                        Text="20-Jan-2018"
+                        Text ="{Binding JoiningDate}"
                         Foreground="#aeb1b2"
                         Background="{DynamicResource BackgroundBase_05}"
                         BorderBrush="{DynamicResource BackgroundBase_05}"
@@ -339,7 +336,7 @@
                         Foreground="YellowGreen" 
                         Margin="0 5 0 0"/>
                     <TextBox
-                        Text="29-Dec-2018"
+                        Text ="{Binding JoiningDate}"
                         Foreground="#aeb1b2"
                         Background="{DynamicResource BackgroundBase_05}"
                         BorderBrush="{DynamicResource BackgroundBase_05}"
@@ -354,7 +351,7 @@
                     Margin="0,0,0,10" 
                     ButtonWidth="70"
                     Cursor="Hand"
-                    ButtonText="Save" Clicked="AddEmployee_ClickAsync" Loaded="SaveButton_Loaded" />
+                    ButtonText="Save" Clicked="AddEmployee_ClickAsync" />
         </StackPanel>
     </StackPanel>
 

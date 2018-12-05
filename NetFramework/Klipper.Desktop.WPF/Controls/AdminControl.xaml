@@ -45,7 +45,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Background="#404B52" Grid.Row="0">
                     <Border BorderThickness="0.5" Margin="0.5" >
@@ -65,7 +65,7 @@
                                     Background="Transparent"
                                     ToolTip="Add New Employee" 
                                     Click="AddEmployee_click">
-                                <Image Height="40" Width="40" Cursor="Hand" ToolTip="Refresh" 
+                                <Image Height="40" Width="40" Cursor="Hand" ToolTip="Add New Employee" 
                                        Source="pack://application:,,,/Images/user_pic.png"/>
                             </Button>
                             <Button x:Name="RefreshData" 
@@ -79,7 +79,8 @@
                                 <Image Height="40" Width="40" Cursor="Hand" ToolTip="Refresh" 
                                        Source="pack://application:,,,/Images/refresh.png"/>
                             </Button>
-                            <Button x:Name="UpdateUser" 
+                            <Button Visibility="Hidden"
+                                    x:Name="UpdateUser" 
                                     Grid.Column="2" 
                                     Margin="1" 
                                     Width="45" 
@@ -110,13 +111,13 @@
                         </Grid>
                     </Border>
                 </StackPanel>
-                <StackPanel Grid.Row="1" Background="#222D34">
+                <ScrollViewer Grid.Row="1" Background="#222D34">
 
                     <ContentControl x:Name="InteractionArea" 
                         HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch"/>
 
-                </StackPanel>
+                </ScrollViewer>
             </Grid>
         </Border>
 

@@ -25,7 +25,9 @@ namespace Klipper.Desktop.WPF.CustomControls
     {
         public event EventHandler Closed = null;
         private int _SelectedIndex = 0;
-        private static byte[] profileImageByteSream;
+        Employee EmployeeModel = InitEmployeeModel();
+
+        private readonly byte[] defaultProfileImage;
         public int SelectedIndex
         {
             get { return _SelectedIndex; }
@@ -58,7 +60,17 @@ namespace Klipper.Desktop.WPF.CustomControls
         public AddEmployeeControl()
         {
             InitializeComponent();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                BitmapImage DefaultProfileImage = new BitmapImage(new Uri("pack://application:,,,/Images/profilePic.png"));
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(DefaultProfileImage));
+                encoder.Save(ms);
+                defaultProfileImage = ms.ToArray();
+                EmployeeModel.Photo = defaultProfileImage;
+            }
             BirthdateTextBox.Text = DateTime.Now.ToShortDateString();
+            DataContext = EmployeeModel;
         }
 
         private void CloseDialog_clicked(object sender, RoutedEventArgs e)
@@ -71,30 +83,10 @@ namespace Klipper.Desktop.WPF.CustomControls
         {
             try
             {
-                
-                Employee empData = new Employee()
-                {
-                    ID = Convert.ToInt32(IDTextBox.Text),
-                    FirstName = FirstNameTextBox.Text,
-                    LastName = LastNameTextBox.Text,
-                    Gender = (Gender)_selectedItem,
-                    Prefix = PrefixComboBox.Text,
-                    Title = TitleTextBox.Text,
-                    BirthDate = (DateTime)BirthdateTextBox.SelectedDate,
-                    Email = EmailTextBox.Text,
-                    MobilePhone = MobilenumberTextBox.Text,
-                    WorkPhone = WorkPhoneTextBox.Text,
-                    ProvidentFundNumber = PFNumberTextBox.Text,
-                    ProvidentFundUANNumber = PFUANNumberTextBox.Text,
-                    PANNumber = PanNumberTextBox.Text,
-                    AadharNumber = AadharNumberTextBox.Text,
-                    JoiningDate = DateTime.UtcNow,
-                    Photo = profileImageByteSream
-                };
                 using (HttpClient _client = new HttpClient())
                 {
                     _client.BaseAddress = new Uri("https://localhost:6001/");
-                    string json = JsonConvert.SerializeObject(empData, Formatting.Indented);
+                    string json = JsonConvert.SerializeObject(EmployeeModel, Formatting.Indented);
                     var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                     HttpResponseMessage response = await _client.PostAsync("/api/Employees/", httpContent);
                     response.EnsureSuccessStatusCode();
@@ -107,14 +99,34 @@ namespace Klipper.Desktop.WPF.CustomControls
             }
         }
 
-        private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        internal async void LoadEmployeeData(int empId)
         {
-            e.Handled = !IsTextAllowed(e.Text);
+            try
+            {
+                using (HttpClient _client = new HttpClient())
+                {
+                    _client.BaseAddress = new Uri("https://localhost:6001/api/Employees/");
+                    HttpResponseMessage response = await _client.GetAsync($"/api/Employees/{empId}");
+                    string jsonString = await response.Content.ReadAsStringAsync();
+                    EmployeeModel = JsonConvert.DeserializeObject<Employee>(jsonString);
+                    if (EmployeeModel.Photo == null)
+                    {
+                        EmployeeModel.Photo = defaultProfileImage;
+                    }
+                    DataContext = EmployeeModel; //updated values that have been set
+                }
+            }
+            catch (Exception exp)
+            {
+                MessageDialog.Show("Error Message", exp.Message, true, "Close", false, "", DialogFlavour.Error, true);
+            }
         }
-        private static bool IsTextAllowed(string text) //Input text validation : input only numbers
+
+
+        private new void PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex _regex = new Regex("[^0-9.-]+");
-            return !_regex.IsMatch(text);
+            e.Handled = _regex.IsMatch(e.Text);
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -129,34 +141,34 @@ namespace Klipper.Desktop.WPF.CustomControls
             OnPropertyChanged(nameof(_selectedItem));
         }
 
-        private void SaveButton_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void UploadButton_Click(object sender, RoutedEventArgs e)
         {
-
-
             var profileImagePicker = new Microsoft.Win32.OpenFileDialog();
             profileImagePicker.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
 
             if ((bool)profileImagePicker.ShowDialog())
             {
-                profileImageByteSream = File.ReadAllBytes(profileImagePicker.FileName);
+                byte[] profileImageByteSream = File.ReadAllBytes(profileImagePicker.FileName);
                 using (var memStream = new MemoryStream(profileImageByteSream))
                 {
                     BitmapFrame image = BitmapFrame.Create(memStream,
                         BitmapCreateOptions.IgnoreImageCache,
                         BitmapCacheOption.OnLoad);
                     ProfileImage.Source = image;
+                    EmployeeModel.Photo = profileImageByteSream;
                 }
             }
         }
 
-        private void ThisUserControl_Loaded(object sender, RoutedEventArgs e)
+        private static Employee InitEmployeeModel()
         {
-            profileImageByteSream = null;
+            return new Employee()
+            {
+                ProvidentFundNumber = string.Empty,
+                ProvidentFundUANNumber = string.Empty,
+                PANNumber = string.Empty,
+                AadharNumber = string.Empty,
+            };
         }
     }
 }
