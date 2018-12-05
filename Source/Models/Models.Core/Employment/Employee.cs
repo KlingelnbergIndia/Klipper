@@ -1,7 +1,6 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
-using Models.Core.Authentication;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace Models.Core.Employment
 {

@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="Klipper.Desktop.WPF.Views.WorkTime.ApplyLeaveControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="ComboBox">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="WhiteSmoke"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="MaxHeight" Value="27"/>
+        </Style>
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="WhiteSmoke"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="MaxHeight" Value="27"/>
+        </Style>
+    </UserControl.Resources>
+    <Border 
+        Style="{DynamicResource PanelBorder}" 
+        Background="{DynamicResource BackgroundBase_16}"
+        BorderBrush="{DynamicResource BackgroundBase_16}"
+        >
+
+        <Grid Background="#222D34">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.3*" ></ColumnDefinition>
+                <ColumnDefinition Width="0.7*" MinWidth="250"></ColumnDefinition>
+                <ColumnDefinition Width="7"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="Auto" MinHeight="70"></RowDefinition>
+                <RowDefinition Height="100"></RowDefinition>
+                <RowDefinition Height="38"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" 
+                   Content="From" 
+                   FontFamily="Segoe UI" 
+                   Foreground="Gray"
+                   FontSize="15"></Label>
+            <DatePicker Grid.Row="0" Grid.Column="1" 
+                     Name="TestCaseIdTextBox" 
+                     FontFamily="Segoe UI" 
+                     FontSize="15" 
+                     Margin="2 5" >
+            </DatePicker>
+            <Label Grid.Row="1" Grid.Column="0" 
+                   Content="To" 
+                   Foreground="Gray"
+                   FontFamily="Segoe UI" 
+                   FontSize="15"></Label>
+            <DatePicker Grid.Row="1" Grid.Column="1" 
+                     Name="TestCaseNameTextBox" 
+                     FontFamily="Segoe UI" 
+                     FontSize="15" 
+                     Margin="2 5" 
+                     >
+            </DatePicker>
+            <Label Grid.Row="2" Grid.Column="0" 
+                   Content="Comment" 
+                   Foreground="Gray"
+                   FontFamily="Segoe UI" 
+                   FontSize="15">
+            </Label>
+            <TextBox Grid.Row="2" Grid.Column="1" 
+                     Name="TestCaseDescriptionTextBox" 
+                     FontFamily="Segoe UI" 
+                     FontSize="15" 
+                     Margin="2 5" 
+                     AcceptsReturn="True" 
+                     TextWrapping="Wrap">
+            </TextBox>
+            <Label Grid.Row="3" Grid.Column="0" 
+                   Content="Category"
+                   Foreground="Gray"
+                   FontFamily="Segoe UI" 
+                   FontSize="15"
+                   VerticalAlignment="Center">
+            </Label>
+            <ComboBox x:Name="CategoryCombobox"
+                Grid.Row="3"  Grid.Column="1"  
+                Padding="10 2 0 0"
+                MinWidth="130"
+                HorizontalAlignment="Left"
+                SelectedIndex="0">
+                <ComboBoxItem Padding="10 2 0 0">Sick Leave</ComboBoxItem>
+                <ComboBoxItem Padding="10 2 0 0">Personal</ComboBoxItem>
+                <ComboBoxItem Padding="10 2 0 0">X</ComboBoxItem>
+                <ComboBoxItem Padding="10 2 0 0">Y</ComboBoxItem>
+                <ComboBoxItem Padding="10 2 0 0">Z</ComboBoxItem>
+            </ComboBox>
+            <Border x:Name="BottomRowSeparator" 
+                    Grid.Row="7" 
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="2 1" 
+                    Background="{DynamicResource BackgroundBase_06}" 
+                    Height="1">
+            </Border>
+            <Button Name="CreateTestButton" 
+                    Grid.Row="4" Grid.Column="1" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right"
+                    Content="Submit" 
+                    Margin="300,0,0,0" 
+                    Foreground="{DynamicResource Foreground_Normal}"
+                    Click="CreateTestButton_Click"
+                    Style="{DynamicResource Default_PanelButton_Style}" Width="306"/>
+            <Button Grid.Row="4" Grid.Column="1" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Content="Cancle" 
+                    Margin="0,0,300,0" 
+                    Foreground="{DynamicResource Foreground_Normal}"
+                    Click="CreateTestButton_Click"
+                    Style="{DynamicResource Default_PanelButton_Style}" Width="244"/>
+
+
+        </Grid>
+    </Border>
+</UserControl>

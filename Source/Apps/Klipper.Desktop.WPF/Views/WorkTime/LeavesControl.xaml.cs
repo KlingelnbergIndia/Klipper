@@ -1,7 +1,4 @@
-﻿using Klipper.Desktop.WPF.Controls.CustomControls;
-using Sparkle.Appearance;
-using Sparkle.Controls.Dialogs;
-using Sparkle.Controls.Tabs;
+﻿using Sparkle.Controls.Tabs;
 using Sparkle.DataStructures;
 using System.Collections.Generic;
 using System.Windows;
@@ -62,7 +59,7 @@ namespace Klipper.Desktop.WPF.Views.WorkTime
             {
                 control = new LeaveEmployeesList();
             }
-                       
+
             return new ContentControl()
             {
                 Content = control,

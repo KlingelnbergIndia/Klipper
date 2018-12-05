@@ -1,4 +1,4 @@
-﻿using Klipper.Desktop.WPF.CustomControls;
+﻿using Klipper.Desktop.WPF.Views.Admin;
 using Sparkle.Appearance;
 using Sparkle.Controls.Buttons;
 using Sparkle.Controls.Dialogs;
@@ -85,7 +85,7 @@ namespace Klipper.Desktop.WPF.Views.Main
             {
                 InteractionArea.Content = new EmployeeListPanelControl(); //load dynamic panel
             }
-            else
+            else if(e.Current.Header.Equals("Settings", StringComparison.OrdinalIgnoreCase))
             {
                 InteractionArea.Content = null;
             }
@@ -113,6 +113,11 @@ namespace Klipper.Desktop.WPF.Views.Main
             btn.Clicked += (s, args) => { dlg.Close(); };
             dlg.AddButton(btn);
             dlg.ShowDialog();
+        }
+
+        private void RefreshEmployee_click(object sender, RoutedEventArgs e)
+        {
+            InteractionArea.Content = new EmployeeListPanelControl();
         }
     }
 }

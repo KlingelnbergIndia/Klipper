@@ -38,7 +38,7 @@ namespace KlipperApi
             Configuration = builder.Build();
 
             Log.Logger = new LoggerConfiguration()
-                    .WriteTo.Async(a => a.File(LoggingConfigurator.GetConfiguration("KlipperApi").Path + "KlipperApi_log_.log", 
+                    .WriteTo.Async(a => a.File(LoggingConfigurator.GetConfiguration("KlipperApi").Path + "KlipperApi_log_.log",
                                 rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true), blockWhenFull: true)
                     .Enrich.FromLogContext()
                     .MinimumLevel.ControlledBy(new LoggingLevelSwitch() { MinimumLevel = LogEventLevel.Information })
@@ -92,12 +92,6 @@ namespace KlipperApi
                         Email = "KiranAKharade@gmail.com"
                     }
                 });
-            });
-
-            services.Configure<DBConnectionSettings>(options =>
-            {
-                options.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
-                options.Database = Configuration.GetSection("MongoConnection:Database").Value;
             });
 
             services.AddIdentity<User, IdentityRole>()

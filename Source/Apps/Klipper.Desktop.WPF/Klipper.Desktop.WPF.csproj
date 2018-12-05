@@ -111,8 +111,26 @@
     <Compile Include="Connectors\WorkTime\AttendanceConnector.cs" />
     <Compile Include="Connectors\WorkTime\LeavesConnector.cs" />
     <Compile Include="Connectors\WorkTime\RegularizationConnector.cs" />
+    <Compile Include="Views\Admin\AddEmployeeControl.xaml.cs">
+      <DependentUpon>AddEmployeeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\EmployeeListPanelControl.xaml.cs">
+      <DependentUpon>EmployeeListPanelControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WorkTime\ApplyLeaveControl.xaml.cs">
+      <DependentUpon>ApplyLeaveControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WorkTime\LeaveEmployeesList.xaml.cs">
+      <DependentUpon>LeaveEmployeesList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WorkTime\LeaveList.xaml.cs">
+      <DependentUpon>LeaveList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WorkTime\RegularizationControl.xaml.cs">
       <DependentUpon>RegularizationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WorkTime\SelfControll.xaml.cs">
+      <DependentUpon>SelfControll.xaml</DependentUpon>
     </Compile>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -130,9 +148,21 @@
     <Compile Include="Connectors\Main\SettingsConnector.cs" />
     <Compile Include="Connectors\Main\WorkTimeConnector.cs" />
     <Compile Include="SingleInstance.cs" />
+    <Page Include="Views\Admin\AddEmployeeControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Admin\EmployeeListPanelControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Main\AdminControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WorkTime\ApplyLeaveControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\WorkTime\AttendanceControl.xaml">
       <SubType>Designer</SubType>
@@ -146,29 +176,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\WorkTime\LeaveEmployeesList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WorkTime\LeaveList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\WorkTime\LeavesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Main\DocumentsControl.xaml">
-    <Page Include="Controls\Main\DocumentsControl.xaml">
-    <Page Include="Controls\ApplyLeaveControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\AttendanceControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\CustomControls\LeaveEmployeesList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\CustomControls\LeaveList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\HelpControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -185,19 +205,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Main\WorkTimeControl.xaml">
-    <Page Include="Controls\SelfControll.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\SettingsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\CustomControls\AddEmployeeControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\CustomControls\EmployeeListPanelControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -217,20 +224,6 @@
       <DependentUpon>AttendanceControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Main\HelpControl.xaml.cs">
-    <Compile Include="Controls\Main\HelpControl.xaml.cs">
-    <Compile Include="Controls\ApplyLeaveControl.xaml.cs">
-      <DependentUpon>ApplyLeaveControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\AttendanceControl.xaml.cs">
-      <DependentUpon>AttendanceControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\CustomControls\LeaveEmployeesList.xaml.cs">
-      <DependentUpon>LeaveEmployeesList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\CustomControls\LeaveList.xaml.cs">
-      <DependentUpon>LeaveList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\HelpControl.xaml.cs">
       <DependentUpon>HelpControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Main\HomeControl.xaml.cs">
@@ -253,17 +246,6 @@
     </Compile>
     <Compile Include="Views\Main\WorkTimeControl.xaml.cs">
       <DependentUpon>WorkTimeControl.xaml</DependentUpon>
-    <Compile Include="Controls\SelfControll.xaml.cs">
-      <DependentUpon>SelfControll.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SettingsControl.xaml.cs">
-      <DependentUpon>SettingsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\CustomControls\AddEmployeeControl.xaml.cs">
-      <DependentUpon>AddEmployeeControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\CustomControls\EmployeeListPanelControl.xaml.cs">
-      <DependentUpon>EmployeeListPanelControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoginControl.xaml.cs">
       <DependentUpon>LoginControl.xaml</DependentUpon>
@@ -272,6 +254,10 @@
     <Page Include="Views\WorkTime\RegularizationControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WorkTime\SelfControll.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -652,10 +638,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-    <Resource Include="Images\profilePic.png" />
-    <Resource Include="Images\refresh.png" />
-    <Resource Include="Images\update-user.png" />
-    <Resource Include="Images\user_pic.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Models\Models.Core\Models.Core.csproj">
@@ -676,6 +658,20 @@
     <EmbeddedResource Include="Images\WorkTime\Leaves_white.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\profilePic.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\refresh.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\update-user.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\user_pic.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
