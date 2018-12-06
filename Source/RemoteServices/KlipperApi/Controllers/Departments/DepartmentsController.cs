@@ -25,8 +25,9 @@ namespace KlipperApi.Controllers.Departments
             _employeesAccessor = employeesAccessor;
         }
 
+        // ToDo: Need to resolve issues
         [HttpGet("{id}")]
-        [Authorize(Policy = "ReadBasicDepartmentInfo")]
+        //[Authorize(Policy = "ReadBasicDepartmentInfo")]
         public async Task<IActionResult> Get(int employeeId)
         {
             var e = await _employeesAccessor.GetDepartmentByIdAsync(employeeId) as Department;
@@ -34,7 +35,7 @@ namespace KlipperApi.Controllers.Departments
         }
 
         [HttpGet("ByDepartmentName")]
-        [Authorize(Policy = "ReadBasicDepartmentInfo")]
+        //[Authorize(Policy = "ReadBasicDepartmentInfo")]
         public async Task<IActionResult> Get(string departmentName)
         {
             var e = await _employeesAccessor.GetDepartmentByNameAsync(departmentName) as Department;
